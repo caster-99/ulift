@@ -3,11 +3,26 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import theme from "./config/theme";
+import "@fontsource/quicksand/300.css";
+import "@fontsource/quicksand/400.css";
+import "@fontsource/quicksand/500.css";
+import "@fontsource/quicksand/600.css";
+import "@fontsource/quicksand/700.css";
+import { ThemeProvider } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
+import { SnackbarProvider } from "notistack";
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <SnackbarProvider maxSnack={3}>
+         <App />
+      </SnackbarProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );
 
