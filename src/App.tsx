@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Navigate, Outlet, Route, Routes } from "react-router-dom";
+import Chat from "./pages/Chat";
+import Favoritos from "./pages/Favoritos";
+import HistorialColas from "./pages/HistorialColas";
+import Inicio from "./pages/Inicio";
+import InicioSesion from "./pages/InicioSesion";
+import ListaEspera from "./pages/ListaEspera";
+import PerfilUsuario from "./pages/PerfilUsuario";
+import Registro from "./pages/Registro";
+import RegistroVehiculo from "./pages/RegistroVehiculo";
+import InicioSesionLayout from "./components/InicioSesionLayout";
 
-function App() {
+const App = (): JSX.Element => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<Navigate to="login" replace />} />
+      <Route element={<InicioSesionLayout />}>
+        <Route path="login" element={<InicioSesion />} />
+        <Route path="register" element={<Registro />} />
+      </Route>
+      <Route path="inicio" element={<Inicio />} />
+      <Route path="perfil" element={<PerfilUsuario />} />
+      <Route path="historial" element={<HistorialColas />} />
+      <Route path="favoritos" element={<Favoritos />} />
+      <Route path="chat" element={<Chat />} />
+      <Route path="registroVehiculo" element={<RegistroVehiculo />} />
+      <Route path="listaEspera" element={<ListaEspera />} />
+    </Routes>
   );
-}
+};
 
 export default App;
