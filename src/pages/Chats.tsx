@@ -2,7 +2,7 @@ import { Box, Container, Typography } from "@mui/material";
 import React from "react";
 import { NavBar } from "../components/NavBar";
 
-const HistorialColas = (): JSX.Element => {
+const Chats = (): JSX.Element => {
   return (
     <Box>
       <NavBar />
@@ -15,7 +15,7 @@ const HistorialColas = (): JSX.Element => {
             fontWeight={600}
             mb={{ xs: 2, sm: 3 }}
           >
-            Historial colas
+            Chats
           </Typography>
         </Container>
       </Box>
@@ -23,4 +23,4 @@ const HistorialColas = (): JSX.Element => {
   );
 };
 
-export default HistorialColas;
+export default Chats;

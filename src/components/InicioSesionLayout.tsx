@@ -9,7 +9,7 @@ const LoginLayout = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "linear-gradient(180deg, #042F3E 0%, #40B4E5 100%)",
+        background: "linear-gradient(180deg, #042F3E 0%, #1C6481 50%, #40B4E5 100%)",
         minHeight: "100vh",
       }}
     >
@@ -21,9 +21,19 @@ const LoginLayout = () => {
             alignItems: "center",
           }}
         >
-          <Box component="img" src={logo} alt="logo" sx={{ width: "100%", mb: 1 }} />
+          <Box component="img" src={logo} alt="logo" sx={{ width: "50%", mb: 1 }} />
         </Box>
-        <Card raised sx={{ px: 5, py: 6, mb: 3, borderRadius: 4, position: "relative" }}>
+        <Card
+          raised
+          sx={{
+            px: 5,
+            py: 6,
+            mb: 3,
+            borderRadius: "4px",
+            position: "relative",
+            boxShadow: "-7px 7px 4px rgba(0, 0, 0, 0.25)",
+          }}
+        >
           <Outlet />
         </Card>
       </Container>

@@ -23,15 +23,6 @@ export const theme = createTheme({
   typography: {
     fontFamily: "Quicksand",
   },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        body: {
-          backgroundColor: "#fff",
-        },
-      },
-    },
-  },
 });
 
 export default theme;
