@@ -24,7 +24,7 @@ const validationSchema = yup.object().shape({
   password: yup.string().required("Ingresa tu contraseña, por favor"),
 });
 
-const InicioSesion = () => {
+const InicioSesion = (): JSX.Element => {
   const { enqueueSnackbar } = useSnackbar();
   return (
     <Box>
