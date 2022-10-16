@@ -33,10 +33,6 @@ import { useSnackbar } from "notistack";
 const drawerWidth = 240;
 
 interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window?: () => Window;
 }
 
@@ -67,7 +63,7 @@ export const NavBar = (props: Props) => {
   };
 
   const handleClickFaq = () => {
-    navigate(`/historial`);
+    navigate(`/faq`);
   };
 
   const handleClickCloseSesion = () => {
@@ -83,7 +79,6 @@ export const NavBar = (props: Props) => {
   };
   const drawer = (
     <div>
-      <Toolbar />
       <Divider />
       <List>
         <ListItem disablePadding>

@@ -53,20 +53,14 @@ const InicioSesion = (): JSX.Element => {
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
         {({ isSubmitting }) => (
           <Stack component={Form} spacing={2}>
-            <Field component={TextField} name="email" label="Correo" required />
+            <Field component={TextField} name="email" label="Correo UCAB" required />
 
-            <Field
-              margin="normal"
-              component={PasswordField}
-              name="password"
-              label="Contraseña"
-              required
-            />
+            <Field component={PasswordField} name="password" label="Contraseña" required />
             <LoadingButton type="submit" loading={isSubmitting} variant="contained" color="primary">
               Ingresar
             </LoadingButton>
             <Typography align="center">
-              ¿No tienes cuenta?{" "}
+              ¿No tienes cuenta?
               <Link to="/signup">
                 <Typography fontWeight="600"> Regístrate aquí </Typography>
               </Link>

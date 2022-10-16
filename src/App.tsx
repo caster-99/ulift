@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import Chat from "./pages/Chats";
 import Favoritos from "./pages/Favoritos";
+import Faq from "./pages/Faq";
 import HistorialColas from "./pages/HistorialColas";
 import Inicio from "./pages/Inicio";
 import InicioSesionLayout from "./components/InicioSesionLayout";
@@ -14,21 +15,29 @@ import UnAuth from "./components/UnAuth";
 
 const App = (): JSX.Element => {
   return (
-    <Routes>
-      <Route path="/" element={<Inicio />} />
-      <Route element={<InicioSesionLayout />}>
-        <Route path="login" element={<InicioSesion />} />
-        <Route path="registro" element={<Registro />} />
-      </Route>
-      <Route path="/" element={<Inicio />} />
-      <Route path="perfil" element={<PerfilUsuario />} />
-      <Route path="historial" element={<HistorialColas />} />
-      <Route path="favoritos" element={<Favoritos />} />
-      <Route path="chats" element={<Chat />} />
-      <Route path="registroVehiculo" element={<RegistroVehiculo />} />
-      <Route path="listaEspera" element={<ListaEspera />} />
-      <Route path="faq" element={<ListaEspera />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<Inicio />} />
+        <Route
+          element={
+            <UnAuth>
+              <InicioSesionLayout />
+            </UnAuth>
+          }
+        >
+          <Route path="login" element={<InicioSesion />} />
+          <Route path="signup" element={<Registro />} />
+        </Route>
+        <Route path="/" element={<Inicio />} />
+        <Route path="perfil" element={<PerfilUsuario />} />
+        <Route path="historial" element={<HistorialColas />} />
+        <Route path="favoritos" element={<Favoritos />} />
+        <Route path="chats" element={<Chat />} />
+        <Route path="registroVehiculo" element={<RegistroVehiculo />} />
+        <Route path="listaEspera" element={<ListaEspera />} />
+        <Route path="faq" element={<Faq />} />
+      </Routes>
+    </>
   );
 };
 

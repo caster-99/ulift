@@ -5,7 +5,13 @@ interface Props {
 }
 
 const UnAuth = ({ children }: Props): JSX.Element => {
-  return <Navigate to="/" replace />;
+  //const user = useUser();
+
+  // if (1) {
+  //   return <Navigate to="/home" replace />;
+  // }
+
+  return children;
 };
 
 export default UnAuth;

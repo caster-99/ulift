@@ -5,6 +5,7 @@ import logo from "../assets/logo512.png";
 const LoginLayout = () => {
   return (
     <Box
+      m={-1}
       sx={{
         display: "flex",
         alignItems: "center",
@@ -21,7 +22,7 @@ const LoginLayout = () => {
             alignItems: "center",
           }}
         >
-          <Box component="img" src={logo} alt="logo" sx={{ width: "50%", mb: 1 }} />
+          <Box component="img" src={logo} alt="logo" sx={{ width: "20%", mb: 1 }} />
         </Box>
         <Card
           raised
@@ -30,6 +31,7 @@ const LoginLayout = () => {
             py: 6,
             mb: 3,
             borderRadius: "4px",
+            //backgroundColor: "rgba(0,0,0,0.5)",
             position: "relative",
             boxShadow: "-7px 7px 4px rgba(0, 0, 0, 0.25)",
           }}

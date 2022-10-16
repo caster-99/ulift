@@ -5,7 +5,9 @@ interface Props {
 }
 
 const Auth = ({ children }: Props): JSX.Element => {
-  return <Navigate to="/login" replace />;
+  //  const user = useUser();
+
+  return children;
 };
 
 export default Auth;
