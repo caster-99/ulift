@@ -1,6 +1,9 @@
-import { Box, IconButton, Stack, Typography } from "@mui/material";
+import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { ArrowBackRounded as ArrowBackRoundedIcon } from "@mui/icons-material";
+import {
+  AddAPhotoRounded as AddPhotoIcon,
+  ArrowBackRounded as ArrowBackRoundedIcon,
+} from "@mui/icons-material";
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import { TextField } from "formik-mui";
 import * as yup from "yup";
@@ -14,6 +17,7 @@ interface Values {
   email: string;
   password: string;
   repeatPassword: string;
+  photo: object;
 }
 
 const initialValues: Values = {
@@ -21,12 +25,12 @@ const initialValues: Values = {
   email: "",
   password: "",
   repeatPassword: "",
+  photo: {},
 };
 
 const schema = yup.object().shape({
   name: yup.string().required("Ingresa tu nombre, por favor"),
   email: yup.string().required("Ingresa tu email, por favor").email("Email inválido"),
-  phone: yup.string().required("Ingresa tu teléfono, por favor"),
   password: yup
     .string()
     .required("Ingresa una contraseña, por favor")
@@ -35,6 +39,7 @@ const schema = yup.object().shape({
     .string()
     .required("Ingresa tu contraseña nuevamente, por favor")
     .oneOf([yup.ref("password")], "Las contraseñas no coinciden"),
+  photo: yup.object().required("Ingresa una foto, por favor"),
 });
 
 const Registro = (): JSX.Element => {
@@ -52,8 +57,8 @@ const Registro = (): JSX.Element => {
     //   setSubmitting(false);
     //   return enqueueSnackbar(error, { variant: "error" });
     // }
-    enqueueSnackbar("¡Bienvenido de vuelta!", { variant: "success" });
-    navigate(`/`);
+    enqueueSnackbar("¡Ahora puedes iniciar sesión!", { variant: "success" });
+    navigate(`/login`);
   };
 
   return (
@@ -85,13 +90,16 @@ const Registro = (): JSX.Element => {
               label="Repetir Contraseña"
               required
             />
+            <Button variant="contained" component="label" startIcon={<AddPhotoIcon />}>
+              Foto de perfil
+              <input hidden accept="image/*" type="file" name="photo" />
+            </Button>
             <LoadingButton type="submit" loading={isSubmitting} variant="contained">
               Registrarse
             </LoadingButton>
             <Typography align="center">
-              ¿Ya tienes cuenta?{" "}
+              ¿Ya tienes cuenta?
               <Link to="/login">
-                {" "}
                 <Typography fontWeight="600"> Inicia sesión </Typography>
               </Link>
             </Typography>
