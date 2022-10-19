@@ -1,19 +1,32 @@
-import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  IconButton,
+  Radio,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import {
   AddAPhotoRounded as AddPhotoIcon,
   ArrowBackRounded as ArrowBackRoundedIcon,
 } from "@mui/icons-material";
 import { Field, Form, Formik, FormikHelpers } from "formik";
-import { TextField } from "formik-mui";
+import { RadioGroup, TextField } from "formik-mui";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import PasswordField from "../components/PasswordField";
 import Link from "../components/Link";
+import { useId } from "react";
 
 interface Values {
   name: string;
+  sex: string;
   email: string;
   password: string;
   repeatPassword: string;
@@ -22,6 +35,7 @@ interface Values {
 
 const initialValues: Values = {
   name: "",
+  sex: "male",
   email: "",
   password: "",
   repeatPassword: "",
@@ -30,6 +44,7 @@ const initialValues: Values = {
 
 const schema = yup.object().shape({
   name: yup.string().required("Ingresa tu nombre, por favor"),
+  sex: yup.string().required("Selecciona tu género, por favor"),
   email: yup.string().required("Ingresa tu email, por favor").email("Email inválido"),
   password: yup
     .string()
@@ -45,6 +60,7 @@ const schema = yup.object().shape({
 const Registro = (): JSX.Element => {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
+  const labelId = useId();
 
   const onSubmit = async (user: Values, { setSubmitting }: FormikHelpers<Values>) => {
     //    setSubmitting(true);
@@ -81,6 +97,24 @@ const Registro = (): JSX.Element => {
         {({ isSubmitting }) => (
           <Stack component={Form} spacing={2}>
             <Field component={TextField} name="name" label="Nombres y Apellidos" required />
+            <FormControl>
+              <FormLabel id={labelId}>Género</FormLabel>
+              <Field component={RadioGroup} name="sex" row aria-labelledby={labelId}>
+                <FormControlLabel
+                  value="male"
+                  control={<Radio disabled={isSubmitting} />}
+                  label="Masculino"
+                  disabled={isSubmitting}
+                />
+                <FormControlLabel
+                  value="female"
+                  control={<Radio disabled={isSubmitting} />}
+                  label="Femenino"
+                  disabled={isSubmitting}
+                />
+              </Field>
+            </FormControl>
+
             <Field component={TextField} name="email" type="email" label="Correo UCAB" required />
 
             <Field component={PasswordField} name="password" label="Contraseña" required />

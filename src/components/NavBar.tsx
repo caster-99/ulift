@@ -27,8 +27,9 @@ import {
   SosRounded as SosIcon,
 } from "@mui/icons-material";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
+import Link from "../components/Link";
 
 const drawerWidth = 240;
 
@@ -169,9 +170,11 @@ export const NavBar = (props: Props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            U-Lift
-          </Typography>
+          <Link to="/">
+            <Typography color={"#ffffff"} variant="h6" noWrap component="div">
+              U-Lift
+            </Typography>
+          </Link>
 
           <IconButton edge="end" size="large" color="error" onClick={handleClickSOS}>
             <SosIcon />
