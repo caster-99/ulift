@@ -22,7 +22,7 @@ const LoginLayout = () => {
             alignItems: "center",
           }}
         >
-          <Box component="img" src={logo} alt="logo" sx={{ width: "20%", mb: 1 }} />
+          <Box component="img" src={logo} alt="logo" sx={{ width: "50%", mb: 1 }} />
         </Box>
         <Card
           raised
