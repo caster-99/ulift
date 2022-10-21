@@ -27,9 +27,9 @@ import {
   SosRounded as SosIcon,
 } from "@mui/icons-material";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
-import Link from "../components/Link";
+import logo from "../assets/logo512.png";
 
 const drawerWidth = 240;
 
@@ -42,6 +42,8 @@ export const NavBar = (props: Props) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+
+  // Maneja la redirección de cada una de las opciones del menú
 
   const handleClickFav = () => {
     navigate(`/favoritos`);
@@ -71,13 +73,18 @@ export const NavBar = (props: Props) => {
     navigate(`/login`);
   };
 
+  //Función que hace el llamado a SOS
+
   const handleClickSOS = () => {
     enqueueSnackbar("¡Llamando a emergencias!", { variant: "info" });
   };
 
+  //Función que maneja el menú lateral
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  //Lista de elementos del menú
   const drawer = (
     <div>
       <Divider />
@@ -160,7 +167,14 @@ export const NavBar = (props: Props) => {
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-        <Toolbar sx={{ justifyContent: "space-between", color: "primary" }}>
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            color: "primary",
+          }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -170,11 +184,20 @@ export const NavBar = (props: Props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Link to="/">
-            <Typography color={"#ffffff"} variant="h6" noWrap component="div">
-              U-Lift
-            </Typography>
-          </Link>
+          <Box component={Link} to="/" sx={{ display: "flex", alignItems: "center" }}>
+            <Box
+              component="img"
+              src={logo}
+              alt="logo"
+              sx={{
+                width: { xs: 70, sm: 120 },
+                position: { sm: "absolute" },
+                top: { sm: "50%" },
+                left: { sm: "50%" },
+                transform: { sm: "translate(-50%, -50%)" },
+              }}
+            />
+          </Box>
 
           <IconButton edge="end" size="large" color="error" onClick={handleClickSOS}>
             <SosIcon />

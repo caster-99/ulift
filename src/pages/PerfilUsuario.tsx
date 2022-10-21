@@ -7,7 +7,7 @@ const PerfilUsuario = (): JSX.Element => {
     <Box>
       <NavBar />
       <Box>
-        <Container maxWidth="md" sx={{ p: 3 }}>
+        <Container maxWidth="md" sx={{ flexGrow: 1, p: 3 }}>
           <Typography
             color="primary"
             textAlign="center"
