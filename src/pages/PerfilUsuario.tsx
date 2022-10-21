@@ -31,7 +31,12 @@ const PerfilUsuario = (): JSX.Element => {
               <ListItemIcon>
                 <CarIcon fontSize="small" color="primary"/>
               </ListItemIcon>
-              <ListItemText primary="Agregar Vehiculo" />
+              <ListItemText 
+                primary="Agregar Vehiculo"
+                primaryTypographyProps={{
+                  fontWeight: 600,
+                }}
+               />
             </MenuItem>
           <Divider />
         </MenuList>

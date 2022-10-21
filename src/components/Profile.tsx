@@ -33,13 +33,23 @@ const Profile = (): JSX.Element => {
                     justifyContent="center"
                     alignItems="center"
                 >
-                    <Typography textAlign="center">5</Typography>
+                    <Typography 
+                        textAlign="center"
+                        fontWeight={600}
+                    >
+                        5
+                    </Typography>
                     <StarIcon fontSize="small" color="secondary"/>
                 </Stack>
             </Box>
             <Box>
                 <Typography textAlign="center">Nro total de viajes</Typography>
-                <Typography textAlign="center">7</Typography>
+                <Typography 
+                    textAlign="center"
+                    fontWeight={600}
+                >
+                    7
+                </Typography>
             </Box>
         </Stack>
     </Box>
