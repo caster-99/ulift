@@ -1,14 +1,14 @@
 import { Box, Container, Fade, Typography } from "@mui/material";
 import React from "react";
-import SubPaginasHeader from "../components/SubPaginasHeader";
+import { NavBar } from "../components/NavBar";
 
 const ListaEspera = (): JSX.Element => {
   return (
     <Box>
-      <SubPaginasHeader pageName="Lista de espera" />
+      <NavBar />
       <Fade in timeout={800}>
         <Box>
-          <Container maxWidth="md" sx={{ p: 3, mt: 4 }}>
+          <Container maxWidth="md" sx={{ p: 3 }}>
             <Typography
               color="primary"
               textAlign="center"

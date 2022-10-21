@@ -92,9 +92,9 @@ const Inicio = (): JSX.Element => {
             >
               <SpeedDialAction icon={<PedirColaIcon />} onClick={openPedirDialog} />
 
-              {/* <BuscarColaDialogo isOpen={isDialogPedirOpen} closeDialog={closePedirDialog} /> */}
+              <BuscarColaDialogo isOpen={isDialogPedirOpen} closeDialog={closePedirDialog} />
               <SpeedDialAction icon={<OfrecerColaIcon />} onClick={openOfrecerDialog} />
-              {/* <OfrecerColaDialogo isOpen={isDialogOfrecerOpen} closeDialog={closeOfrecerDialog} /> */}
+              <OfrecerColaDialogo isOpen={isDialogOfrecerOpen} closeDialog={closeOfrecerDialog} />
             </SpeedDial>
           </Container>
         </Box>

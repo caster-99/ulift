@@ -1,7 +1,5 @@
 import {
   AppBar,
-  BottomNavigation,
-  BottomNavigationAction,
   Box,
   CssBaseline,
   Divider,
@@ -13,9 +11,9 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
-  Typography,
 } from "@mui/material";
 import {
+  Ballot as WaitingListIcon,
   HomeRounded as HomeIcon,
   FavoriteRounded as FavIcon,
   PersonRounded as PersonIcon,
@@ -26,7 +24,7 @@ import {
   ChatRounded as ChatIcon,
   SosRounded as SosIcon,
 } from "@mui/icons-material";
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import logo from "../assets/logo512.png";
@@ -63,6 +61,10 @@ export const NavBar = (props: Props) => {
 
   const handleClickChats = () => {
     navigate(`/chats`);
+  };
+
+  const handleClickListaEspera = () => {
+    navigate(`/listaEspera`);
   };
 
   const handleClickFaq = () => {
@@ -125,6 +127,7 @@ export const NavBar = (props: Props) => {
             <ListItemText>Favoritos</ListItemText>
           </ListItemButton>
         </ListItem>
+        <Divider />
         <ListItem disablePadding>
           <ListItemButton onClick={handleClickChats}>
             <ListItemIcon>
@@ -133,6 +136,16 @@ export const NavBar = (props: Props) => {
             <ListItemText>Chats</ListItemText>
           </ListItemButton>
         </ListItem>
+
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleClickListaEspera}>
+            <ListItemIcon>
+              <WaitingListIcon />
+            </ListItemIcon>
+            <ListItemText>Lista de espera</ListItemText>
+          </ListItemButton>
+        </ListItem>
+
         <Divider />
         <ListItem disablePadding>
           <ListItemButton onClick={handleClickFaq}>
@@ -190,7 +203,7 @@ export const NavBar = (props: Props) => {
               src={logo}
               alt="logo"
               sx={{
-                width: { xs: 70, sm: 120 },
+                width: { xs: 70, sm: 80 },
                 position: { sm: "absolute" },
                 top: { sm: "50%" },
                 left: { sm: "50%" },

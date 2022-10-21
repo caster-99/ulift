@@ -1,35 +1,26 @@
 import * as React from "react";
-import { Global } from "@emotion/react";
 
 import { grey } from "@mui/material/colors";
 
 import {
   Dialog,
-  CssBaseline,
   styled,
   Box,
-  Skeleton,
-  SwipeableDrawer,
-  Typography,
-  Drawer,
+  DialogTitle,
+  DialogContent,
+  FormControl,
+  InputLabel,
+  MenuItem,
 } from "@mui/material";
+import { LocationOn as LocIcon } from "@mui/icons-material";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { LoadingButton } from "@mui/lab";
+import { useNavigate } from "react-router-dom";
 
-const drawerBleeding = 56;
-
-interface Props {
-  window?: () => Window;
+interface DialogProps {
   isOpen: boolean;
   closeDialog: () => void;
 }
-
-const Root = styled("div")(({ theme }) => ({
-  height: "100%",
-  backgroundColor: theme.palette.mode === "light" ? grey[100] : theme.palette.background.default,
-}));
-
-const StyledBox = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "light" ? "#fff" : grey[800],
-}));
 
 const Puller = styled(Box)(({ theme }) => ({
   width: 30,
@@ -41,110 +32,66 @@ const Puller = styled(Box)(({ theme }) => ({
   left: "calc(50% - 15px)",
 }));
 
-export default function BuscarColaDialogo(props: Props) {
-  const { window } = props;
-  const [open, setOpen] = React.useState(false);
-
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
+const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
+  const [direccion, setDireccion] = React.useState("");
+  const navigate = useNavigate();
+  const handleChange = (event: SelectChangeEvent) => {
+    setDireccion(event.target.value as string);
   };
-
-  // This is used only for the example
-  const container = window !== undefined ? () => window().document.body : undefined;
-
+  const irListaEspera = () => {
+    navigate(`/listaEspera`);
+  };
   return (
-    <div>
-      {(["left", "right", "top", "bottom"] as const).map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Drawer
-            container={container}
-            anchor="bottom"
-            open={props.isOpen}
-            onClose={props.closeDialog}
-            //  onOpen={toggleDrawer(true)}
+    <Dialog open={isOpen} onClose={closeDialog}>
+      <DialogTitle textAlign={"center"} color={"primary"}>
+        ¿A donde necesitas una cola?
+      </DialogTitle>
+      <DialogContent>
+        <Puller />
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            justifyContent: "space-around",
+            margin: 2,
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "row",
+              justifyContent: "space-around",
+              margin: 2,
+              width: "100%",
+            }}
           >
-            <StyledBox
-              sx={{
-                position: "absolute",
-                top: -drawerBleeding,
-                borderTopLeftRadius: 8,
-                borderTopRightRadius: 8,
-                visibility: "visible",
-                right: 0,
-                left: 0,
-              }}
-            >
-              <Puller />
+            {" "}
+            <LocIcon color="success" fontSize="large" />
+            <FormControl fullWidth>
+              <InputLabel id="direccionDestino-label">Dirección</InputLabel>
 
-              <Typography sx={{ p: 2, color: "primary", fontWeight: "600", textAlign: "center" }}>
-                ¿A donde necesitas una cola?
-              </Typography>
-              <StyledBox
-                sx={{
-                  px: 2,
-                  pb: 2,
-                  height: "100%",
-                  overflow: "auto",
-                }}
-              ></StyledBox>
-            </StyledBox>
-          </Drawer>
-        </React.Fragment>
-      ))}
-    </div>
-
-    // <Root>
-    //   <CssBaseline />
-    //   <Global
-    //     styles={{
-    //       ".MuiSwipeableDrawer-root > .MuiPaper-root": {
-    //         height: `calc(50% - ${drawerBleeding}px)`,
-    //         overflow: "visible",
-    //       },
-    //     }}
-    //   />
-
-    //   <SwipeableDrawer
-    //     container={container}
-    //     anchor="bottom"
-    //     open={props.isOpen}
-    //     onClose={props.closeDialog}
-    //     onOpen={toggleDrawer(true)}
-    //     swipeAreaWidth={drawerBleeding}
-    //     disableSwipeToOpen={false}
-    //     ModalProps={{
-    //       keepMounted: false,
-    //     }}
-    //     disableEnforceFocus={true}
-    //     disableAutoFocus={true}
-    //     disableRestoreFocus={true}
-    //   >
-    //     <StyledBox
-    //       sx={{
-    //         position: "absolute",
-    //         top: -drawerBleeding,
-    //         borderTopLeftRadius: 8,
-    //         borderTopRightRadius: 8,
-    //         visibility: "visible",
-    //         right: 0,
-    //         left: 0,
-    //       }}
-    //     >
-    //       <Puller />
-
-    //       <Typography sx={{ p: 2, color: "primary", fontWeight: "600", textAlign: "center" }}>
-    //         ¿A donde necesitas una cola?
-    //       </Typography>
-    //       <StyledBox
-    //         sx={{
-    //           px: 2,
-    //           pb: 2,
-    //           height: "100%",
-    //           overflow: "auto",
-    //         }}
-    //       ></StyledBox>
-    //     </StyledBox>
-    //   </SwipeableDrawer>
-    // </Root>
+              <Select
+                labelId="direccionDestino-label"
+                id="direccionDestino-label"
+                value={direccion}
+                label="Dirección"
+                onChange={handleChange}
+                fullWidth
+              >
+                <MenuItem value={"Los olivos"}>Los olivos</MenuItem>
+                <MenuItem value={"Altavista"}>Altavista</MenuItem>
+                <MenuItem value={"Los Mangos"}>Los Mangos</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <LoadingButton onClick={irListaEspera} variant="text">
+            Aceptar
+          </LoadingButton>
+        </Box>
+      </DialogContent>
+    </Dialog>
   );
-}
+};
+export default BuscarColaDialogo;
