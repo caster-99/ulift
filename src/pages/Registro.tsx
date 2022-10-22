@@ -16,7 +16,7 @@ import {
   ArrowBackRounded as ArrowBackRoundedIcon,
 } from "@mui/icons-material";
 import { Field, Form, Formik, FormikHelpers } from "formik";
-import { RadioGroup, TextField } from "formik-mui";
+import { CheckboxWithLabel, RadioGroup, TextField } from "formik-mui";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
@@ -31,6 +31,7 @@ interface Values {
   password: string;
   repeatPassword: string;
   photo: object;
+  condiciones: boolean;
 }
 
 const initialValues: Values = {
@@ -40,8 +41,9 @@ const initialValues: Values = {
   password: "",
   repeatPassword: "",
   photo: {},
+  condiciones: false,
 };
-
+const SUPPORTED_FORMATS = ["image/jpg", "image/png", "image/jpeg", "image/gif"];
 const schema = yup.object().shape({
   name: yup.string().required("Ingresa tu nombre, por favor"),
   sex: yup.string().required("Selecciona tu género, por favor"),
@@ -54,7 +56,8 @@ const schema = yup.object().shape({
     .string()
     .required("Ingresa tu contraseña nuevamente, por favor")
     .oneOf([yup.ref("password")], "Las contraseñas no coinciden"),
-  photo: yup.object().required("Ingresa una foto, por favor"),
+  photo: yup.mixed().required("Ingresa una foto, por favor"),
+  condiciones: yup.boolean().oneOf([true], "Debes aceptar los términos y condiciones"),
 });
 
 const Registro = (): JSX.Element => {
@@ -124,10 +127,15 @@ const Registro = (): JSX.Element => {
               label="Repetir Contraseña"
               required
             />
-            <Button variant="contained" component="label" startIcon={<AddPhotoIcon />}>
-              Foto de perfil
-              <input hidden accept="image/*" type="file" name="photo" />
-            </Button>
+            {/* <Button variant="contained" component="label" startIcon={<AddPhotoIcon />}>
+              <input accept="image/*" type="file" name="photo" />
+            </Button> */}
+            <input type={"file"} name="photo" required />
+
+            <label style={{ fontFamily: "Quicksand", fontSize: 12, fontWeight: 600 }}>
+              <Field type="checkbox" name="condiciones" required />
+              Acepto que se que la UCAB no es responsable de nada
+            </label>
             <LoadingButton type="submit" loading={isSubmitting} variant="contained">
               Registrarse
             </LoadingButton>
