@@ -37,7 +37,7 @@ const Inicio = (): JSX.Element => {
       <NavBar />
       <Fade in timeout={800}>
         <Box>
-          <Container maxWidth="md">
+          <Container component="main" sx={{ flexGrow: 1, p: 3 }}>
             <Typography
               color="primary"
               textAlign="center"

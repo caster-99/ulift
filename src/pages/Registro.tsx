@@ -2,10 +2,12 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Divider,
   FormControl,
   FormControlLabel,
   FormLabel,
   IconButton,
+  MenuItem,
   Radio,
   Stack,
   Typography,
@@ -23,6 +25,7 @@ import { useSnackbar } from "notistack";
 import PasswordField from "../components/PasswordField";
 import Link from "../components/Link";
 import { useId } from "react";
+import Select from "../components/Select";
 
 interface Values {
   name: string;
@@ -32,6 +35,7 @@ interface Values {
   repeatPassword: string;
   photo: object;
   condiciones: boolean;
+  role: string;
 }
 
 const initialValues: Values = {
@@ -42,6 +46,7 @@ const initialValues: Values = {
   repeatPassword: "",
   photo: {},
   condiciones: false,
+  role: "",
 };
 const SUPPORTED_FORMATS = ["image/jpg", "image/png", "image/jpeg", "image/gif"];
 const schema = yup.object().shape({
@@ -56,6 +61,14 @@ const schema = yup.object().shape({
     .string()
     .required("Ingresa tu contraseña nuevamente, por favor")
     .oneOf([yup.ref("password")], "Las contraseñas no coinciden"),
+  role: yup
+    .string()
+    .required("Selecciona tu rol en la UCAB, por favor")
+    .test(
+      "role",
+      "Selecciona tu rol en la UCAB, por favor",
+      (value) => value !== "Indique su rol en la UCAB"
+    ),
   photo: yup.mixed().required("Ingresa una foto, por favor"),
   condiciones: yup.boolean().oneOf([true], "Debes aceptar los términos y condiciones"),
 });
@@ -70,7 +83,7 @@ const Registro = (): JSX.Element => {
 
     // const { repeatPassword, ...userData } = user;
 
-    // const error = await signUp({ ...userData, type: "nurse" });
+    // const error = await signUp({ ...userData});
 
     // if (error) {
     //   setSubmitting(false);
@@ -127,6 +140,17 @@ const Registro = (): JSX.Element => {
               label="Repetir Contraseña"
               required
             />
+            <Select variant="outlined" displayEmpty required name="role">
+              <MenuItem sx={{ color: "text.secondary" }} value="">
+                Indique su rol en la UCAB
+              </MenuItem>
+              <Divider />
+              <MenuItem value="Estudiante">Estudiante</MenuItem>
+              <MenuItem value="Docente">Docente</MenuItem>
+              <MenuItem value="Personal Administrativo">Personal Administrativo</MenuItem>
+              <MenuItem value="Personal Servicios Generales">Personal Servicios Generales</MenuItem>
+            </Select>
+
             {/* <Button variant="contained" component="label" startIcon={<AddPhotoIcon />}>
               <input accept="image/*" type="file" name="photo" />
             </Button> */}
@@ -134,8 +158,10 @@ const Registro = (): JSX.Element => {
 
             <label style={{ fontFamily: "Quicksand", fontSize: 12, fontWeight: 600 }}>
               <Field type="checkbox" name="condiciones" required />
-              Acepto que se que la UCAB no es responsable de nada
+              Acepto que se que la UCAB no es responsable de nada que suceda en la aplicación,
+              siendo esta un proyecto independiente de la institución.
             </label>
+
             <LoadingButton type="submit" loading={isSubmitting} variant="contained">
               Registrarse
             </LoadingButton>
