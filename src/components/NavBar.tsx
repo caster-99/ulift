@@ -13,7 +13,7 @@ import {
   Toolbar,
 } from "@mui/material";
 import {
-  Ballot as WaitingListIcon,
+  BallotRounded as WaitingListIcon,
   HomeRounded as HomeIcon,
   FavoriteRounded as FavIcon,
   PersonRounded as PersonIcon,
@@ -23,6 +23,7 @@ import {
   LogoutRounded as CloseIcon,
   ChatRounded as ChatIcon,
   SosRounded as SosIcon,
+  TaxiAlertRounded as ColaProcesoIcon,
 } from "@mui/icons-material";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -58,7 +59,9 @@ export const NavBar = (props: Props) => {
   const handleClickHistory = () => {
     navigate(`/historial`);
   };
-
+  const handleClickColasenProceso = () => {
+    navigate(`/colaEnProceso`);
+  };
   const handleClickChats = () => {
     navigate(`/chats`);
   };
@@ -128,6 +131,15 @@ export const NavBar = (props: Props) => {
           </ListItemButton>
         </ListItem>
         <Divider />
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleClickColasenProceso}>
+            <ListItemIcon>
+              <ColaProcesoIcon />
+            </ListItemIcon>
+            <ListItemText>Cola en proceso</ListItemText>
+          </ListItemButton>
+        </ListItem>
+
         <ListItem disablePadding>
           <ListItemButton onClick={handleClickChats}>
             <ListItemIcon>

@@ -9,6 +9,7 @@ import {
   Box,
   Typography,
   Card,
+  CardActionArea,
 } from "@mui/material";
 import {
   ChatRounded as ChatIcon,
@@ -16,46 +17,87 @@ import {
 } from "@mui/icons-material";
 import { grey } from "@mui/material/colors";
 import CardContent from "@mui/material/CardContent";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 interface UserProps {
   name: string;
   // photo: object;
   lastMsg: string;
+  userId: string;
 }
 
 const ChatMini = (props: UserProps): JSX.Element => {
-  const handleClick = () => {
-    console.log("click");
-  };
   return (
     <Card
       sx={{
-        width: "100%",
-        height: "80px",
+        width: "360px",
+        height: "75px",
         boxShadow: "none",
-
         p: 0,
+        mb: 0.5,
       }}
     >
-      <CardContent
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          boxShadow: "none",
-          width: "100%",
-          height: "80px",
-        }}
+      <CardActionArea
+        sx={{ p: 0, display: "flex", height: "100%" }}
+        component={Link}
+        to={`/chatPrivado/${props.userId}`}
       >
-        <Box alignItems="center" mr={2} onClick={handleClick}>
-          {/* Aquí se tiene que cambiar para colocar la imagen */}
-          <Avatar sx={{ width: "50px", height: "50px" }}>N</Avatar>
-        </Box>
+        <CardContent
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            boxShadow: "none",
+            width: "360px",
+            height: "80px",
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+            p: 0,
+          }}
+        >
+          <Box alignItems="center" mr={2}>
+            {/* Aquí se tiene que cambiar para colocar la imagen */}
+            <Avatar sx={{ width: "50px", height: "50px" }}>N</Avatar>
+          </Box>
 
-        <Box sx={{ display: "flex", flexDirection: "column" }} onClick={handleClick}>
-          <Typography sx={{ fontWeight: 600 }}>{props.name}</Typography>
-          <Typography sx={{ color: grey }}>{props.lastMsg}</Typography>
-        </Box>
-      </CardContent>
+          <Box sx={{ display: "flex", flexDirection: "column", width: "360px" }}>
+            <Box
+              sx={{
+                width: "250px",
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontWeight: 600,
+                }}
+              >
+                {props.name}
+              </Typography>
+            </Box>
+            <Box
+              component="div"
+              sx={{
+                height: "20px",
+                width: "250px",
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+                fontSize: "0.875rem",
+                fontWeight: "700",
+              }}
+            >
+              <Typography
+                sx={{
+                  color: grey,
+                }}
+              >
+                {props.lastMsg}
+              </Typography>
+            </Box>
+          </Box>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 };

@@ -12,7 +12,7 @@ import {
   InputLabel,
   MenuItem,
 } from "@mui/material";
-import { LocationOn as LocIcon } from "@mui/icons-material";
+import { LocationOnRounded as LocIcon } from "@mui/icons-material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router-dom";

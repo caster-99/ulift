@@ -21,16 +21,22 @@ const Chats = (): JSX.Element => {
           </Typography>
 
           <Box display={"flex"} flexDirection="column">
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" />
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" />
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" />
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" />
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" />
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" />
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" />
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" />
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" />
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" />
+            <ChatMini name="Luisa" lastMsg="Holaaaa aaaaaa" userId="1234" />
+            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" userId="5254" />
+            <ChatMini name="Luisa" lastMsg="Holaaaa aaaaaa" userId="53" />
+            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" userId="44587" />
+            <ChatMini name="Luisa" lastMsg="Holaaaa aaaaaa" userId="752" />
+            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" userId="725" />
+            <ChatMini name="Luisa" lastMsg="Holaaaa aaaaaa" userId="727" />
+            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" userId="7837" />
+            <ChatMini name="Luisa" lastMsg="Holaaaa aaaaaa" userId="732" />
+            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" userId="73" />
+            <ChatMini name="Luisa" lastMsg="Holaaaa aaaaaa" userId="793" />
+            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" userId="045" />
+            <ChatMini name="Luisa" lastMsg="Holaaaa aaaaaa" userId="735" />
+            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" userId="9234" />
+            <ChatMini name="Luisa" lastMsg="Holaaaa aaaaaa" userId="70" />
+            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" userId="15" />
           </Box>
         </Container>
       </Box>

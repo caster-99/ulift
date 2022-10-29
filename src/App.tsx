@@ -1,5 +1,7 @@
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import Chat from "./pages/Chats";
+import ChatLayout from "./pages/ChatPrivado";
+import ColaProceso from "./pages/ColaProceso";
 import Favoritos from "./pages/Favoritos";
 import Faq from "./pages/Faq";
 import HistorialColas from "./pages/HistorialColas";
@@ -39,10 +41,12 @@ const App = (): JSX.Element => {
         <Route path="perfil" element={<PerfilUsuario />} />
         <Route path="historial" element={<HistorialColas />} />
         <Route path="favoritos" element={<Favoritos />} />
+        <Route path="colaEnProceso" element={<ColaProceso />} />
         <Route path="chats" element={<Chat />} />
         <Route path="registroVehiculo" element={<RegistroVehiculo />} />
         <Route path="listaEspera" element={<ListaEspera />} />
         <Route path="faq" element={<Faq />} />
+        <Route path="chatPrivado/:userId" element={<ChatLayout />} />
       </Routes>
     </>
   );
