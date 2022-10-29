@@ -102,7 +102,6 @@ export const NavBar = (props: Props) => {
             <ListItemText>Perfil</ListItemText>
           </ListItemButton>
         </ListItem>
-
         <Divider />
         <ListItem disablePadding>
           <ListItemButton onClick={handleClickHome}>
@@ -112,7 +111,6 @@ export const NavBar = (props: Props) => {
             <ListItemText>Inicio</ListItemText>
           </ListItemButton>
         </ListItem>
-
         <ListItem disablePadding>
           <ListItemButton onClick={handleClickHistory}>
             <ListItemIcon>
@@ -121,7 +119,6 @@ export const NavBar = (props: Props) => {
             <ListItemText>Historial</ListItemText>
           </ListItemButton>
         </ListItem>
-
         <ListItem disablePadding>
           <ListItemButton onClick={handleClickFav}>
             <ListItemIcon>
@@ -139,7 +136,6 @@ export const NavBar = (props: Props) => {
             <ListItemText>Cola en proceso</ListItemText>
           </ListItemButton>
         </ListItem>
-
         <ListItem disablePadding>
           <ListItemButton onClick={handleClickChats}>
             <ListItemIcon>
@@ -148,7 +144,6 @@ export const NavBar = (props: Props) => {
             <ListItemText>Chats</ListItemText>
           </ListItemButton>
         </ListItem>
-
         <ListItem disablePadding>
           <ListItemButton onClick={handleClickListaEspera}>
             <ListItemIcon>
@@ -156,26 +151,35 @@ export const NavBar = (props: Props) => {
             </ListItemIcon>
             <ListItemText>Lista de espera</ListItemText>
           </ListItemButton>
-        </ListItem>
-
+        </ListItem>{" "}
         <Divider />
-        <ListItem disablePadding>
-          <ListItemButton onClick={handleClickFaq}>
-            <ListItemIcon>
-              <QuestionIcon />
-            </ListItemIcon>
-            <ListItemText>Preguntas frecuentes</ListItemText>
-          </ListItemButton>
-        </ListItem>
+        <Box
+          sx={{
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}
+        >
+          <Divider />
+          <ListItem disablePadding>
+            <ListItemButton onClick={handleClickFaq}>
+              <ListItemIcon>
+                <QuestionIcon />
+              </ListItemIcon>
+              <ListItemText>Preguntas frecuentes</ListItemText>
+            </ListItemButton>
+          </ListItem>
 
-        <ListItem disablePadding>
-          <ListItemButton onClick={handleClickCloseSesion}>
-            <ListItemIcon>
-              <CloseIcon />
-            </ListItemIcon>
-            <ListItemText>Cerrar Sesión</ListItemText>
-          </ListItemButton>
-        </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton onClick={handleClickCloseSesion}>
+              <ListItemIcon>
+                <CloseIcon />
+              </ListItemIcon>
+              <ListItemText>Cerrar Sesión</ListItemText>
+            </ListItemButton>
+          </ListItem>
+        </Box>
       </List>
     </div>
   );
