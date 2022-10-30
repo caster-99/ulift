@@ -11,6 +11,7 @@ import {
   Card,
   CardActionArea,
   Divider,
+  Grid,
 } from "@mui/material";
 import {
   ChatRounded as ChatIcon,
@@ -43,10 +44,10 @@ const ConductorDisponible = (props: UserProps): JSX.Element => {
   };
 
   return (
-    <>
+    <Grid item xs={12} sm={6} md={4}>
       <Card
         sx={{
-          width: "360px",
+          width: "100%",
           height: "90px",
           boxShadow: "none",
           p: 0,
@@ -60,7 +61,7 @@ const ConductorDisponible = (props: UserProps): JSX.Element => {
             flexDirection: "row",
             alignItems: "center",
             boxShadow: "none",
-            width: "360px",
+            width: "100%",
             height: "80px",
             textOverflow: "ellipsis",
             overflow: "hidden",
@@ -139,7 +140,7 @@ const ConductorDisponible = (props: UserProps): JSX.Element => {
         time={props.time}
         role={props.role}
       />
-    </>
+    </Grid>
   );
 };
 

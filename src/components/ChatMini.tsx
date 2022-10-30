@@ -10,6 +10,7 @@ import {
   Typography,
   Card,
   CardActionArea,
+  Grid,
 } from "@mui/material";
 import {
   ChatRounded as ChatIcon,
@@ -28,77 +29,79 @@ interface UserProps {
 
 const ChatMini = (props: UserProps): JSX.Element => {
   return (
-    <Card
-      sx={{
-        width: "360px",
-        height: "75px",
-        boxShadow: "none",
-        p: 0,
-        mb: 0.5,
-      }}
-    >
-      <CardActionArea
-        sx={{ p: 0, display: "flex", height: "100%" }}
-        component={Link}
-        to={`/chatPrivado/${props.userId}`}
+    <Grid item xs={12} sm={6} md={4}>
+      <Card
+        sx={{
+          width: "100%",
+          height: "75px",
+          boxShadow: "none",
+          p: 0,
+          mb: 0.5,
+        }}
       >
-        <CardContent
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            boxShadow: "none",
-            width: "360px",
-            height: "80px",
-            textOverflow: "ellipsis",
-            overflow: "hidden",
-            p: 0,
-          }}
+        <CardActionArea
+          sx={{ p: 0, display: "flex", height: "100%" }}
+          component={Link}
+          to={`/chatPrivado/${props.userId}`}
         >
-          <Box alignItems="center" mr={2}>
-            {/* Aquí se tiene que cambiar para colocar la imagen */}
-            <Avatar sx={{ width: "50px", height: "50px" }}>N</Avatar>
-          </Box>
+          <CardContent
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              boxShadow: "none",
+              width: "100%",
+              height: "80px",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+              p: 0,
+            }}
+          >
+            <Box alignItems="center" mr={2}>
+              {/* Aquí se tiene que cambiar para colocar la imagen */}
+              <Avatar sx={{ width: "50px", height: "50px" }}>N</Avatar>
+            </Box>
 
-          <Box sx={{ display: "flex", flexDirection: "column", width: "360px" }}>
-            <Box
-              sx={{
-                width: "250px",
-                textOverflow: "ellipsis",
-                overflow: "hidden",
-              }}
-            >
-              <Typography
+            <Box sx={{ display: "flex", flexDirection: "column", width: "360px" }}>
+              <Box
                 sx={{
-                  fontWeight: 600,
+                  width: "250px",
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
                 }}
               >
-                {props.name}
-              </Typography>
-            </Box>
-            <Box
-              component="div"
-              sx={{
-                height: "20px",
-                width: "250px",
-                textOverflow: "ellipsis",
-                overflow: "hidden",
-                fontSize: "0.875rem",
-                fontWeight: "700",
-              }}
-            >
-              <Typography
+                <Typography
+                  sx={{
+                    fontWeight: 600,
+                  }}
+                >
+                  {props.name}
+                </Typography>
+              </Box>
+              <Box
+                component="div"
                 sx={{
-                  color: grey,
+                  height: "20px",
+                  width: "250px",
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  fontSize: "0.875rem",
+                  fontWeight: "700",
                 }}
               >
-                {props.lastMsg}
-              </Typography>
+                <Typography
+                  sx={{
+                    color: grey,
+                  }}
+                >
+                  {props.lastMsg}
+                </Typography>
+              </Box>
             </Box>
-          </Box>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </Grid>
   );
 };
 

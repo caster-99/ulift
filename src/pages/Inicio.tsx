@@ -42,7 +42,7 @@ const Inicio = (): JSX.Element => {
       <NavBar />
       <Fade in timeout={800}>
         <Box>
-          <Container component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <Container maxWidth="md" sx={{ p: 2 }}>
             <Box display={"flex"} flexDirection="column">
               <Typography
                 color="primary"
@@ -54,78 +54,80 @@ const Inicio = (): JSX.Element => {
               >
                 Conductores disponibles
               </Typography>
-              <ConductorDisponible
-                name="Luisa"
-                time="10"
-                seats={2}
-                location="Los olivos"
-                userId="1234"
-                role="Estudiante"
-              />
-              <ConductorDisponible
-                name="Luisa"
-                time="10"
-                seats={2}
-                location="Los olivos"
-                userId="1234"
-                role="Estudiante"
-              />
-              <ConductorDisponible
-                name="Luisa"
-                time="10"
-                seats={2}
-                location="Los olivos"
-                userId="1234"
-                role="Estudiante"
-              />
-              <ConductorDisponible
-                name="Luisa"
-                time="10"
-                seats={2}
-                location="Los olivos"
-                userId="1234"
-                role="Estudiante"
-              />
-              <ConductorDisponible
-                name="Luisa"
-                time="10"
-                seats={2}
-                location="Los olivos"
-                userId="1234"
-                role="Estudiante"
-              />
-              <ConductorDisponible
-                name="Luisa"
-                time="10"
-                seats={2}
-                location="Los olivos"
-                userId="1234"
-                role="Estudiante"
-              />
-              <ConductorDisponible
-                name="Luisa"
-                time="10"
-                seats={2}
-                location="Los olivos"
-                userId="1234"
-                role="Estudiante"
-              />
-              <ConductorDisponible
-                name="Luisa"
-                time="10"
-                seats={2}
-                location="Los olivos"
-                userId="1234"
-                role="Estudiante"
-              />
-              <ConductorDisponible
-                name="Luisa"
-                time="10"
-                seats={2}
-                location="Los olivos"
-                userId="1234"
-                role="Estudiante"
-              />
+              <Grid container spacing={{ xs: 2, md: 3 }}>
+                <ConductorDisponible
+                  name="Luisa"
+                  time="10"
+                  seats={2}
+                  location="Los olivos"
+                  userId="1234"
+                  role="Estudiante"
+                />
+                <ConductorDisponible
+                  name="Luisa"
+                  time="10"
+                  seats={2}
+                  location="Los olivos"
+                  userId="1234"
+                  role="Estudiante"
+                />
+                <ConductorDisponible
+                  name="Luisa"
+                  time="10"
+                  seats={2}
+                  location="Los olivos"
+                  userId="1234"
+                  role="Estudiante"
+                />
+                <ConductorDisponible
+                  name="Luisa"
+                  time="10"
+                  seats={2}
+                  location="Los olivos"
+                  userId="1234"
+                  role="Estudiante"
+                />
+                <ConductorDisponible
+                  name="Luisa"
+                  time="10"
+                  seats={2}
+                  location="Los olivos"
+                  userId="1234"
+                  role="Estudiante"
+                />
+                <ConductorDisponible
+                  name="Luisa"
+                  time="10"
+                  seats={2}
+                  location="Los olivos"
+                  userId="1234"
+                  role="Estudiante"
+                />
+                <ConductorDisponible
+                  name="Luisa"
+                  time="10"
+                  seats={2}
+                  location="Los olivos"
+                  userId="1234"
+                  role="Estudiante"
+                />
+                <ConductorDisponible
+                  name="Luisa"
+                  time="10"
+                  seats={2}
+                  location="Los olivos"
+                  userId="1234"
+                  role="Estudiante"
+                />
+                <ConductorDisponible
+                  name="Luisa"
+                  time="10"
+                  seats={2}
+                  location="Los olivos"
+                  userId="1234"
+                  role="Estudiante"
+                />
+              </Grid>
             </Box>
             <SpeedDial
               ariaLabel="acciones"
