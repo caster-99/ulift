@@ -1,5 +1,4 @@
 import { Box, Container, Fade, Typography } from "@mui/material";
-import React from "react";
 import { NavBar } from "../components/NavBar";
 
 const ColaProceso = (): JSX.Element => {
@@ -11,13 +10,16 @@ const ColaProceso = (): JSX.Element => {
           <Container maxWidth="md" sx={{ p: 3 }}>
             <Typography
               color="primary"
-              textAlign="center"
+              textAlign="left"
               fontSize={{ xs: 27, md: 30 }}
               fontWeight={600}
               mb={{ xs: 2, sm: 3 }}
+              mt={-5}
             >
               Cola en proceso
             </Typography>
+            {/* Si no hay nada en proceso aún */}
+            <Typography fontSize={{ xs: 14, md: 17 }}>No hay ninguna cola en proceso</Typography>
           </Container>
         </Box>
       </Fade>

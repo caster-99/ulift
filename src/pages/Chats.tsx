@@ -1,5 +1,4 @@
 import { Box, Container, Typography } from "@mui/material";
-import React from "react";
 import { NavBar } from "../components/NavBar";
 import ChatMini from "../components/ChatMini";
 
@@ -19,7 +18,8 @@ const Chats = (): JSX.Element => {
           >
             Chats
           </Typography>
-
+          {/* Si no hay ningún chat aún */}
+          <Typography fontSize={{ xs: 14, md: 17 }}>No has iniciado ningún chat</Typography>
           <Box display={"flex"} flexDirection="column">
             <ChatMini name="Luisa" lastMsg="Holaaaa aaaaaa" userId="1234" />
             <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" userId="5254" />

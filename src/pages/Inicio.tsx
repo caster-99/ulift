@@ -5,9 +5,8 @@ import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import {
-  ArrowCircleUpRounded as OfrecerColaIcon,
-  ArrowCircleDownRounded as PedirColaIcon,
-  Tab,
+  DriveEtaRounded as OfrecerColaIcon,
+  HailRounded as PedirColaIcon,
 } from "@mui/icons-material";
 
 import { useState } from "react";
@@ -53,6 +52,10 @@ const Inicio = (): JSX.Element => {
                 mt={-5}
               >
                 Conductores disponibles
+              </Typography>
+              {/* Si no hay nada en proceso aún */}
+              <Typography fontSize={{ xs: 14, md: 17 }}>
+                No hay ningún conductor disponible
               </Typography>
               <Grid container spacing={{ xs: 2, md: 3 }}>
                 <ConductorDisponible
