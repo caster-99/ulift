@@ -1,5 +1,17 @@
 import { SpeedDial } from "@mui/lab";
-import { Box, Container, SpeedDialAction, SpeedDialIcon, Typography } from "@mui/material";
+import { 
+  Box, 
+  Container, 
+  SpeedDialAction, 
+  SpeedDialIcon, 
+  Typography, 
+  Tab,
+} from "@mui/material";
+import {
+  TabContext,
+  TabList,
+  TabPanel,
+} from "@mui/lab";
 import Fade from "@mui/material/Fade";
 import React, { useState } from "react";
 import { NavBar } from "../components/NavBar";
@@ -28,13 +40,33 @@ const Favoritos = (): JSX.Element => {
   const closeConductorFavoritoDialog = () => {
     setDialogConductorFavoritoOpen(false);
   };
+
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
   return (
     <Box>
       <NavBar />
+      <TabContext value={value}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <TabList onChange={handleChange} variant="fullWidth">
+            <Tab label="Conductores" value="1" />
+            <Tab label="Pasajeros" value="2" />
+          </TabList>
+        </Box>
+        <TabPanel value="1">
+          <ListaUsuarios/>
+        </TabPanel>
+        <TabPanel value="2">
+          <ListaUsuarios/>
+        </TabPanel>
+      </TabContext>
       <Fade in timeout={800}>
         <Box>
+          
+
           <Container maxWidth="md" sx={{ p: 3 }}>
-            <Typography
+            {/* <Typography
               color="primary"
               textAlign="center"
               fontSize={{ xs: 27, md: 30 }}
@@ -42,7 +74,10 @@ const Favoritos = (): JSX.Element => {
               mb={{ xs: 2, sm: 3 }}
             >
               Favoritos
-            </Typography>{" "}
+            </Typography>{" "} */}
+
+            
+
             <SpeedDial
               ariaLabel="acciones"
               sx={{ position: "fixed", bottom: "8%", right: "5%" }}
