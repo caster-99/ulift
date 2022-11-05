@@ -2,31 +2,31 @@ import { SpeedDial } from "@mui/lab";
 import { Box, Container, SpeedDialAction, SpeedDialIcon, Typography } from "@mui/material";
 import Fade from "@mui/material/Fade";
 import React, { useState } from "react";
-import BuscarColaDialogo from "../components/BuscarColaDialogo";
 import { NavBar } from "../components/NavBar";
-import OfrecerColaDialogo from "../components/OfrecerColaDialogo";
+import ConductoresFavoritosDialogo from "../components/ConductoresFavoritosDialogo";
+import PasajeroFavoritoDialogo from "../components/PasajeroFavoritoDialogo";
 import {
-  ArrowCircleUpRounded as OfrecerColaIcon,
-  ArrowCircleDownRounded as PedirColaIcon,
+  HailRounded as PasajeroFavoritoIcon,
+  DriveEtaRounded as ConductorFavoritoIcon,
 } from "@mui/icons-material";
 
 const Favoritos = (): JSX.Element => {
-  const [isDialogOfrecerOpen, setDialogOfrecerOpen] = useState(false);
-  const [isDialogPedirOpen, setDialogPedirOpen] = useState(false);
-  const openOfrecerDialog = () => {
-    setDialogOfrecerOpen(true);
+  const [isDialogPasajeroFavoritoOpen, setDialogPasajeroFavoritoOpen] = useState(false);
+  const [isDialogConductorFavoritoOpen, setDialogConductorFavoritoOpen] = useState(false);
+  const openPasajeroFavoritoDialog = () => {
+    setDialogPasajeroFavoritoOpen(true);
   };
 
-  const closeOfrecerDialog = () => {
-    setDialogOfrecerOpen(false);
+  const closePasajeroFavoritoDialog = () => {
+    setDialogPasajeroFavoritoOpen(false);
   };
 
-  const openPedirDialog = () => {
-    setDialogPedirOpen(true);
+  const openConductorFavoritoDialog = () => {
+    setDialogConductorFavoritoOpen(true);
   };
 
-  const closePedirDialog = () => {
-    setDialogPedirOpen(false);
+  const closeConductorFavoritoDialog = () => {
+    setDialogConductorFavoritoOpen(false);
   };
   return (
     <Box>
@@ -52,11 +52,26 @@ const Favoritos = (): JSX.Element => {
                 size: "large",
               }}
             >
-              <SpeedDialAction icon={<PedirColaIcon />} onClick={openPedirDialog} />
-              {/* Aquí llamar a los dialogos correspondientes */}
-              <BuscarColaDialogo isOpen={isDialogPedirOpen} closeDialog={closePedirDialog} />
-              <SpeedDialAction icon={<OfrecerColaIcon />} onClick={openOfrecerDialog} />
-              <OfrecerColaDialogo isOpen={isDialogOfrecerOpen} closeDialog={closeOfrecerDialog} />
+              <SpeedDialAction
+                icon={<ConductorFavoritoIcon />}
+                onClick={openConductorFavoritoDialog}
+                tooltipTitle="Conductor"
+                tooltipOpen
+              />
+              <ConductoresFavoritosDialogo
+                isOpen={isDialogConductorFavoritoOpen}
+                closeDialog={closeConductorFavoritoDialog}
+              />
+              <SpeedDialAction
+                icon={<PasajeroFavoritoIcon />}
+                onClick={openPasajeroFavoritoDialog}
+                tooltipTitle="Pasajero"
+                tooltipOpen
+              />
+              <PasajeroFavoritoDialogo
+                isOpen={isDialogPasajeroFavoritoOpen}
+                closeDialog={closePasajeroFavoritoDialog}
+              />
             </SpeedDial>
           </Container>
         </Box>
