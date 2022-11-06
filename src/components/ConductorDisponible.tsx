@@ -44,7 +44,7 @@ const ConductorDisponible = (props: UserProps): JSX.Element => {
   };
 
   return (
-    <Grid item xs={16} sm={8} md={6}>
+    <Grid item xs={12} sm={6} md={4}>
       <Card
         sx={{
           width: "100%",

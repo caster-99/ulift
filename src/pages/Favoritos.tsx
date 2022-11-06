@@ -38,33 +38,33 @@ const Favoritos = (): JSX.Element => {
   return (
     <Box>
       <NavBar />
-      <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList onChange={handleChange} variant="fullWidth">
-            <Tab label="Conductores" value="1" />
-            <Tab label="Pasajeros" value="2" />
-          </TabList>
-        </Box>
-        <TabPanel value="1">
-          <ListaUsuarios />
-        </TabPanel>
-        <TabPanel value="2">
-          <ListaUsuarios />
-        </TabPanel>
-      </TabContext>
       <Fade in timeout={800}>
         <Box>
-          <Container maxWidth="md" sx={{ p: 3 }}>
-            {/* <Typography
+          <Container maxWidth="md">
+            <Typography
               color="primary"
-              textAlign="center"
-              fontSize={{ xs: 27, md: 30 }}
+              textAlign="left"
+              fontSize={{ xs: 24 }}
               fontWeight={600}
               mb={{ xs: 2, sm: 3 }}
+              mt={-2}
             >
               Favoritos
-            </Typography>{" "} */}
-
+            </Typography>
+            <TabContext value={value}>
+              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                <TabList onChange={handleChange} variant="fullWidth">
+                  <Tab label="Conductores" value="1" />
+                  <Tab label="Pasajeros" value="2" />
+                </TabList>
+              </Box>
+              <TabPanel value="1">
+                <ListaUsuarios />
+              </TabPanel>
+              <TabPanel value="2">
+                <ListaUsuarios />
+              </TabPanel>
+            </TabContext>
             <SpeedDial
               ariaLabel="acciones"
               sx={{ position: "fixed", bottom: "8%", right: "5%" }}

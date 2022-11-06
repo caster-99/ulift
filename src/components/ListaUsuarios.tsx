@@ -1,25 +1,60 @@
 import React from "react";
-import { 
-    Box,
-
-} from "@mui/material";
+import { Box } from "@mui/material";
 import UserListItem from "../components/UserListItem";
 
 const ListaUsuarios = (): JSX.Element => {
-    return (
-        <Box display={"flex"} flexDirection="column">
-            <UserListItem name="Maria Guerra" userId="1"/>
-            <UserListItem name="Maria Guerra" userId="2"/>
-            <UserListItem name="Maria Guerra" userId="3"/>
-            <UserListItem name="Maria Guerra" userId="4"/>
-            <UserListItem name="Maria Guerra" userId="5"/>
-            <UserListItem name="Maria Guerra" userId="6"/>
-            <UserListItem name="Maria Guerra" userId="7"/>
-            <UserListItem name="Maria Guerra" userId="8"/>
-            <UserListItem name="Maria Guerra" userId="9"/>
-            
-        </Box>
-    );
+  return (
+    <Box display={"flex"} flexDirection="column">
+      <UserListItem
+        name="Luisa"
+        time="10"
+        seats={2}
+        location="Los olivos"
+        userId="1234"
+        role="Estudiante"
+      />{" "}
+      <UserListItem
+        name="Luisa"
+        time="10"
+        seats={2}
+        location="Los olivos"
+        userId="1234"
+        role="Estudiante"
+      />{" "}
+      <UserListItem
+        name="Luisa"
+        time="10"
+        seats={2}
+        location="Los olivos"
+        userId="1234"
+        role="Estudiante"
+      />{" "}
+      <UserListItem
+        name="Luisa"
+        time="10"
+        seats={2}
+        location="Los olivos"
+        userId="1234"
+        role="Estudiante"
+      />{" "}
+      <UserListItem
+        name="Luisa"
+        time="10"
+        seats={2}
+        location="Los olivos"
+        userId="1234"
+        role="Estudiante"
+      />{" "}
+      <UserListItem
+        name="Luisa"
+        time="10"
+        seats={2}
+        location="Los olivos"
+        userId="1234"
+        role="Estudiante"
+      />
+    </Box>
+  );
 };
 
 export default ListaUsuarios;
