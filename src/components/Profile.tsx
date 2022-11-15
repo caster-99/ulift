@@ -6,7 +6,7 @@ interface UserProps {
   photo: object;
   rating: number;
   rides: number;
-  email: string;
+  id: undefined | string;
 }
 const Profile = (props: UserProps): JSX.Element => {
   return (

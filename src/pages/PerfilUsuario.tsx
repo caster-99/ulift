@@ -30,7 +30,7 @@ const PerfilUsuario = (): JSX.Element => {
       <NavBar />
       <Box justifyContent="space-between" flexDirection="column" flexGrow={1}>
         <Container maxWidth="md" sx={{ p: 2 }}>
-          <Profile name="Usuario" email="user@ucab.edu.ve" photo={{ logo }} rides={2} rating={3} />
+          <Profile name="Usuario" id="user@ucab.edu.ve" photo={{ logo }} rides={2} rating={3} />
         </Container>
         <Box
           sx={{

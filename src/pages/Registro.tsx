@@ -24,8 +24,9 @@ import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import PasswordField from "../components/PasswordField";
 import Link from "../components/Link";
-import { useId } from "react";
+import { useId, useState } from "react";
 import Select from "../components/Select";
+import instance from "../api/api_instance";
 
 interface Values {
   name: string;
@@ -48,7 +49,6 @@ const initialValues: Values = {
   condiciones: false,
   role: "",
 };
-const SUPPORTED_FORMATS = ["image/jpg", "image/png", "image/jpeg", "image/gif"];
 const schema = yup.object().shape({
   name: yup.string().required("Ingresa tu nombre, por favor"),
   sex: yup.string().required("Selecciona tu género, por favor"),
@@ -75,20 +75,12 @@ const schema = yup.object().shape({
 
 const Registro = (): JSX.Element => {
   const navigate = useNavigate();
+  const [userData, setUserData] = useState({});
+
   const { enqueueSnackbar } = useSnackbar();
   const labelId = useId();
 
-  const onSubmit = async (user: Values, { setSubmitting }: FormikHelpers<Values>) => {
-    //    setSubmitting(true);
-
-    // const { repeatPassword, ...userData } = user;
-
-    // const error = await signUp({ ...userData});
-
-    // if (error) {
-    //   setSubmitting(false);
-    //   return enqueueSnackbar(error, { variant: "error" });
-    // }
+  const onSubmit = async (user: Values) => {
     enqueueSnackbar("¡Ahora puedes iniciar sesión!", { variant: "success" });
     navigate(`/login`);
   };
@@ -151,9 +143,6 @@ const Registro = (): JSX.Element => {
               <MenuItem value="Personal Servicios Generales">Personal Servicios Generales</MenuItem>
             </Select>
 
-            {/* <Button variant="contained" component="label" startIcon={<AddPhotoIcon />}>
-              <input accept="image/*" type="file" name="photo" />
-            </Button> */}
             <input type={"file"} name="photo" required />
 
             <label style={{ fontFamily: "Quicksand", fontSize: 12, fontWeight: 600 }}>

@@ -11,6 +11,7 @@ import {
   DriveEtaRounded as ConductorFavoritoIcon,
 } from "@mui/icons-material";
 import ListaUsuarios from "../components/ListaUsuarios";
+import ListaConductores from "../components/ListaConductores";
 
 const Favoritos = (): JSX.Element => {
   const [isDialogPasajeroFavoritoOpen, setDialogPasajeroFavoritoOpen] = useState(false);
@@ -59,7 +60,7 @@ const Favoritos = (): JSX.Element => {
                 </TabList>
               </Box>
               <TabPanel value="1">
-                <ListaUsuarios />
+                <ListaConductores />
               </TabPanel>
               <TabPanel value="2">
                 <ListaUsuarios />

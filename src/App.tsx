@@ -14,6 +14,7 @@ import Registro from "./pages/Registro";
 import RegistroVehiculo from "./pages/RegistroVehiculo";
 import Auth from "./components/Auth";
 import UnAuth from "./components/UnAuth";
+import PerfilExterno from "./pages/PerfilExterno";
 
 const App = (): JSX.Element => {
   return (
@@ -47,6 +48,7 @@ const App = (): JSX.Element => {
         <Route path="listaEspera" element={<ListaEspera />} />
         <Route path="faq" element={<Faq />} />
         <Route path="chatPrivado/:userId" element={<ChatLayout />} />
+        <Route path="perfilExterno/:userId" element={<PerfilExterno />} />
       </Routes>
     </>
   );
