@@ -1,7 +1,5 @@
 import {
   Box,
-  Button,
-  ButtonGroup,
   Divider,
   FormControl,
   FormControlLabel,
@@ -13,12 +11,9 @@ import {
   Typography,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import {
-  AddAPhotoRounded as AddPhotoIcon,
-  ArrowBackRounded as ArrowBackRoundedIcon,
-} from "@mui/icons-material";
-import { Field, Form, Formik, FormikHelpers } from "formik";
-import { CheckboxWithLabel, RadioGroup, TextField } from "formik-mui";
+import { ArrowBackRounded as ArrowBackRoundedIcon } from "@mui/icons-material";
+import { Field, Form, Formik } from "formik";
+import { RadioGroup, TextField } from "formik-mui";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
@@ -26,7 +21,6 @@ import PasswordField from "../components/PasswordField";
 import Link from "../components/Link";
 import { useId, useState } from "react";
 import Select from "../components/Select";
-import instance from "../api/api_instance";
 
 interface Values {
   name: string;

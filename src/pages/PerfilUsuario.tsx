@@ -17,14 +17,38 @@ import {
   AddLocationAltRounded as LocationIcon,
   RampLeftRounded as RutaIcon,
 } from "@mui/icons-material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavBar } from "../components/NavBar";
 import Profile from "../components/Profile";
 import logo from "../assets/logo512.png";
 import { useNavigate } from "react-router-dom";
+import api_instance from "../api/api_instance";
 
 const PerfilUsuario = (): JSX.Element => {
   const navigate = useNavigate();
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    const getUser = () => {
+      api_instance
+        .get("api/user/profile", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then(function (response) {
+          if (response.status === 200) {
+            // const data = response.json();
+            // setUser(data);
+            console.log(response);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+    getUser();
+  }, []);
+
   return (
     <Box>
       <NavBar />
