@@ -23,30 +23,35 @@ import Profile from "../components/Profile";
 import logo from "../assets/logo512.png";
 import { useNavigate } from "react-router-dom";
 import api_instance from "../api/api_instance";
+import { User } from "../types/index";
+
+const usuario: User = {
+  name: "",
+  id: "",
+  email: "",
+  role: "",
+  genre: "",
+};
 
 const PerfilUsuario = (): JSX.Element => {
   const navigate = useNavigate();
-  const [user, setUser] = useState({});
+  const [userInfo, setUser] = useState({});
+  const url = "https://ulift-backend-production.up.railway.app/api/user/profile";
+
+  const fetchUser = async () => {
+    const token = localStorage.getItem("token");
+    const response = await api_instance.get(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    setUser(response.data.user);
+    console.log(response.data.user.nameU);
+    usuario.name = response.data.user.nameU + " " + response.data.user.lastname;
+    usuario.id = response.data.user.id;
+    usuario.email = response.data.user.email;
+  };
+
   useEffect(() => {
-    const getUser = () => {
-      api_instance
-        .get("api/user/profile", {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        })
-        .then(function (response) {
-          if (response.status === 200) {
-            // const data = response.json();
-            // setUser(data);
-            console.log(response);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    };
-    getUser();
+    fetchUser();
   }, []);
 
   return (
@@ -54,7 +59,13 @@ const PerfilUsuario = (): JSX.Element => {
       <NavBar />
       <Box justifyContent="space-between" flexDirection="column" flexGrow={1}>
         <Container maxWidth="md" sx={{ p: 2 }}>
-          <Profile name="Usuario" id="user@ucab.edu.ve" photo={{ logo }} rides={2} rating={3} />
+          <Profile
+            name={usuario.name}
+            id="user@ucab.edu.ve"
+            photo={{ logo }}
+            rides={2}
+            rating={3}
+          />
         </Container>
         <Box
           sx={{
@@ -67,6 +78,7 @@ const PerfilUsuario = (): JSX.Element => {
           <Divider />
           <Card
             sx={{
+              display: "none",
               width: "100%",
               height: "80px",
               boxShadow: "none",

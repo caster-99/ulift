@@ -44,7 +44,9 @@ const InicioSesion = (): JSX.Element => {
         console.log(response);
         if (response.status === 200) {
           enqueueSnackbar("Inicio de sesión exitoso", { variant: "success" });
-          localStorage.setItem(response.data.token, response.data.token);
+          const { token } = response.data;
+          localStorage.setItem("token", token);
+          console.log("token: " + token);
           navigate(`/`);
         } else {
           enqueueSnackbar("Error al iniciar sesión", { variant: "error" });
