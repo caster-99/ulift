@@ -34,7 +34,7 @@ interface Values {
   condiciones: boolean;
   role: string;
   emergencyName: string;
-  emergencyPhone: string;
+  // emergencyPhone: string;
 }
 
 const initialValues: Values = {
@@ -48,7 +48,7 @@ const initialValues: Values = {
   condiciones: false,
   role: "",
   emergencyName: "",
-  emergencyPhone: "",
+  // emergencyPhone: "",
 };
 const validationSchema = yup.object().shape({
   name: yup.string().required("Ingresa tu nombre, por favor"),
@@ -73,10 +73,10 @@ const validationSchema = yup.object().shape({
     ),
   photo: yup.mixed().required("Ingresa una foto, por favor"),
   condiciones: yup.boolean().oneOf([true], "Debes aceptar los términos y condiciones"),
-  emergencyName: yup.string().required("Ingresa el nombre de tu contacto de emergencia, por favor"),
-  emergencyPhone: yup
-    .string()
-    .required("Ingresa el número de teléfono de tu contacto de emergencia, por favor"),
+  emergencyName: yup.string().required("Ingresa tu nombre, por favor"),
+  // emergencyPhone: yup
+  //   .string()
+  //   .required("Ingresa el número de teléfono de tu contacto de emergencia, por favor"),
 });
 
 const Registro = (): JSX.Element => {
@@ -86,25 +86,53 @@ const Registro = (): JSX.Element => {
 
   // Al presionar el botón de registrarse
   // se ejecuta esta función para llamar a la API
-  const onSubmit = async (user: Values, { setSubmitting }: FormikHelpers<Values>) => {
-    console.log("Registro");
+  const registrar = async (user: Values, { setSubmitting }: FormikHelpers<Values>) => {
     setSubmitting(true);
 
-    // api_instance({
-    //   method: "post",
-    //   url: "api/login",
-    //   data: user,
-    //   headers: { "Content-Type": "multipart/form-data" },
-    // })
-    //   .then((res) => {
-    //     console.log(res);
-    //     enqueueSnackbar("¡Ahora puedes iniciar sesión!", { variant: "success" });
-    //     navigate(`/login`);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     enqueueSnackbar("¡Algo salió mal!", { variant: "error" });
-    //   });
+    const formData = {
+      name: user.name,
+      lastname: user.lastName,
+      gender: user.sex,
+      email: user.email,
+      password: user.password,
+      role: user.role,
+      emergencyContact: user.emergencyName,
+      photo: user.photo,
+    };
+
+    const json = JSON.stringify(formData);
+    const blob = new Blob([json], {
+      type: "application/json",
+    });
+
+    const data = new FormData();
+    data.append("document", blob);
+    console.log(json);
+    // formData.append("name", user.name);
+    // formData.append("lastName", user.lastName);
+    // formData.append("email", user.email);
+    // formData.append("password", user.password);
+    // formData.append("role", user.role);
+    // formData.append("gender", user.sex);
+    // formData.append("emergencyName", user.emergencyName);
+    //   formData.append("emergencyPhone", user.emergencyPhone);
+    //   formData.append("file", user.photo);
+
+    api_instance({
+      method: "post",
+      url: "signup",
+      data: data,
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then((res) => {
+        console.log(res);
+        enqueueSnackbar("¡Ahora puedes iniciar sesión!", { variant: "success" });
+        navigate(`/login`);
+      })
+      .catch((err) => {
+        console.log(err);
+        enqueueSnackbar("¡Algo salió mal!", { variant: "error" });
+      });
   };
 
   return (
@@ -123,7 +151,11 @@ const Registro = (): JSX.Element => {
         Ingresa tus datos para continuar
       </Typography>
 
-      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+      <Formik
+        initialValues={initialValues}
+        //   validationSchema={validationSchema}
+        onSubmit={registrar}
+      >
         {({ isSubmitting }) => (
           <Stack component={Form} spacing={2}>
             <Field component={TextField} name="name" label="Nombres" required />
@@ -167,7 +199,7 @@ const Registro = (): JSX.Element => {
             </Select>
             <Field
               component={TextField}
-              name="contactoEmergencia"
+              name="emergencyName"
               label="Nombre de contacto de emergencia"
               required
             />
@@ -187,13 +219,7 @@ const Registro = (): JSX.Element => {
               siendo esta un proyecto independiente de la institución.
             </label>
 
-            <LoadingButton
-              type="submit"
-              loading={isSubmitting}
-              loadingIndicator="Procesando..."
-              variant="contained"
-              color="primary"
-            >
+            <LoadingButton type="submit" loading={isSubmitting} variant="contained">
               Registrarse
             </LoadingButton>
             <Typography align="center">
