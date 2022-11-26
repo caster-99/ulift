@@ -83,11 +83,11 @@ const RegistroVehiculo = (): JSX.Element => {
             alignContent: "center",
           }}
         >
-          <Container 
-            maxWidth={false} 
-            sx={{ 
+          <Container
+            maxWidth={false}
+            sx={{
               maxWidth: 450,
-              mb: 3, 
+              mb: 3,
               mt: 12,
               position: "relative",
             }}
@@ -108,7 +108,12 @@ const RegistroVehiculo = (): JSX.Element => {
           </Container>
         </Box>
       </Fade>
-      <Box component="img" src={car} alt="car" sx={{ width: 400, position: "absolute", bottom: 0, right: 0, }} />
+      <Box
+        component="img"
+        src={car}
+        alt="car"
+        sx={{ width: 400, position: "absolute", bottom: 0, right: 0 }}
+      />
     </Box>
   );
 };
