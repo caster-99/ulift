@@ -89,34 +89,46 @@ const Registro = (): JSX.Element => {
   const registrar = async (user: Values, { setSubmitting }: FormikHelpers<Values>) => {
     setSubmitting(true);
 
-    const formData = {
-      name: user.name,
-      lastname: user.lastName,
-      gender: user.sex,
-      email: user.email,
-      password: user.password,
-      role: user.role,
-      emergencyContact: user.emergencyName,
-      photo: user.photo,
-    };
-
-    const json = JSON.stringify(formData);
-    const blob = new Blob([json], {
-      type: "application/json",
-    });
-
     const data = new FormData();
-    data.append("document", blob);
-    console.log(json);
-    // formData.append("name", user.name);
-    // formData.append("lastName", user.lastName);
-    // formData.append("email", user.email);
-    // formData.append("password", user.password);
-    // formData.append("role", user.role);
-    // formData.append("gender", user.sex);
-    // formData.append("emergencyName", user.emergencyName);
-    //   formData.append("emergencyPhone", user.emergencyPhone);
-    //   formData.append("file", user.photo);
+
+    data.append('email', user.email);
+    data.append('password', user.password);
+    data.append('name', user.name);
+    data.append('lastname', user.lastName);
+    data.append('gender', user.sex);
+    data.append('role', 'E');
+    data.append('emergencyContact', user.emergencyName);
+    data.append("photo", user.photo );
+    console.log(user);
+
+    // const formData = {
+    //   name: user.name,
+    //   lastname: user.lastName,
+    //   gender: user.sex,
+    //   email: user.email,
+    //   password: user.password,
+    //   role: user.role,
+    //   emergencyContact: user.emergencyName,
+    //   photo: user.photo,
+    // };
+
+    // const json = JSON.stringify(formData);
+    // const blob = new Blob([json], {
+    //   type: "application/json",
+    // });
+
+    // const data = new FormData();
+    // data.append("document", blob);
+    // console.log(json);
+    // // formData.append("name", user.name);
+    // // formData.append("lastName", user.lastName);
+    // // formData.append("email", user.email);
+    // // formData.append("password", user.password);
+    // // formData.append("role", user.role);
+    // // formData.append("gender", user.sex);
+    // // formData.append("emergencyName", user.emergencyName);
+    // //   formData.append("emergencyPhone", user.emergencyPhone);
+    // //   formData.append("file", user.photo);
 
     api_instance({
       method: "post",
@@ -164,13 +176,13 @@ const Registro = (): JSX.Element => {
               <FormLabel id={labelId}>Género</FormLabel>
               <Field component={RadioGroup} name="sex" row aria-labelledby={labelId}>
                 <FormControlLabel
-                  value="male"
+                  value="M"
                   control={<Radio disabled={isSubmitting} />}
                   label="Masculino"
                   disabled={isSubmitting}
                 />
                 <FormControlLabel
-                  value="female"
+                  value="F"
                   control={<Radio disabled={isSubmitting} />}
                   label="Femenino"
                   disabled={isSubmitting}
@@ -188,10 +200,10 @@ const Registro = (): JSX.Element => {
               required
             />
             <Select variant="outlined" displayEmpty required name="role">
-              <MenuItem sx={{ color: "text.secondary" }} value="">
+              <MenuItem sx={{ color: "text.secondary" }}>
                 Indique su rol en la UCAB
               </MenuItem>
-              <Divider />
+              {/* <Divider /> */}
               <MenuItem value="Estudiante">Estudiante</MenuItem>
               <MenuItem value="Docente">Docente</MenuItem>
               <MenuItem value="Personal Administrativo">Personal Administrativo</MenuItem>
