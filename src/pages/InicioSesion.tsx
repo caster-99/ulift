@@ -36,8 +36,9 @@ const InicioSesion = (): JSX.Element => {
   const onSubmit = async (user: Values, { setSubmitting }: FormikHelpers<Values>) => {
     setSubmitting(true);
 
-    const url = "https://ulift-backend-production.up.railway.app/api/";
+    //const url = "https://ulift-backend-production.up.railway.app/api/";
 
+    const url = "http://localhost:3000/api/";
     return api_instance
       .post(url + "login", user)
       .then((response) => {
@@ -74,7 +75,13 @@ const InicioSesion = (): JSX.Element => {
 
             <Field component={PasswordField} name="password" label="Contraseña" required />
 
-            <LoadingButton type="submit" loading={isSubmitting} variant="contained" color="primary">
+            <LoadingButton
+              type="submit"
+              loading={isSubmitting}
+              loadingIndicator="Procesando..."
+              variant="contained"
+              color="primary"
+            >
               Ingresar
             </LoadingButton>
             <Typography align="center">

@@ -16,6 +16,11 @@ import {
   EditRounded as EditIcon,
   AddLocationAltRounded as LocationIcon,
   RampLeftRounded as RutaIcon,
+  EmailRounded as EmailIcon,
+  PhoneRounded as PhoneIcon,
+  PersonRounded as PersonIcon,
+  BadgeRounded as BadgeIcon,
+  Email,
 } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { NavBar } from "../components/NavBar";
@@ -66,6 +71,68 @@ const PerfilUsuario = (): JSX.Element => {
             rides={2}
             rating={3}
           />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                mt: 2,
+                ml: 4,
+                mb: 2,
+              }}
+            >
+              <EmailIcon color="primary" />
+              <Typography ml={2}>
+                <b>Correo electrónico:</b> {usuario.name}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                ml: 4,
+                mb: 2,
+              }}
+            >
+              <BadgeIcon color="primary" />
+              <Typography ml={2}>
+                <b>Rol:</b> {usuario.name}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                ml: 4,
+                mb: 2,
+              }}
+            >
+              <PersonIcon color="primary" />
+              <Typography ml={2}>
+                <b>Contacto de emergencia:</b> {usuario.name}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                ml: 4,
+                mb: 2,
+              }}
+            >
+              <PhoneIcon color="primary" />
+              <Typography ml={2}>
+                <b>Teléfono de emergencia:</b> {usuario.name}
+              </Typography>
+            </Box>
+          </Box>
         </Container>
         <Box
           sx={{
