@@ -1,5 +1,4 @@
 import {
-  AutocompleteRenderInputParams,
   Box,
   Divider,
   FormControl,
@@ -14,8 +13,8 @@ import {
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { ArrowBackRounded as ArrowBackRoundedIcon } from "@mui/icons-material";
-import { Field, Form, Formik, FormikHelpers, useFormik, useFormikContext } from "formik";
-import { Autocomplete, RadioGroup, TextField } from "formik-mui";
+import { Field, Form, Formik, FormikHelpers } from "formik";
+import { Autocomplete, AutocompleteRenderInputParams, RadioGroup, TextField } from "formik-mui";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
@@ -24,8 +23,6 @@ import Link from "../components/Link";
 import { useId } from "react";
 import Select from "../components/Select";
 import api_instance from "../api/api_instance";
-import car from "../assets/luisa.jpeg";
-import { render } from "react-dom";
 import axios from "axios";
 
 interface Values {
@@ -71,7 +68,11 @@ const validationSchema = yup.object().shape({
   role: yup
     .string()
     .required("Selecciona tu rol en la UCAB, por favor")
-    .typeError("Selecciona tu rol en la UCAB, por favor"),
+    .test(
+      "role",
+      "Selecciona tu rol en la UCAB, por favor",
+      (value) => value !== "Indique su rol en la UCAB"
+    ),
   photo: yup.mixed().required("Ingresa una foto, por favor"),
   condiciones: yup.boolean().oneOf([true], "Debes aceptar los términos y condiciones"),
   emergencyName: yup.string().required("Ingresa tu nombre, por favor"),
@@ -80,26 +81,24 @@ const validationSchema = yup.object().shape({
     .required("Ingresa el número de teléfono de tu contacto de emergencia, por favor"),
 });
 
-const optionsUser = ["Estudiante", "Docente", "Trabajador"];
-
 const Registro = (): JSX.Element => {
   const labelId = useId();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const formikProps = useFormikContext();
+  const data = new FormData();
+  const optionsUser = ["Estudiante", "Docente", "Trabajador"];
 
   // Al presionar el botón de registrarse
   // se ejecuta esta función para llamar a la API
   const registrar = async (user: Values, { setSubmitting }: FormikHelpers<Values>) => {
     setSubmitting(true);
-    const file = document.getElementById("photo");
-    const data = new FormData();
 
     data.append("email", user.email);
     data.append("password", user.password);
     data.append("name", user.name);
     data.append("lastname", user.lastName);
     data.append("gender", user.sex);
+
     if (user.role === "Estudiante") {
       data.append("role", "E");
     } else if (user.role === "Docente") {
@@ -110,7 +109,8 @@ const Registro = (): JSX.Element => {
 
     data.append("emergencyContact", user.emergencyPhone);
     data.append("emergencyName", user.emergencyName);
-    data.append("photo", car, "luisa.jpeg");
+
+    console.log(user);
 
     const config = {
       method: "post",
@@ -124,9 +124,12 @@ const Registro = (): JSX.Element => {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        enqueueSnackbar("¡Ahora puedes iniciar sesión!", { variant: "success" });
+        navigate(`/login`);
       })
       .catch(function (error) {
         console.log(error);
+        enqueueSnackbar("¡Algo salió mal!", { variant: "error" });
       });
   };
 
@@ -146,11 +149,7 @@ const Registro = (): JSX.Element => {
         Ingresa tus datos para continuar
       </Typography>
 
-      <Formik
-        initialValues={initialValues}
-        //     validationSchema={validationSchema}
-        onSubmit={registrar}
-      >
+      <Formik initialValues={initialValues} onSubmit={registrar}>
         {({ isSubmitting, touched, errors }) => (
           <Stack component={Form} spacing={2}>
             <Field component={TextField} name="name" label="Nombres" required />
@@ -207,19 +206,29 @@ const Registro = (): JSX.Element => {
 
             <Field
               component={TextField}
-              name="tlfEmergencia"
+              name="emercencyPhone"
               label="Número de contacto de emergencia"
               required
             />
 
             <input
-              type="file"
+              type={"file"}
               name="photo"
               required
-              id="photo"
-              // onChange={(event) => {
-              //   setFieldValue("file", event.currentTarget.files[0]);
-              // }}
+              onChange={() => {
+                const inputs = document.getElementsByTagName("input");
+                if (inputs.length > 0) {
+                  for (let i = 0; i < inputs.length; i++) {
+                    const input = inputs[i];
+                    if (input != null && input.type === "file") {
+                      if (input.files != null && input.files.length > 0) {
+                        data.append("photo", input.files[0]);
+                        console.log(input.files[0]);
+                      }
+                    }
+                  }
+                }
+              }}
             />
 
             <label style={{ fontFamily: "Quicksand", fontSize: 12, fontWeight: 600 }}>
