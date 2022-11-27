@@ -10,7 +10,7 @@ import InicioSesionLayout from "./components/InicioSesionLayout";
 import InicioSesion from "./pages/InicioSesion";
 import ListaEspera from "./pages/ListaEspera";
 import PerfilUsuario from "./pages/PerfilUsuario";
-import Registro from "./pages/Registro";
+import Registro from "./pages/NewRegistro";
 import RegistroVehiculo from "./pages/RegistroVehiculo";
 import Auth from "./components/Auth";
 import UnAuth from "./components/UnAuth";

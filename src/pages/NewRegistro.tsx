@@ -124,9 +124,11 @@ const Registro = (): JSX.Element => {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        enqueueSnackbar("Usuario registrado con éxito", { variant: "success" });
       })
       .catch(function (error) {
         console.log(error);
+        enqueueSnackbar("Error al registrar usuario", { variant: "error" });
       });
   };
 
@@ -146,100 +148,75 @@ const Registro = (): JSX.Element => {
         Ingresa tus datos para continuar
       </Typography>
 
-      <Formik
-        initialValues={initialValues}
-        //     validationSchema={validationSchema}
-        onSubmit={registrar}
-      >
-        {({ isSubmitting, touched, errors }) => (
-          <Stack component={Form} spacing={2}>
-            <Field component={TextField} name="name" label="Nombres" required />
-            <Field component={TextField} name="lastName" label="Apellidos" required />
-            <FormControl>
-              <FormLabel id={labelId}>Género</FormLabel>
-              <Field component={RadioGroup} name="sex" row aria-labelledby={labelId}>
-                <FormControlLabel
-                  value="M"
-                  control={<Radio disabled={isSubmitting} />}
-                  label="Masculino"
-                  disabled={isSubmitting}
-                />
-                <FormControlLabel
-                  value="F"
-                  control={<Radio disabled={isSubmitting} />}
-                  label="Femenino"
-                  disabled={isSubmitting}
-                />
-              </Field>
-            </FormControl>
+      <Stack component={Form} spacing={2}>
+        <Field component={TextField} name="name" label="Nombres" required />
+        <Field component={TextField} name="lastName" label="Apellidos" required />
+        <FormControl>
+          <FormLabel id={labelId}>Género</FormLabel>
+          <Field component={RadioGroup} name="sex" row aria-labelledby={labelId}>
+            <FormControlLabel value="M" control={<Radio />} label="Masculino" />
+            <FormControlLabel value="F" control={<Radio />} label="Femenino" />
+          </Field>
+        </FormControl>
 
-            <Field component={TextField} name="email" type="email" label="Correo UCAB" required />
+        <Field component={TextField} name="email" type="email" label="Correo UCAB" required />
 
-            <Field component={PasswordField} name="password" label="Contraseña" required />
-            <Field
-              component={PasswordField}
-              name="repeatPassword"
-              label="Repetir Contraseña"
-              required
-            />
-            <Field
-              name="role"
-              component={Autocomplete}
-              options={optionsUser}
-              fullWidth
-              renderInput={(params: AutocompleteRenderInputParams) => (
-                <TextFieldMUI
-                  {...params}
-                  name="role"
-                  error={touched.role && !!errors.role}
-                  helperText={touched.role && errors.role}
-                  label="Rol en la UCAB"
-                  required
-                />
-              )}
-            />
-            <Field
-              component={TextField}
-              name="emergencyName"
-              label="Nombre de contacto de emergencia"
-              required
-            />
+        <Field component={PasswordField} name="password" label="Contraseña" required />
+        <Field
+          component={PasswordField}
+          name="repeatPassword"
+          label="Repetir Contraseña"
+          required
+        />
+        <Field
+          name="role"
+          component={Autocomplete}
+          options={optionsUser}
+          fullWidth
+          renderInput={(params: AutocompleteRenderInputParams) => (
+            <TextFieldMUI {...params} name="role" label="Rol en la UCAB" required />
+          )}
+        />
+        <Field
+          component={TextField}
+          name="emergencyName"
+          label="Nombre de contacto de emergencia"
+          required
+        />
 
-            <Field
-              component={TextField}
-              name="tlfEmergencia"
-              label="Número de contacto de emergencia"
-              required
-            />
+        <Field
+          component={TextField}
+          name="tlfEmergencia"
+          label="Número de contacto de emergencia"
+          required
+        />
 
-            <input
-              type="file"
-              name="photo"
-              required
-              id="photo"
-              // onChange={(event) => {
-              //   setFieldValue("file", event.currentTarget.files[0]);
-              // }}
-            />
+        <input
+          type="file"
+          name="photo"
+          required
+          id="photo"
+          // onChange={(event) => {
+          //   setFieldValue("file", event.currentTarget.files[0]);
+          // }}
+        />
 
-            <label style={{ fontFamily: "Quicksand", fontSize: 12, fontWeight: 600 }}>
-              <Field type="checkbox" name="condiciones" required />
-              Acepto que se que la UCAB no es responsable de nada que suceda en la aplicación,
-              siendo esta un proyecto independiente de la institución.
-            </label>
+        <label style={{ fontFamily: "Quicksand", fontSize: 12, fontWeight: 600 }}>
+          <Field type="checkbox" name="condiciones" required />
+          Acepto que se que la UCAB no es responsable de nada que suceda en la aplicación, siendo
+          esta un proyecto independiente de la institución.
+        </label>
 
-            <LoadingButton type="submit" loading={isSubmitting} variant="contained">
-              Registrarse
-            </LoadingButton>
-            <Typography align="center">
-              ¿Ya tienes cuenta?
-              <Link to="/login">
-                <Typography fontWeight="600"> Inicia sesión </Typography>
-              </Link>
-            </Typography>
-          </Stack>
-        )}
-      </Formik>
+        <LoadingButton type="submit" variant="contained">
+          Registrarse
+        </LoadingButton>
+        <Typography align="center">
+          ¿Ya tienes cuenta?
+          <Link to="/login">
+            <Typography fontWeight="600"> Inicia sesión </Typography>
+          </Link>
+        </Typography>
+      </Stack>
     </Box>
   );
 };
