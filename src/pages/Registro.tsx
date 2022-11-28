@@ -20,9 +20,8 @@ import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import PasswordField from "../components/PasswordField";
 import Link from "../components/Link";
-import { useId } from "react";
+import { useId, useRef } from "react";
 import Select from "../components/Select";
-import api_instance from "../api/api_instance";
 import axios from "axios";
 
 interface Values {
@@ -36,7 +35,7 @@ interface Values {
   condiciones: boolean;
   role: string;
   emergencyName: string;
-  emergencyPhone: string;
+  emergencyContact: string;
 }
 
 const initialValues: Values = {
@@ -50,38 +49,10 @@ const initialValues: Values = {
   condiciones: false,
   role: "",
   emergencyName: "",
-  emergencyPhone: "",
+  emergencyContact: "",
 };
-const validationSchema = yup.object().shape({
-  name: yup.string().required("Ingresa tu nombre, por favor"),
-  lastName: yup.string().required("Ingresa tu apellido, por favor"),
-  sex: yup.string().required("Selecciona tu género, por favor"),
-  email: yup.string().required("Ingresa tu email, por favor").email("Email inválido"),
-  password: yup
-    .string()
-    .required("Ingresa una contraseña, por favor")
-    .min(6, "La contraseña debe tener al menos 6 caracteres"),
-  repeatPassword: yup
-    .string()
-    .required("Ingresa tu contraseña nuevamente, por favor")
-    .oneOf([yup.ref("password")], "Las contraseñas no coinciden"),
-  role: yup
-    .string()
-    .required("Selecciona tu rol en la UCAB, por favor")
-    .test(
-      "role",
-      "Selecciona tu rol en la UCAB, por favor",
-      (value) => value !== "Indique su rol en la UCAB"
-    ),
-  photo: yup.mixed().required("Ingresa una foto, por favor"),
-  condiciones: yup.boolean().oneOf([true], "Debes aceptar los términos y condiciones"),
-  emergencyName: yup.string().required("Ingresa tu nombre, por favor"),
-  emergencyPhone: yup
-    .string()
-    .required("Ingresa el número de teléfono de tu contacto de emergencia, por favor"),
-});
-
 const Registro = (): JSX.Element => {
+  const fileRef = useRef();
   const labelId = useId();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
@@ -107,13 +78,11 @@ const Registro = (): JSX.Element => {
       data.append("role", "T");
     }
 
-    data.append("emergencyContact", user.emergencyPhone);
+    data.append("emergencyContact", user.emergencyContact);
     data.append("emergencyName", user.emergencyName);
 
-    console.log(user);
-    
     for (let [key, value] of data) {
-      console.log(`${key}: ${value}`)
+      console.log(`${key}: ${value}`);
     }
 
     console.log(data.get("photo"));
@@ -212,7 +181,7 @@ const Registro = (): JSX.Element => {
 
             <Field
               component={TextField}
-              name="emercencyPhone"
+              name="emergencyContact"
               label="Número de contacto de emergencia"
               required
             />
@@ -220,6 +189,7 @@ const Registro = (): JSX.Element => {
             <input
               type={"file"}
               name="photo"
+              //   itemRef={fileRef}
               required
               onChange={() => {
                 const inputs = document.getElementsByTagName("input");
@@ -229,7 +199,6 @@ const Registro = (): JSX.Element => {
                     if (input != null && input.type === "file") {
                       if (input.files != null && input.files.length > 0) {
                         data.append("photo", input.files[0]);
-                        console.log(input.files[0]);
                       }
                     }
                   }
