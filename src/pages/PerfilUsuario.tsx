@@ -91,9 +91,8 @@ const PerfilUsuario = (): JSX.Element => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              justifyContent: "space-between",
-              width: "100%",
               p: 2,
+              m: 1,
             }}
           >
             <Box
@@ -148,7 +147,7 @@ const PerfilUsuario = (): JSX.Element => {
         </Container>
         <Box
           sx={{
-            position: "fixed",
+            mt: 5,
             bottom: 0,
             left: 0,
             right: 0,
