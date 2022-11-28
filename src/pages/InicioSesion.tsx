@@ -38,9 +38,9 @@ const InicioSesion = (): JSX.Element => {
 
     //const url = "https://ulift-backend-production.up.railway.app/api/";
 
-    const url = "http://localhost:3000/api/";
+    const url = "https://ulift-backend.up.railway.app/api/";
     return api_instance
-      .post(url + "login", user)
+      .post("https://ulift-backend.up.railway.app/api/login", user)
       .then((response) => {
         console.log(response);
         if (response.status === 200) {

@@ -89,7 +89,7 @@ const Registro = (): JSX.Element => {
 
     const config = {
       method: "post",
-      url: "http://localhost:3000/api/signup",
+      url: "https://ulift-backend.up.railway.app/api/signup",
       headers: {
         "Content-Type": "multipart/form-data",
       },

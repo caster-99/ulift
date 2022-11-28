@@ -36,12 +36,17 @@ const usuario: User = {
   email: "",
   role: "",
   genre: "",
+  photo: new File([], ""),
+  rides: 0,
+  rating: 0,
+  emergencyContact: "",
+  emergencyName: "",
 };
 
 const PerfilUsuario = (): JSX.Element => {
   const navigate = useNavigate();
   const [userInfo, setUser] = useState({});
-  const url = "https://ulift-backend-production.up.railway.app/api/user/profile";
+  const url = "https://ulift-backend.up.railway.app/api/user/profile";
 
   const fetchUser = async () => {
     const token = localStorage.getItem("token");
@@ -49,10 +54,21 @@ const PerfilUsuario = (): JSX.Element => {
       headers: { Authorization: `Bearer ${token}` },
     });
     setUser(response.data.user);
-    console.log(response.data.user.nameU);
     usuario.name = response.data.user.nameU + " " + response.data.user.lastname;
     usuario.id = response.data.user.id;
     usuario.email = response.data.user.email;
+    usuario.emergencyContact = response.data.user.emergencyContact;
+    usuario.emergencyName = response.data.user.emergencyName;
+    usuario.rides = response.data.user.rides;
+    usuario.rating = response.data.user.rating;
+    usuario.genre = response.data.user.genre;
+    if (response.data.user.role === "E") {
+      usuario.role = "Estudiante";
+    } else if (response.data.user.role === "D") {
+      usuario.role = "Docente";
+    } else {
+      usuario.role = "Trabajador";
+    }
   };
 
   useEffect(() => {
@@ -66,10 +82,10 @@ const PerfilUsuario = (): JSX.Element => {
         <Container maxWidth="md" sx={{ p: 2 }}>
           <Profile
             name={usuario.name}
-            id="user@ucab.edu.ve"
-            photo={{ logo }}
-            rides={2}
-            rating={3}
+            id={usuario.email}
+            photo={usuario.photo}
+            rides={usuario.rides}
+            rating={usuario.rating}
           />
           <Box
             sx={{
@@ -77,59 +93,55 @@ const PerfilUsuario = (): JSX.Element => {
               flexDirection: "column",
               justifyContent: "space-between",
               width: "100%",
+              p: 2,
             }}
           >
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "row",
-                mt: 2,
-                ml: 4,
                 mb: 2,
               }}
             >
               <EmailIcon color="primary" />
               <Typography ml={2}>
-                <b>Correo electrónico:</b> {usuario.name}
+                <b>Correo electrónico:</b> {usuario.email}
               </Typography>
             </Box>
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "row",
-                ml: 4,
                 mb: 2,
               }}
             >
               <BadgeIcon color="primary" />
               <Typography ml={2}>
-                <b>Rol:</b> {usuario.name}
+                <b>Rol:</b> {usuario.role}
               </Typography>
             </Box>
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "row",
-                ml: 4,
                 mb: 2,
               }}
             >
               <PersonIcon color="primary" />
               <Typography ml={2}>
-                <b>Contacto de emergencia:</b> {usuario.name}
+                <b>Contacto de emergencia:</b> {usuario.emergencyName}
               </Typography>
             </Box>
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "row",
-                ml: 4,
                 mb: 2,
               }}
             >
               <PhoneIcon color="primary" />
               <Typography ml={2}>
-                <b>Teléfono de emergencia:</b> {usuario.name}
+                <b>Teléfono de emergencia:</b> {usuario.emergencyContact}
               </Typography>
             </Box>
           </Box>
@@ -142,7 +154,7 @@ const PerfilUsuario = (): JSX.Element => {
             right: 0,
           }}
         >
-          <Divider />
+          {/* <Divider />
           <Card
             sx={{
               display: "none",
@@ -170,12 +182,12 @@ const PerfilUsuario = (): JSX.Element => {
               <EditIcon />
               <Typography sx={{ fontWeight: 600, fontSize: 16, ml: 2 }}>Editar Perfil</Typography>
             </CardContent>
-          </Card>
+          </Card> */}
           <Divider />
           <Card
             sx={{
               width: "100%",
-              height: "80px",
+              height: "70px",
               boxShadow: "none",
               p: 0,
             }}
@@ -190,7 +202,7 @@ const PerfilUsuario = (): JSX.Element => {
                 alignItems: "center",
                 boxShadow: "none",
                 width: "100%",
-                height: "80px",
+                height: "70px",
                 textOverflow: "ellipsis",
                 overflow: "hidden",
               }}

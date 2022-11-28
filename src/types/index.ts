@@ -4,6 +4,9 @@ export interface User {
   email: string;
   role: string;
   genre: string;
-  //photo:File,
-  //route:object,
+  photo: File;
+  rides: number;
+  rating: number;
+  emergencyContact: string;
+  emergencyName: string;
 }
