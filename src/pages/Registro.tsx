@@ -111,6 +111,12 @@ const Registro = (): JSX.Element => {
     data.append("emergencyName", user.emergencyName);
 
     console.log(user);
+    
+    for (let [key, value] of data) {
+      console.log(`${key}: ${value}`)
+    }
+
+    console.log(data.get("photo"));
 
     const config = {
       method: "post",
