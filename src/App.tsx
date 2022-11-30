@@ -55,21 +55,35 @@ const App = (): JSX.Element => {
 };
 
 export default App;
-//  <Route path="/" element={<Navigate to="login" replace />} />
-//     <Route
-//       element={
-//         <UnAuth>
-//           <InicioSesionLayout />
-//         </UnAuth>
-//       }
-//     >
-//       <Route path="login" element={<InicioSesion />} />
-//       <Route path="registro" element={<Registro />} />
-//     </Route>
-//     <Route
-//       element={
-//         <Auth>
-//           <Outlet />
-//         </Auth>
-//       }
-//     ></Route>
+
+//    <Routes>
+//   <Route path="/" element={<Navigate to="login" replace />} />
+//   <Route
+//     element={
+//       <UnAuth>
+//         <InicioSesionLayout />
+//       </UnAuth>
+//     }
+//   >
+//     <Route path="login" element={<InicioSesion />} />
+//     <Route path="signup" element={<Registro />} />
+//   </Route>
+//   <Route
+//     element={
+//       <Auth>
+//         <Outlet />
+//       </Auth>
+//     }
+//   ></Route>
+//   <Route path="/" element={<Inicio />} />
+//   <Route path="perfil" element={<PerfilUsuario />} />
+//   <Route path="historial" element={<HistorialColas />} />
+//   <Route path="favoritos" element={<Favoritos />} />
+//   <Route path="colaEnProceso" element={<ColaProceso />} />
+//   <Route path="chats" element={<Chat />} />
+//   <Route path="registroVehiculo" element={<RegistroVehiculo />} />
+//   <Route path="listaEspera" element={<ListaEspera />} />
+//   <Route path="faq" element={<Faq />} />
+//   <Route path="chatPrivado/:userId" element={<ChatLayout />} />
+//   <Route path="perfilExterno/:userId" element={<PerfilExterno />} />
+// </Routes>;

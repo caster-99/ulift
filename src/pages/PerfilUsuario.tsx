@@ -60,7 +60,7 @@ const PerfilUsuario = (): JSX.Element => {
     usuario.emergencyContact = response.data.user.emergencyContact;
     usuario.emergencyName = response.data.user.emergencyName;
     usuario.rides = response.data.user.rides;
-    usuario.rating = response.data.user.rating;
+    usuario.rating = response.data.user.rate;
     usuario.genre = response.data.user.genre;
     if (response.data.user.role === "E") {
       usuario.role = "Estudiante";

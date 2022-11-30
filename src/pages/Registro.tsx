@@ -23,6 +23,7 @@ import Link from "../components/Link";
 import { useId, useRef } from "react";
 import Select from "../components/Select";
 import axios from "axios";
+import Map from "../components/Map";
 
 interface Values {
   name: string;
@@ -105,6 +106,14 @@ const Registro = (): JSX.Element => {
       .catch(function (error) {
         console.log(error);
         enqueueSnackbar("¡Algo salió mal!", { variant: "error" });
+        data.delete("email");
+        data.delete("password");
+        data.delete("name");
+        data.delete("lastname");
+        data.delete("emergencyContact");
+        data.delete("emergencyName");
+        data.delete("role");
+        data.delete("gender");
       });
   };
 
@@ -205,6 +214,12 @@ const Registro = (): JSX.Element => {
                 }
               }}
             />
+
+            <Typography fontWeight="500" fontSize="18px" align="left" mb={3}>
+              Ingresa tu destino principal en el mapa:
+            </Typography>
+
+            <Map />
 
             <label style={{ fontFamily: "Quicksand", fontSize: 12, fontWeight: 600 }}>
               <Field type="checkbox" name="condiciones" required />
