@@ -1,34 +1,11 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Card,
-  Container,
-  Divider,
-  Fade,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  IconButton,
-  MenuItem,
-  Radio,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Fade, Stack } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import {
-  AddAPhotoRounded as AddPhotoIcon,
-  ArrowBackRounded as ArrowBackRoundedIcon,
-} from "@mui/icons-material";
 import { Field, Form, Formik, FormikHelpers } from "formik";
-import { CheckboxWithLabel, RadioGroup, TextField } from "formik-mui";
+import { TextField } from "formik-mui";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
-import PasswordField from "../components/PasswordField";
-import Link from "../components/Link";
 import { useId } from "react";
-import Select from "../components/Select";
 import SubPaginasHeader from "../components/SubPaginasHeader";
 import car from "../assets/car.png";
 
@@ -55,18 +32,8 @@ const RegistroVehiculo = (): JSX.Element => {
   const labelId = useId();
 
   const onSubmit = async (user: Values, { setSubmitting }: FormikHelpers<Values>) => {
-    //    setSubmitting(true);
-
-    // const { repeatPassword, ...userData } = user;
-
-    // const error = await signUp({ ...userData});
-
-    // if (error) {
-    //   setSubmitting(false);
-    //   return enqueueSnackbar(error, { variant: "error" });
-    // }
-    enqueueSnackbar("¡Ahora puedes iniciar sesión!", { variant: "success" });
-    navigate(`/login`);
+    enqueueSnackbar("¡Vehículo registrado con éxito!", { variant: "success" });
+    navigate(-1);
   };
 
   return (

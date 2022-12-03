@@ -221,7 +221,7 @@ const PerfilUsuario = (): JSX.Element => {
               p: 0,
             }}
             onClick={() => {
-              navigate("/registroVehiculo");
+              navigate("/registroRuta");
             }}
           >
             <CardContent
