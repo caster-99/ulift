@@ -20,10 +20,10 @@ import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import PasswordField from "../components/PasswordField";
 import Link from "../components/Link";
-import { useId, useRef } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import Select from "../components/Select";
 import axios from "axios";
-import Map from "../components/Map";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 interface Values {
   name: string;
@@ -37,6 +37,8 @@ interface Values {
   role: string;
   emergencyName: string;
   emergencyContact: string;
+  lat: string;
+  lng: string;
 }
 
 const initialValues: Values = {
@@ -51,14 +53,25 @@ const initialValues: Values = {
   role: "",
   emergencyName: "",
   emergencyContact: "",
+  lat: "",
+  lng: "",
 };
+
 const Registro = (): JSX.Element => {
-  const fileRef = useRef();
+  const [latitude, setLat] = useState("");
+  const [longitude, setLng] = useState("");
   const labelId = useId();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const data = new FormData();
   const optionsUser = ["Estudiante", "Docente", "Trabajador"];
+  const ucab = { lat: 8.296423157514385, lng: -62.71283272286731 };
+
+  const containerStyle = {
+    width: "100%",
+    height: "400px",
+    margin: "2px",
+  };
 
   // Al presionar el botón de registrarse
   // se ejecuta esta función para llamar a la API
@@ -81,6 +94,8 @@ const Registro = (): JSX.Element => {
 
     data.append("emergencyContact", user.emergencyContact);
     data.append("emergencyName", user.emergencyName);
+    data.append("lat", latitude);
+    data.append("lng", longitude);
 
     for (let [key, value] of data) {
       console.log(`${key}: ${value}`);
@@ -114,6 +129,8 @@ const Registro = (): JSX.Element => {
         data.delete("emergencyName");
         data.delete("role");
         data.delete("gender");
+        data.delete("lat");
+        data.delete("lng");
       });
   };
 
@@ -198,7 +215,6 @@ const Registro = (): JSX.Element => {
             <input
               type={"file"}
               name="photo"
-              //   itemRef={fileRef}
               required
               onChange={() => {
                 const inputs = document.getElementsByTagName("input");
@@ -215,11 +231,27 @@ const Registro = (): JSX.Element => {
               }}
             />
 
-            <Typography fontWeight="500" fontSize="18px" align="left" mb={3}>
+            <Typography fontWeight="500" fontSize="18px" align="left">
               Ingresa tu destino principal en el mapa:
             </Typography>
 
-            <Map />
+            <LoadScript googleMapsApiKey="AIzaSyDiBDk9jPW-I_ka-HEAH5gZO2wfXblZ88k">
+              <GoogleMap id="map" mapContainerStyle={containerStyle} center={ucab} zoom={15}>
+                <Marker
+                  position={ucab}
+                  visible={true}
+                  draggable={true}
+                  onDragEnd={(e) => {
+                    console.log(e.latLng?.lat());
+                    console.log(e.latLng?.lng());
+                    const latLng = e.latLng?.toString();
+                    var splitted = latLng?.split(",");
+                    var lat = splitted?.[0].replace("(", "");
+                    var lng = splitted?.[1].replace(")", "").replace(" ", "");
+                  }}
+                />
+              </GoogleMap>
+            </LoadScript>
 
             <label style={{ fontFamily: "Quicksand", fontSize: 12, fontWeight: 600 }}>
               <Field type="checkbox" name="condiciones" required />
