@@ -144,7 +144,26 @@ const PerfilUsuario = (): JSX.Element => {
               </Typography>
             </Box>
           </Box>
+
+          <Box>
+            <Box>
+              <Typography variant="h6" sx={{ mt: 2 }}>
+                Vehículos registrados
+              </Typography>
+
+              {/* Mapear los nombres de los vehículos registrados */}
+            </Box>
+
+            <Box>
+              <Typography variant="h6" sx={{ mt: 2 }}>
+                Rutas registradas
+              </Typography>
+
+              {/* Mapear los nombres de las rutas registradas */}
+            </Box>
+          </Box>
         </Container>
+
         <Box
           sx={{
             mt: 5,
