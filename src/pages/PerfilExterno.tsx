@@ -42,13 +42,13 @@ import Profile from "../components/Profile";
 const PerfilExterno = (): JSX.Element => {
   const params = useParams();
   // let { id } = useParams();
-  
+
   return (
     <Box>
       <SubPaginasHeader pageName="Perfil" />
-        <Box sx={{mt: 8}}>
-          <Profile id={params.userId} name="luisa" photo={{ logo }} rating={2} rides={2} />
-        </Box>
+      <Box sx={{ mt: 8 }}>
+        <Profile id={params.userId} name="luisa" photo="logo" rating={2} rides={2} />
+      </Box>
     </Box>
   );
 };
