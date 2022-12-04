@@ -1,88 +1,152 @@
 import {
   Box,
-  Button,
-  ButtonGroup,
-  Divider,
   FormControl,
   FormControlLabel,
   FormLabel,
   IconButton,
-  MenuItem,
   Radio,
   Stack,
+  TextField as TextFieldMUI,
   Typography,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import {
-  AddAPhotoRounded as AddPhotoIcon,
-  ArrowBackRounded as ArrowBackRoundedIcon,
-} from "@mui/icons-material";
+import { ArrowBackRounded as ArrowBackRoundedIcon } from "@mui/icons-material";
 import { Field, Form, Formik, FormikHelpers } from "formik";
-import { CheckboxWithLabel, RadioGroup, TextField } from "formik-mui";
-import * as yup from "yup";
+import { Autocomplete, AutocompleteRenderInputParams, RadioGroup, TextField } from "formik-mui";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import PasswordField from "../components/PasswordField";
 import Link from "../components/Link";
 import { useId, useState } from "react";
-import Select from "../components/Select";
-import instance from "../api/api_instance";
+import axios from "axios";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { MarkerF } from "@react-google-maps/api";
 
 interface Values {
   name: string;
+  lastName: string;
   sex: string;
   email: string;
   password: string;
   repeatPassword: string;
-  photo: object;
+  photo: File;
   condiciones: boolean;
   role: string;
+  emergencyName: string;
+  emergencyContact: string;
+  lat: string;
+  lng: string;
 }
 
 const initialValues: Values = {
   name: "",
+  lastName: "",
   sex: "male",
   email: "",
   password: "",
   repeatPassword: "",
-  photo: {},
+  photo: new File([], ""),
   condiciones: false,
   role: "",
+  emergencyName: "",
+  emergencyContact: "",
+  lat: "",
+  lng: "",
 };
-const schema = yup.object().shape({
-  name: yup.string().required("Ingresa tu nombre, por favor"),
-  sex: yup.string().required("Selecciona tu género, por favor"),
-  email: yup.string().required("Ingresa tu email, por favor").email("Email inválido"),
-  password: yup
-    .string()
-    .required("Ingresa una contraseña, por favor")
-    .min(6, "La contraseña debe tener al menos 6 caracteres"),
-  repeatPassword: yup
-    .string()
-    .required("Ingresa tu contraseña nuevamente, por favor")
-    .oneOf([yup.ref("password")], "Las contraseñas no coinciden"),
-  role: yup
-    .string()
-    .required("Selecciona tu rol en la UCAB, por favor")
-    .test(
-      "role",
-      "Selecciona tu rol en la UCAB, por favor",
-      (value) => value !== "Indique su rol en la UCAB"
-    ),
-  photo: yup.mixed().required("Ingresa una foto, por favor"),
-  condiciones: yup.boolean().oneOf([true], "Debes aceptar los términos y condiciones"),
-});
 
 const Registro = (): JSX.Element => {
-  const navigate = useNavigate();
-  const [userData, setUserData] = useState({});
-
-  const { enqueueSnackbar } = useSnackbar();
+  var latitude = "";
+  var longitude = "";
   const labelId = useId();
+  const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
+  const data = new FormData();
+  const optionsUser = ["Estudiante", "Docente", "Trabajador"];
 
-  const onSubmit = async (user: Values) => {
-    enqueueSnackbar("¡Ahora puedes iniciar sesión!", { variant: "success" });
-    navigate(`/login`);
+  const ucab = { lat: 8.296423157514385, lng: -62.71283272286731 };
+
+  const containerStyle = {
+    width: "100%",
+    height: "400px",
+    margin: "2px",
+  };
+
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: "AIzaSyDiBDk9jPW-I_ka-HEAH5gZO2wfXblZ88k",
+    libraries: ["places", "drawing"],
+  });
+
+  // Al presionar el botón de registrarse
+  // se ejecuta esta función para llamar a la API
+  const registrar = async (user: Values, { setSubmitting }: FormikHelpers<Values>) => {
+    setSubmitting(true);
+
+    data.append("email", user.email);
+    data.append("password", user.password);
+    data.append("name", user.name);
+    data.append("lastname", user.lastName);
+    data.append("gender", user.sex);
+
+    if (user.role === "Estudiante") {
+      data.append("role", "E");
+    } else if (user.role === "Docente") {
+      data.append("role", "D");
+    } else if (user.role === "Trabajador") {
+      data.append("role", "T");
+    }
+
+    data.append("emergencyContact", user.emergencyContact);
+    data.append("emergencyName", user.emergencyName);
+    data.append("lat", latitude.toString()!);
+    data.append("lng", longitude.toString()!);
+
+    for (let [key, value] of data) {
+      console.log(`${key}: ${value}`);
+    }
+
+    console.log(data.get("photo"));
+
+    const config = {
+      method: "post",
+      url: "https://ulift-backend.up.railway.app/api/signup",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        enqueueSnackbar("¡Ahora puedes iniciar sesión!", { variant: "success" });
+        navigate(`/login`);
+      })
+      .catch(function (error) {
+        console.log(error);
+        enqueueSnackbar("¡Algo salió mal!", { variant: "error" });
+        data.delete("email");
+        data.delete("password");
+        data.delete("name");
+        data.delete("lastname");
+        data.delete("emergencyContact");
+        data.delete("emergencyName");
+        data.delete("role");
+        data.delete("gender");
+        data.delete("lat");
+        data.delete("lng");
+        const inputs = document.getElementsByTagName("input");
+        if (inputs.length > 0) {
+          for (let i = 0; i < inputs.length; i++) {
+            const input = inputs[i];
+            if (input != null && input.type === "file") {
+              if (input.files != null && input.files.length > 0) {
+                input.value = "";
+              }
+            }
+          }
+        }
+      });
   };
 
   return (
@@ -101,21 +165,22 @@ const Registro = (): JSX.Element => {
         Ingresa tus datos para continuar
       </Typography>
 
-      <Formik initialValues={initialValues} validationSchema={schema} onSubmit={onSubmit}>
-        {({ isSubmitting }) => (
+      <Formik initialValues={initialValues} onSubmit={registrar}>
+        {({ isSubmitting, touched, errors }) => (
           <Stack component={Form} spacing={2}>
-            <Field component={TextField} name="name" label="Nombres y Apellidos" required />
+            <Field component={TextField} name="name" label="Nombres" required />
+            <Field component={TextField} name="lastName" label="Apellidos" required />
             <FormControl>
               <FormLabel id={labelId}>Género</FormLabel>
               <Field component={RadioGroup} name="sex" row aria-labelledby={labelId}>
                 <FormControlLabel
-                  value="male"
+                  value="M"
                   control={<Radio disabled={isSubmitting} />}
                   label="Masculino"
                   disabled={isSubmitting}
                 />
                 <FormControlLabel
-                  value="female"
+                  value="F"
                   control={<Radio disabled={isSubmitting} />}
                   label="Femenino"
                   disabled={isSubmitting}
@@ -132,18 +197,72 @@ const Registro = (): JSX.Element => {
               label="Repetir Contraseña"
               required
             />
-            <Select variant="outlined" displayEmpty required name="role">
-              <MenuItem sx={{ color: "text.secondary" }} value="">
-                Indique su rol en la UCAB
-              </MenuItem>
-              <Divider />
-              <MenuItem value="Estudiante">Estudiante</MenuItem>
-              <MenuItem value="Docente">Docente</MenuItem>
-              <MenuItem value="Personal Administrativo">Personal Administrativo</MenuItem>
-              <MenuItem value="Personal Servicios Generales">Personal Servicios Generales</MenuItem>
-            </Select>
+            <Field
+              name="role"
+              component={Autocomplete}
+              options={optionsUser}
+              fullWidth
+              renderInput={(params: AutocompleteRenderInputParams) => (
+                <TextFieldMUI
+                  {...params}
+                  name="role"
+                  error={touched.role && !!errors.role}
+                  helperText={touched.role && errors.role}
+                  label="Rol en la UCAB"
+                  required
+                />
+              )}
+            />
+            <Field
+              component={TextField}
+              name="emergencyName"
+              label="Nombre de contacto de emergencia"
+              required
+            />
 
-            <input type={"file"} name="photo" required />
+            <Field
+              component={TextField}
+              name="emergencyContact"
+              label="Número de contacto de emergencia"
+              required
+            />
+
+            <input
+              type={"file"}
+              name="photo"
+              required
+              accept="image/png, image/jpeg"
+              onChange={() => {
+                const inputs = document.getElementsByTagName("input");
+                if (inputs.length > 0) {
+                  for (let i = 0; i < inputs.length; i++) {
+                    const input = inputs[i];
+                    if (input != null && input.type === "file") {
+                      if (input.files != null && input.files.length > 0) {
+                        data.append("photo", input.files[0]);
+                      }
+                    }
+                  }
+                }
+              }}
+            />
+
+            <Typography fontWeight="500" fontSize="18px" align="left">
+              Ingresa tu destino principal en el mapa:
+            </Typography>
+            {isLoaded && (
+              <GoogleMap id="map" mapContainerStyle={containerStyle} center={ucab} zoom={15}>
+                <MarkerF
+                  position={ucab}
+                  visible={true}
+                  draggable={true}
+                  onDragEnd={(e) => {
+                    latitude = e.latLng?.lat().toString()!;
+                    longitude = e.latLng?.lng().toString()!;
+                  }}
+                />
+              </GoogleMap>
+            )}
 
             <label style={{ fontFamily: "Quicksand", fontSize: 12, fontWeight: 600 }}>
               <Field type="checkbox" name="condiciones" required />

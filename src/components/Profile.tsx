@@ -3,15 +3,16 @@ import { StarRateRounded as StarIcon } from "@mui/icons-material";
 import React from "react";
 interface UserProps {
   name: string;
-  photo: object;
+  photo: string;
   rating: number;
   rides: number;
   id: undefined | string;
 }
 const Profile = (props: UserProps): JSX.Element => {
+  const foto = "https://ulift-backend.up.railway.app/" + props.photo;
   return (
     <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
-      <Avatar sx={{ width: 120, height: 120, marginBottom: 1 }}></Avatar>
+      <Avatar sx={{ width: 120, height: 120, marginBottom: 1 }} src={foto} />
       <Typography
         color="primary"
         textAlign="center"

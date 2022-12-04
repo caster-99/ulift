@@ -7,8 +7,8 @@ interface Props {
 const UnAuth = ({ children }: Props): JSX.Element => {
   //const user = useUser();
 
-  // if (1) {
-  //   return <Navigate to="/home" replace />;
+  // if (localStorage.getItem("token")) {
+  //   return <Navigate to="/" />;
   // }
 
   return children;
