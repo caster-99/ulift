@@ -31,15 +31,24 @@ import Select from "../components/Select";
 import SubPaginasHeader from "../components/SubPaginasHeader";
 import logo from "../assets/logo512.png";
 import Profile from "../components/Profile";
+/*interface UserProps {
+  name: string;
+  // photo: object;
+  rating: string;
+  userId: string;
+  rides: number;
+}*/
 
 const PerfilExterno = (): JSX.Element => {
   const params = useParams();
+  // let { id } = useParams();
+  
   return (
     <Box>
-      <SubPaginasHeader pageName="Registro de Vehículo" />
-      <Fade in timeout={800}>
-        <Profile id={params.userId} name="luisa" photo={{ logo }} rating={2} rides={2} />
-      </Fade>
+      <SubPaginasHeader pageName="Perfil" />
+        <Box sx={{mt: 8}}>
+          <Profile id={params.userId} name="luisa" photo={{ logo }} rating={2} rides={2} />
+        </Box>
     </Box>
   );
 };
