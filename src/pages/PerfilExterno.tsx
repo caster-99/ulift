@@ -38,7 +38,7 @@ const PerfilExterno = (): JSX.Element => {
     <Box>
       <SubPaginasHeader pageName="Registro de Vehículo" />
       <Fade in timeout={800}>
-        <Profile id={params.userId} name="luisa" photo={{ logo }} rating={2} rides={2} />
+        <Profile id={params.userId} name="luisa" photo="foto" rating={2} rides={2} />
       </Fade>
     </Box>
   );
