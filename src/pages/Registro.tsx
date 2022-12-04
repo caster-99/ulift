@@ -1,11 +1,9 @@
 import {
   Box,
-  Divider,
   FormControl,
   FormControlLabel,
   FormLabel,
   IconButton,
-  MenuItem,
   Radio,
   Stack,
   TextField as TextFieldMUI,
@@ -15,15 +13,14 @@ import { LoadingButton } from "@mui/lab";
 import { ArrowBackRounded as ArrowBackRoundedIcon } from "@mui/icons-material";
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import { Autocomplete, AutocompleteRenderInputParams, RadioGroup, TextField } from "formik-mui";
-import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import PasswordField from "../components/PasswordField";
 import Link from "../components/Link";
-import { useEffect, useId, useMemo, useRef, useState } from "react";
-import Select from "../components/Select";
+import { useId, useState } from "react";
 import axios from "axios";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { MarkerF } from "@react-google-maps/api";
 
 interface Values {
   name: string;
@@ -58,13 +55,14 @@ const initialValues: Values = {
 };
 
 const Registro = (): JSX.Element => {
-  const [latitude, setLat] = useState("");
-  const [longitude, setLng] = useState("");
+  var latitude = "";
+  var longitude = "";
   const labelId = useId();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const data = new FormData();
   const optionsUser = ["Estudiante", "Docente", "Trabajador"];
+
   const ucab = { lat: 8.296423157514385, lng: -62.71283272286731 };
 
   const containerStyle = {
@@ -72,6 +70,12 @@ const Registro = (): JSX.Element => {
     height: "400px",
     margin: "2px",
   };
+
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: "AIzaSyDiBDk9jPW-I_ka-HEAH5gZO2wfXblZ88k",
+    libraries: ["places", "drawing"],
+  });
 
   // Al presionar el botón de registrarse
   // se ejecuta esta función para llamar a la API
@@ -94,8 +98,8 @@ const Registro = (): JSX.Element => {
 
     data.append("emergencyContact", user.emergencyContact);
     data.append("emergencyName", user.emergencyName);
-    data.append("lat", latitude);
-    data.append("lng", longitude);
+    data.append("lat", latitude.toString()!);
+    data.append("lng", longitude.toString()!);
 
     for (let [key, value] of data) {
       console.log(`${key}: ${value}`);
@@ -131,6 +135,17 @@ const Registro = (): JSX.Element => {
         data.delete("gender");
         data.delete("lat");
         data.delete("lng");
+        const inputs = document.getElementsByTagName("input");
+        if (inputs.length > 0) {
+          for (let i = 0; i < inputs.length; i++) {
+            const input = inputs[i];
+            if (input != null && input.type === "file") {
+              if (input.files != null && input.files.length > 0) {
+                input.value = "";
+              }
+            }
+          }
+        }
       });
   };
 
@@ -216,6 +231,7 @@ const Registro = (): JSX.Element => {
               type={"file"}
               name="photo"
               required
+              accept="image/png, image/jpeg"
               onChange={() => {
                 const inputs = document.getElementsByTagName("input");
                 if (inputs.length > 0) {
@@ -234,24 +250,19 @@ const Registro = (): JSX.Element => {
             <Typography fontWeight="500" fontSize="18px" align="left">
               Ingresa tu destino principal en el mapa:
             </Typography>
-
-            <LoadScript googleMapsApiKey="AIzaSyDiBDk9jPW-I_ka-HEAH5gZO2wfXblZ88k">
+            {isLoaded && (
               <GoogleMap id="map" mapContainerStyle={containerStyle} center={ucab} zoom={15}>
-                <Marker
+                <MarkerF
                   position={ucab}
                   visible={true}
                   draggable={true}
                   onDragEnd={(e) => {
-                    console.log(e.latLng?.lat());
-                    console.log(e.latLng?.lng());
-                    const latLng = e.latLng?.toString();
-                    var splitted = latLng?.split(",");
-                    var lat = splitted?.[0].replace("(", "");
-                    var lng = splitted?.[1].replace(")", "").replace(" ", "");
+                    latitude = e.latLng?.lat().toString()!;
+                    longitude = e.latLng?.lng().toString()!;
                   }}
                 />
               </GoogleMap>
-            </LoadScript>
+            )}
 
             <label style={{ fontFamily: "Quicksand", fontSize: 12, fontWeight: 600 }}>
               <Field type="checkbox" name="condiciones" required />
