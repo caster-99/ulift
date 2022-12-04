@@ -24,7 +24,7 @@ interface UserProps {
 const UsuarioTarjeta = (props: UserProps): JSX.Element => {
   const navigate = useNavigate();
   const openInfoUserDialog = () => {
-    navigate("/perfil/" + props.userId);
+    navigate("/perfilExterno/" + props.userId);
   };
 
   return (

@@ -1,51 +1,51 @@
 import React from "react";
 import { Box } from "@mui/material";
-import UserListItem from "../components/UserListItem";
+import UsuarioTarjeta from "./UsuarioTarjeta";
 
 const ListaUsuarios = (): JSX.Element => {
   return (
     <Box display={"flex"} flexDirection="column">
-      <UserListItem
+      <UsuarioTarjeta
         name="Luisa"
         time="10"
         seats={2}
         location="Los olivos"
         userId="1234"
         role="Estudiante"
-      />{" "}
-      <UserListItem
+      />
+      <UsuarioTarjeta
         name="Luisa"
         time="10"
         seats={2}
         location="Los olivos"
         userId="1234"
         role="Estudiante"
-      />{" "}
-      <UserListItem
+      />
+      <UsuarioTarjeta
         name="Luisa"
         time="10"
         seats={2}
         location="Los olivos"
         userId="1234"
         role="Estudiante"
-      />{" "}
-      <UserListItem
+      />
+      <UsuarioTarjeta
         name="Luisa"
         time="10"
         seats={2}
         location="Los olivos"
         userId="1234"
         role="Estudiante"
-      />{" "}
-      <UserListItem
+      />
+      <UsuarioTarjeta
         name="Luisa"
         time="10"
         seats={2}
         location="Los olivos"
         userId="1234"
         role="Estudiante"
-      />{" "}
-      <UserListItem
+      />
+      <UsuarioTarjeta
         name="Luisa"
         time="10"
         seats={2}

@@ -3,9 +3,9 @@ export interface User {
   name: string;
   email: string;
   role: string;
-  genre: string;
-  photo: File;
-  rides: number;
+  gender: string;
+  photo: string;
+  trips: number;
   rating: number;
   emergencyContact: string;
   emergencyName: string;

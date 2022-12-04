@@ -1,11 +1,9 @@
 import {
   Box,
-  Divider,
   FormControl,
   FormControlLabel,
   FormLabel,
   IconButton,
-  MenuItem,
   Radio,
   Stack,
   TextField as TextFieldMUI,
@@ -15,14 +13,14 @@ import { LoadingButton } from "@mui/lab";
 import { ArrowBackRounded as ArrowBackRoundedIcon } from "@mui/icons-material";
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import { Autocomplete, AutocompleteRenderInputParams, RadioGroup, TextField } from "formik-mui";
-import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import PasswordField from "../components/PasswordField";
 import Link from "../components/Link";
-import { useId, useRef } from "react";
-import Select from "../components/Select";
+import { useId, useState } from "react";
 import axios from "axios";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { MarkerF } from "@react-google-maps/api";
 
 interface Values {
   name: string;
@@ -36,6 +34,8 @@ interface Values {
   role: string;
   emergencyName: string;
   emergencyContact: string;
+  lat: string;
+  lng: string;
 }
 
 const initialValues: Values = {
@@ -50,14 +50,32 @@ const initialValues: Values = {
   role: "",
   emergencyName: "",
   emergencyContact: "",
+  lat: "",
+  lng: "",
 };
+
 const Registro = (): JSX.Element => {
-  const fileRef = useRef();
+  var latitude = "";
+  var longitude = "";
   const labelId = useId();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const data = new FormData();
   const optionsUser = ["Estudiante", "Docente", "Trabajador"];
+
+  const ucab = { lat: 8.296423157514385, lng: -62.71283272286731 };
+
+  const containerStyle = {
+    width: "100%",
+    height: "400px",
+    margin: "2px",
+  };
+
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: "AIzaSyDiBDk9jPW-I_ka-HEAH5gZO2wfXblZ88k",
+    libraries: ["places", "drawing"],
+  });
 
   // Al presionar el botón de registrarse
   // se ejecuta esta función para llamar a la API
@@ -80,6 +98,8 @@ const Registro = (): JSX.Element => {
 
     data.append("emergencyContact", user.emergencyContact);
     data.append("emergencyName", user.emergencyName);
+    data.append("lat", latitude.toString()!);
+    data.append("lng", longitude.toString()!);
 
     for (let [key, value] of data) {
       console.log(`${key}: ${value}`);
@@ -105,6 +125,27 @@ const Registro = (): JSX.Element => {
       .catch(function (error) {
         console.log(error);
         enqueueSnackbar("¡Algo salió mal!", { variant: "error" });
+        data.delete("email");
+        data.delete("password");
+        data.delete("name");
+        data.delete("lastname");
+        data.delete("emergencyContact");
+        data.delete("emergencyName");
+        data.delete("role");
+        data.delete("gender");
+        data.delete("lat");
+        data.delete("lng");
+        const inputs = document.getElementsByTagName("input");
+        if (inputs.length > 0) {
+          for (let i = 0; i < inputs.length; i++) {
+            const input = inputs[i];
+            if (input != null && input.type === "file") {
+              if (input.files != null && input.files.length > 0) {
+                input.value = "";
+              }
+            }
+          }
+        }
       });
   };
 
@@ -189,8 +230,8 @@ const Registro = (): JSX.Element => {
             <input
               type={"file"}
               name="photo"
-              //   itemRef={fileRef}
               required
+              accept="image/png, image/jpeg"
               onChange={() => {
                 const inputs = document.getElementsByTagName("input");
                 if (inputs.length > 0) {
@@ -205,6 +246,23 @@ const Registro = (): JSX.Element => {
                 }
               }}
             />
+
+            <Typography fontWeight="500" fontSize="18px" align="left">
+              Ingresa tu destino principal en el mapa:
+            </Typography>
+            {isLoaded && (
+              <GoogleMap id="map" mapContainerStyle={containerStyle} center={ucab} zoom={15}>
+                <MarkerF
+                  position={ucab}
+                  visible={true}
+                  draggable={true}
+                  onDragEnd={(e) => {
+                    latitude = e.latLng?.lat().toString()!;
+                    longitude = e.latLng?.lng().toString()!;
+                  }}
+                />
+              </GoogleMap>
+            )}
 
             <label style={{ fontFamily: "Quicksand", fontSize: 12, fontWeight: 600 }}>
               <Field type="checkbox" name="condiciones" required />

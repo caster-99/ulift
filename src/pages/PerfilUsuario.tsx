@@ -35,9 +35,9 @@ const usuario: User = {
   id: "",
   email: "",
   role: "",
-  genre: "",
-  photo: new File([], ""),
-  rides: 0,
+  gender: "",
+  photo: "",
+  trips: 0,
   rating: 0,
   emergencyContact: "",
   emergencyName: "",
@@ -59,9 +59,10 @@ const PerfilUsuario = (): JSX.Element => {
     usuario.email = response.data.user.email;
     usuario.emergencyContact = response.data.user.emergencyContact;
     usuario.emergencyName = response.data.user.emergencyName;
-    usuario.rides = response.data.user.rides;
-    usuario.rating = response.data.user.rating;
-    usuario.genre = response.data.user.genre;
+    usuario.trips = response.data.user.trips;
+    usuario.rating = response.data.user.rate;
+    usuario.gender = response.data.user.gender;
+    usuario.photo = response.data.user.photo;
     if (response.data.user.role === "E") {
       usuario.role = "Estudiante";
     } else if (response.data.user.role === "D") {
@@ -69,6 +70,8 @@ const PerfilUsuario = (): JSX.Element => {
     } else {
       usuario.role = "Trabajador";
     }
+
+    console.log(usuario);
   };
 
   useEffect(() => {
@@ -84,7 +87,7 @@ const PerfilUsuario = (): JSX.Element => {
             name={usuario.name}
             id={usuario.email}
             photo={usuario.photo}
-            rides={usuario.rides}
+            rides={usuario.trips}
             rating={usuario.rating}
           />
           <Box
@@ -144,7 +147,26 @@ const PerfilUsuario = (): JSX.Element => {
               </Typography>
             </Box>
           </Box>
+
+          <Box>
+            <Box>
+              <Typography variant="h6" sx={{ mt: 2 }}>
+                Vehículos registrados
+              </Typography>
+
+              {/* Mapear los nombres de los vehículos registrados */}
+            </Box>
+
+            <Box>
+              <Typography variant="h6" sx={{ mt: 2 }}>
+                Rutas registradas
+              </Typography>
+
+              {/* Mapear los nombres de las rutas registradas */}
+            </Box>
+          </Box>
         </Container>
+
         <Box
           sx={{
             mt: 5,
@@ -221,7 +243,7 @@ const PerfilUsuario = (): JSX.Element => {
               p: 0,
             }}
             onClick={() => {
-              navigate("/registroVehiculo");
+              navigate("/registroRuta");
             }}
           >
             <CardContent
