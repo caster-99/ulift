@@ -50,6 +50,7 @@ const PerfilUsuario = (): JSX.Element => {
 
   const fetchUser = async () => {
     const token = localStorage.getItem("token");
+    console.log(token);
     const response = await api_instance.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
