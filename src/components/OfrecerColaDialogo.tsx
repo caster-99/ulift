@@ -26,13 +26,48 @@ import { useNavigate } from "react-router-dom";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { useSnackbar } from "notistack";
+import api_instance from "../api/api_instance";
+import { User, Vehicle, Route } from "../types/index";
+import { useEffect } from "react";
 
 interface DialogProps {
   isOpen: boolean;
   closeDialog: () => void;
 }
 
+const vehicle: Vehicle = {
+  plate: "",
+  model: "",
+  color: "",
+  seats: 0,
+  driverID: "",
+};
+
 const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
+  // const rutas;
+  // const vehiculos = [] Vehicle;
+
+  const url = "https://ulift-backend.up.railway.app/api/user/profile";
+  const fetchUser = async () => {
+    const token = localStorage.getItem("token");
+    console.log(token);
+    const response = await api_instance.get(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    for (let i = 0; i < response.data.user.vehicles.length; i++) {
+      console.log(response.data.user.vehicles[i].plate + "" + response.data.user.vehicles[i].model);
+    }
+    for (let i = 0; i < response.data.user.routes.length; i++) {
+      console.log(response.data.user.routes[i].name);
+    }
+    // console.log(vehiculos);
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   const [direccion, setDireccion] = React.useState("");
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
@@ -95,9 +130,7 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
                   fullWidth
                   required
                 >
-                  <MenuItem value={"Los olivos"}>Los olivos</MenuItem>
-                  <MenuItem value={"Altavista"}>Altavista</MenuItem>
-                  <MenuItem value={"Los Mangos"}>Los Mangos</MenuItem>
+                  {/* Mapear las rutas disponibles */}
                 </Select>
               </FormControl>
             </Box>

@@ -16,10 +16,6 @@ const InfoCard = (props: Props): JSX.Element => {
         sx={{
           width: "100%",
           height: "100%",
-          transition: "all 0.2s ease",
-          ":hover": {
-            transform: "scale(1.05) translateY(-4px)",
-          },
         }}
       >
         <CardContent sx={{ flex: 3 }}>
