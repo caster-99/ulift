@@ -52,7 +52,7 @@ const PerfilUsuario = (): JSX.Element => {
   const navigate = useNavigate();
   const [userInfo, setUser] = useState({});
   const url = "https://ulift-backend.up.railway.app/api/user/profile";
-  const estado = "";
+
   const fetchUser = async () => {
     const token = localStorage.getItem("token");
     console.log(token);
@@ -70,7 +70,7 @@ const PerfilUsuario = (): JSX.Element => {
     usuario.gender = response.data.user.gender;
     usuario.photo = response.data.user.photo;
     usuario.vehicles = response.data.user.vehicles;
-    usuario.destinations = response.data.user.destinations;
+    usuario.destinations = response.data.user.destination;
     usuario.routes = response.data.user.routes;
 
     if (response.data.user.role === "E") {
@@ -296,7 +296,12 @@ const PerfilUsuario = (): JSX.Element => {
               p: 0,
             }}
             onClick={() => {
-              navigate("/registroRuta");
+              if (usuario.vehicles.length === 0) {
+                alert("Debe registrar un vehículo antes de registrar una ruta");
+              }
+              if (usuario.vehicles.length >= 1) {
+                navigate("/registroRuta");
+              }
             }}
           >
             <CardContent
