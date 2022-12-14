@@ -16,6 +16,7 @@ import Auth from "./components/Auth";
 import UnAuth from "./components/UnAuth";
 import PerfilExterno from "./pages/PerfilExterno";
 import RegistroRuta from "./pages/RegistroRuta";
+import RegistroDestino from "./pages/RegistroDestino";
 
 const App = (): JSX.Element => {
   return (
@@ -51,6 +52,7 @@ const App = (): JSX.Element => {
         <Route path="chatPrivado/:userId" element={<ChatLayout />} />
         <Route path="perfilExterno/:userId" element={<PerfilExterno />} />
         <Route path="registroRuta" element={<RegistroRuta />} />
+        <Route path="registroDestino" element={<RegistroDestino />} />
       </Routes>
     </>
   );

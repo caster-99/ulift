@@ -9,6 +9,7 @@ import {
   Divider,
   Card,
   CardContent,
+  Grid,
 } from "@mui/material";
 import {
   AccessTimeRounded as TimeIcon,
@@ -20,7 +21,7 @@ import {
   PhoneRounded as PhoneIcon,
   PersonRounded as PersonIcon,
   BadgeRounded as BadgeIcon,
-  Email,
+  LocationOnRounded as LocationOnIcon,
 } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { NavBar } from "../components/NavBar";
@@ -29,6 +30,7 @@ import logo from "../assets/logo512.png";
 import { useNavigate } from "react-router-dom";
 import api_instance from "../api/api_instance";
 import { User } from "../types/index";
+import InfoCard from "../components/InfoCard";
 
 const usuario: User = {
   name: "",
@@ -41,13 +43,16 @@ const usuario: User = {
   rating: 0,
   emergencyContact: "",
   emergencyName: "",
+  vehicles: [],
+  destinations: [],
+  routes: [],
 };
 
 const PerfilUsuario = (): JSX.Element => {
   const navigate = useNavigate();
   const [userInfo, setUser] = useState({});
   const url = "https://ulift-backend.up.railway.app/api/user/profile";
-
+  const estado = "";
   const fetchUser = async () => {
     const token = localStorage.getItem("token");
     console.log(token);
@@ -64,6 +69,10 @@ const PerfilUsuario = (): JSX.Element => {
     usuario.rating = response.data.user.rate;
     usuario.gender = response.data.user.gender;
     usuario.photo = response.data.user.photo;
+    usuario.vehicles = response.data.user.vehicles;
+    usuario.destinations = response.data.user.destinations;
+    usuario.routes = response.data.user.routes;
+
     if (response.data.user.role === "E") {
       usuario.role = "Estudiante";
     } else if (response.data.user.role === "D") {
@@ -72,7 +81,7 @@ const PerfilUsuario = (): JSX.Element => {
       usuario.role = "Trabajador";
     }
 
-    console.log(usuario);
+    console.log(response.data.user.destinations);
   };
 
   useEffect(() => {
@@ -154,16 +163,59 @@ const PerfilUsuario = (): JSX.Element => {
               <Typography variant="h6" sx={{ mt: 2 }}>
                 Vehículos registrados
               </Typography>
-
               {/* Mapear los nombres de los vehículos registrados */}
+              {usuario.vehicles.length === 0 && (
+                <Typography fontSize={{ xs: 14, md: 17 }} m={2}>
+                  No hay vehículos registrados
+                </Typography>
+              )}
+              <Grid container spacing={{ xs: 2, md: 3 }}>
+                {usuario.vehicles?.map((v) => (
+                  <InfoCard title={"Placa: " + v.plate} subtitile={"Modelo: " + v.model} />
+                ))}
+              </Grid>
             </Box>
 
             <Box>
               <Typography variant="h6" sx={{ mt: 2 }}>
                 Rutas registradas
               </Typography>
-
               {/* Mapear los nombres de las rutas registradas */}
+              {usuario.routes.length === 0 && (
+                <Typography fontSize={{ xs: 14, md: 17 }} m={2}>
+                  No hay rutas registradas
+                </Typography>
+              )}
+
+              <Grid container spacing={{ xs: 2, md: 3 }}>
+                {usuario.routes?.map((v) => (
+                  <InfoCard
+                    title={"Nombre de la ruta: " + v.name}
+                    subtitile={"Activa: " + v.active}
+                  />
+                ))}
+              </Grid>
+            </Box>
+
+            <Box>
+              <Typography variant="h6" sx={{ mt: 2 }}>
+                Destinos registrados
+              </Typography>
+              {/* Mapear los nombres de las rutas registradas */}
+              {usuario.routes.length === 0 && (
+                <Typography fontSize={{ xs: 14, md: 17 }} m={2}>
+                  Error al cargar destinos
+                </Typography>
+              )}
+
+              <Grid container spacing={{ xs: 2, md: 3 }}>
+                {usuario.destinations?.map((v) => (
+                  <InfoCard
+                    title={"Nombre del destino: " + v.name}
+                    subtitile={"Latitud y Longitud: " + v.lat + " " + v.lng}
+                  />
+                ))}
+              </Grid>
             </Box>
           </Box>
         </Container>
@@ -176,17 +228,17 @@ const PerfilUsuario = (): JSX.Element => {
             right: 0,
           }}
         >
-          {/* <Divider />
+          <Divider />
           <Card
             sx={{
-              display: "none",
+              display: "flex",
               width: "100%",
               height: "80px",
               boxShadow: "none",
               p: 0,
             }}
             onClick={() => {
-              navigate("/registroVehiculo");
+              navigate("/registroDestino");
             }}
           >
             <CardContent
@@ -201,10 +253,10 @@ const PerfilUsuario = (): JSX.Element => {
                 overflow: "hidden",
               }}
             >
-              <EditIcon />
-              <Typography sx={{ fontWeight: 600, fontSize: 16, ml: 2 }}>Editar Perfil</Typography>
+              <LocationIcon />
+              <Typography sx={{ fontWeight: 600, fontSize: 16, ml: 2 }}>Agregar Destino</Typography>
             </CardContent>
-          </Card> */}
+          </Card>
           <Divider />
           <Card
             sx={{
