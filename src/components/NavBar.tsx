@@ -25,10 +25,11 @@ import {
   SosRounded as SosIcon,
   TaxiAlertRounded as ColaProcesoIcon,
 } from "@mui/icons-material";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import logo from "../assets/logo512.png";
+import api_instance from "../api/api_instance";
 
 const drawerWidth = 240;
 
@@ -37,6 +38,25 @@ interface Props {
 }
 
 export const NavBar = (props: Props) => {
+  var numeroEmergencia = "";
+
+  const url = "https://ulift-backend.up.railway.app/api/user/profile";
+  //  const url = "http://localhost:3000/api/user/profile";
+  const fetchUser = async () => {
+    const token = localStorage.getItem("token");
+    console.log(token);
+    const response = await api_instance.get(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    numeroEmergencia = response.data.user.emergencyNumber;
+    // console.log(vehiculos);
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
@@ -81,6 +101,10 @@ export const NavBar = (props: Props) => {
   //Función que hace el llamado a SOS
 
   const handleClickSOS = () => {
+    // eslint-disable-next-line no-restricted-globals
+    open(
+      `https://wa.me/58${numeroEmergencia}?text=Hola%2C%20he%20presionado%20el%20bot%C3%B3n%20de%20emergencia%20de%20ULift%2C%20cont%C3%A1cteme%20lo%20m%C3%A1s%20r%C3%A1pido%20posible.`
+    );
     enqueueSnackbar("¡Llamando a emergencias!", { variant: "info" });
   };
 

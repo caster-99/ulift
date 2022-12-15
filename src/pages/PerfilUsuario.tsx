@@ -50,16 +50,14 @@ const usuario: User = {
 
 const PerfilUsuario = (): JSX.Element => {
   const navigate = useNavigate();
-  const [userInfo, setUser] = useState({});
   const url = "https://ulift-backend.up.railway.app/api/user/profile";
-
+  //const url = "http://localhost:3000/api/user/profile";
   const fetchUser = async () => {
     const token = localStorage.getItem("token");
     console.log(token);
     const response = await api_instance.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    setUser(response.data.user);
     usuario.name = response.data.user.nameU + " " + response.data.user.lastname;
     usuario.id = response.data.user.id;
     usuario.email = response.data.user.email;
@@ -81,7 +79,7 @@ const PerfilUsuario = (): JSX.Element => {
       usuario.role = "Trabajador";
     }
 
-    console.log(response.data.user.destinations);
+    console.log(usuario.destinations);
   };
 
   useEffect(() => {

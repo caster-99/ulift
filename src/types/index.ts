@@ -31,6 +31,8 @@ export interface Route {
 }
 
 export interface Destination {
+  userID: string;
+  dNumber: string;
   name: string;
   lat: string;
   lng: string;

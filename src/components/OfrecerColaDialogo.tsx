@@ -12,12 +12,14 @@ import {
   InputLabel,
   MenuItem,
   TextField,
+  Typography,
 } from "@mui/material";
 import {
   AlarmRounded as TimeIcon,
   EmojiPeopleRounded as PasajerosIcon,
   DirectionsCar as CarIcon,
   LocationOn as LocIcon,
+  RampLeftRounded as RutaIcon,
 } from "@mui/icons-material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Button from "@mui/material/Button";
@@ -35,19 +37,12 @@ interface DialogProps {
   closeDialog: () => void;
 }
 
-const vehicle: Vehicle = {
-  plate: "",
-  model: "",
-  color: "",
-  seats: 0,
-  driverID: "",
-};
-
 const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
-  // const rutas;
-  // const vehiculos = [] Vehicle;
+  var rutas: Route[] = [];
+  var vehiculos: Vehicle[] = [];
 
   const url = "https://ulift-backend.up.railway.app/api/user/profile";
+  // const url = "http://localhost:3000/api/user/profile";
   const fetchUser = async () => {
     const token = localStorage.getItem("token");
     console.log(token);
@@ -57,9 +52,11 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
 
     for (let i = 0; i < response.data.user.vehicles.length; i++) {
       console.log(response.data.user.vehicles[i].plate + "" + response.data.user.vehicles[i].model);
+      vehiculos.push(response.data.user.vehicles[i]);
     }
     for (let i = 0; i < response.data.user.routes.length; i++) {
       console.log(response.data.user.routes[i].name);
+      rutas.push(response.data.user.routes[i]);
     }
     // console.log(vehiculos);
   };
@@ -69,27 +66,28 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
   }, []);
 
   const [direccion, setDireccion] = React.useState("");
+  const [vehiculo, setVehiculo] = React.useState("");
+  const [puestos, setPuestos] = React.useState(0);
+  const [tiempo, setTiempo] = React.useState(0);
+  const [mujeresOnly, setMujeresOnly] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const handleChange = (event: SelectChangeEvent) => {
     setDireccion(event.target.value as string);
   };
 
-  const [vehiculo, setVehiculo] = React.useState("");
-  const [puestos, setPuestos] = React.useState(0);
-  const [tiempo, setTiempo] = React.useState(0);
-
   const handleChangeVehiculo = (event: SelectChangeEvent) => {
     setVehiculo(event.target.value as string);
   };
   const irListaEspera = () => {
-    if (direccion !== "" && vehiculo !== "" && puestos >= 1 && tiempo > 1) {
-      navigate("/listaEspera");
-    } else {
-      enqueueSnackbar("¡Espera, tienes que completar todos los campos de manera válida!", {
-        variant: "error",
-      });
-    }
+    navigate("/listaEspera");
+    // if (direccion !== "" && vehiculo !== "" && puestos >= 1 && tiempo > 1) {
+    //   navigate("/listaEspera");
+    // } else {
+    //   enqueueSnackbar("¡Espera, tienes que completar todos los campos de manera válida!", {
+    //     variant: "error",
+    //   });
+    // }
   };
   return (
     <Dialog open={isOpen} onClose={closeDialog}>
@@ -117,7 +115,7 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
               }}
             >
               {" "}
-              <LocIcon color="warning" fontSize="large" />
+              <RutaIcon color="warning" fontSize="large" />
               <FormControl fullWidth>
                 <InputLabel id="direccionDestino-label">Ruta</InputLabel>
 
@@ -130,7 +128,9 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
                   fullWidth
                   required
                 >
-                  {/* Mapear las rutas disponibles */}
+                  {rutas.map((ruta) => (
+                    <MenuItem value={ruta.rNumber}>{ruta.name}</MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Box>
@@ -158,9 +158,11 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
                   fullWidth
                   required
                 >
-                  <MenuItem value={"Toyota"}>Toyota</MenuItem>
-                  <MenuItem value={"Ford"}>Ford</MenuItem>
-                  <MenuItem value={"Cadillac"}>Cadillac</MenuItem>
+                  {vehiculos.map((vehiculo) => (
+                    <MenuItem value={vehiculo.plate}>
+                      {vehiculo.plate} - {vehiculo.model}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Box>
@@ -206,11 +208,24 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
                 onChange={(e) => setTiempo(parseInt(e.target.value))}
               />
             </Box>
-            <FormControlLabel
-              control={<Checkbox />}
-              label="Solo aceptar mujeres"
-              defaultValue={0}
-            />
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}
+            >
+              <Checkbox
+                sx={{ "& .MuiSvgIcon-root": { fontSize: 24 } }}
+                inputProps={{
+                  "aria-label": "Solo aceptar mujeres",
+                }}
+                id="mujeresOnly"
+                onChange={(e) => setMujeresOnly(e.target.checked)}
+              />
+              <Typography>Solo aceptar mujeres</Typography>
+            </Box>
             <LoadingButton onClick={irListaEspera} variant="text">
               Aceptar
             </LoadingButton>

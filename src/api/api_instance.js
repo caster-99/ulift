@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const url = "https://ulift-backend.up.railway.app/api/";
+//const url = "https://ulift-backend.up.railway.app/api/";
 
-//const url = "http://localhost:3000/api/";
+const url = "http://localhost:3000/api/";
 const instance = axios.create({
   baseURL: url,
   timeout: 100000,

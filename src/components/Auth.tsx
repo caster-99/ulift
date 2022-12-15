@@ -6,9 +6,9 @@ interface Props {
 
 const Auth = ({ children }: Props): JSX.Element => {
   //  const user = useUser();
-  if (!localStorage.getItem("token")) {
-    return <Navigate to="/login" />;
-  }
+  // if (!localStorage.getItem("token")) {
+  //   return <Navigate to="/login" />;
+  // }
 
   return children;
 };
