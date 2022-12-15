@@ -2,7 +2,8 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Container, Tab, Typography } from "@mui/material";
 import Fade from "@mui/material/Fade";
 import { NavBar } from "../components/NavBar";
-import ListaUsuarios from "../components/ListaUsuarios";
+import ListaHistorialUsuarios from "../components/ListaHistorialUsuarios";
+import ListaHistorialConductores from "../components/ListaHistorialConductores";
 import React from "react";
 
 const HistorialColas = (): JSX.Element => {
@@ -35,10 +36,10 @@ const HistorialColas = (): JSX.Element => {
                 </TabList>
               </Box>
               <TabPanel value="1">
-                <ListaUsuarios />
+                <ListaHistorialConductores />
               </TabPanel>
               <TabPanel value="2">
-                <ListaUsuarios />
+                <ListaHistorialUsuarios />
               </TabPanel>
             </TabContext>
           </Container>
