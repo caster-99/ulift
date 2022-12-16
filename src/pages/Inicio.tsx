@@ -12,7 +12,6 @@ import {
 import { useState } from "react";
 import BuscarColaDialogo from "../components/BuscarColaDialogo";
 import OfrecerColaDialogo from "../components/OfrecerColaDialogo";
-import UserWaitingListItem from "../components/UserWaitingListItem";
 import ConductorDisponible from "../components/ConductorDisponible";
 import InfoUserDialogo from "../components/InfoUserDialogo";
 
@@ -57,71 +56,11 @@ const Inicio = (): JSX.Element => {
               <Typography fontSize={{ xs: 14, md: 17 }}>
                 No hay ningún conductor disponible
               </Typography>
+
+              {/* Si hay conductores disponibles, se saca de la API directamente y se muestra 
+              la siguiente información */}
+
               <Grid container spacing={{ xs: 2, md: 3 }}>
-                <ConductorDisponible
-                  name="Luisa"
-                  time="10"
-                  seats={2}
-                  location="Los olivos"
-                  userId="1234"
-                  role="Estudiante"
-                />
-                <ConductorDisponible
-                  name="Luisa"
-                  time="10"
-                  seats={2}
-                  location="Los olivos"
-                  userId="1234"
-                  role="Estudiante"
-                />
-                <ConductorDisponible
-                  name="Luisa"
-                  time="10"
-                  seats={2}
-                  location="Los olivos"
-                  userId="1234"
-                  role="Estudiante"
-                />
-                <ConductorDisponible
-                  name="Luisa"
-                  time="10"
-                  seats={2}
-                  location="Los olivos"
-                  userId="1234"
-                  role="Estudiante"
-                />
-                <ConductorDisponible
-                  name="Luisa"
-                  time="10"
-                  seats={2}
-                  location="Los olivos"
-                  userId="1234"
-                  role="Estudiante"
-                />
-                <ConductorDisponible
-                  name="Luisa"
-                  time="10"
-                  seats={2}
-                  location="Los olivos"
-                  userId="1234"
-                  role="Estudiante"
-                />
-                <ConductorDisponible
-                  name="Luisa"
-                  time="10"
-                  seats={2}
-                  location="Los olivos"
-                  userId="1234"
-                  role="Estudiante"
-                />
-                <ConductorDisponible
-                  name="Luisa"
-                  time="10"
-                  seats={2}
-                  location="Los olivos"
-                  userId="1234"
-                  role="Estudiante"
-                />
                 <ConductorDisponible
                   name="Luisa"
                   time="10"

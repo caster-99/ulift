@@ -4,8 +4,8 @@ import { Box, Container, Stack, Button, TextField } from "@mui/material";
 import SubPaginasHeader from "../components/SubPaginasHeader";
 import { LoadingButton } from "@mui/lab";
 import { Field, Form, Formik, FormikHelpers } from "formik";
-
 import * as yup from "yup";
+import axios from "axios";
 
 interface Values {
   nombreRuta: string;
@@ -28,13 +28,17 @@ const rendererOptions: object = {
 };
 
 const ucab: object = { lat: 8.296677954778339, lng: -62.71350327511522 };
-function onSubmit() {
-  console.log("Registrado");
-}
 
 export default class RutaUsuario extends Component<
   {},
-  { google: any; map: any; markers: Array<{ lat: number; lng: number }>; finalMarker: any }
+  {
+    google: any;
+    map: any;
+    markers: Array<{ lat: number; lng: number }>;
+    finalMarker: any;
+    path: any;
+    name: string;
+  }
 > {
   googleMapDiv!: HTMLElement | any;
 
@@ -45,6 +49,8 @@ export default class RutaUsuario extends Component<
       map: null,
       markers: [],
       finalMarker: null,
+      path: "",
+      name: "",
     };
     this.handleMapClick = this.handleMapClick.bind(this);
     this.calculateAndDisplayRoute = this.calculateAndDisplayRoute.bind(this);
@@ -130,6 +136,9 @@ export default class RutaUsuario extends Component<
           this.state.finalMarker.setMap(null);
         }
 
+        this.setState({ path: JSON.stringify(response.routes[0].overview_path) });
+        console.log(response.routes[0].overview_path);
+
         const latlng: google.maps.LatLngLiteral = this.state.markers[this.state.markers.length - 1];
 
         const mark = new google.maps.Marker({
@@ -187,6 +196,7 @@ export default class RutaUsuario extends Component<
               variant="outlined"
               required
               fullWidth
+              onChange={(e) => this.setState({ name: e.target.value })}
             />
             <Box
               ref={(ref) => {
@@ -199,7 +209,31 @@ export default class RutaUsuario extends Component<
               type="submit"
               variant="contained"
               onClick={() => {
-                alert("clicked");
+                var data = JSON.stringify({
+                  path: this.state.path,
+                  name: this.state.name,
+                });
+
+                const token = localStorage.getItem("token");
+
+                var config = {
+                  method: "post",
+                  url: "https://ulift-backend.up.railway.app/api/user/route",
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                  },
+                  data: data,
+                };
+
+                axios(config)
+                  .then(function (response) {
+                    console.log(JSON.stringify(response.data));
+                    alert("Ruta registrada con éxito, puedes registrar otra o ir a tu perfil.");
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
               }}
               fullWidth
             >

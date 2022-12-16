@@ -16,6 +16,7 @@ import Auth from "./components/Auth";
 import UnAuth from "./components/UnAuth";
 import PerfilExterno from "./pages/PerfilExterno";
 import RegistroRuta from "./pages/RegistroRuta";
+import RegistroDestino from "./pages/RegistroDestino";
 
 const App = (): JSX.Element => {
   return (
@@ -29,28 +30,30 @@ const App = (): JSX.Element => {
             </UnAuth>
           }
         >
-          <Route
-            element={
-              <Auth>
-                <Outlet />
-              </Auth>
-            }
-          ></Route>
           <Route path="login" element={<InicioSesion />} />
-          <Route path="signup" element={<Registro />} />
         </Route>
-        <Route path="/" element={<Inicio />} />
-        <Route path="perfil" element={<PerfilUsuario />} />
-        <Route path="historial" element={<HistorialColas />} />
-        <Route path="favoritos" element={<Favoritos />} />
-        <Route path="colaEnProceso" element={<ColaProceso />} />
-        <Route path="chats" element={<Chat />} />
-        <Route path="registroVehiculo" element={<RegistroVehiculo />} />
-        <Route path="listaEspera" element={<ListaEspera />} />
-        <Route path="faq" element={<Faq />} />
-        <Route path="chatPrivado/:userId" element={<ChatLayout />} />
-        <Route path="perfilExterno/:userId" element={<PerfilExterno />} />
-        <Route path="registroRuta" element={<RegistroRuta />} />
+        <Route
+          element={
+            <Auth>
+              <Outlet />
+            </Auth>
+          }
+        >
+          <Route path="/" element={<Inicio />} />
+          <Route path="signup" element={<Registro />} />
+          <Route path="perfil" element={<PerfilUsuario />} />
+          <Route path="historial" element={<HistorialColas />} />
+          <Route path="favoritos" element={<Favoritos />} />
+          <Route path="colaEnProceso" element={<ColaProceso />} />
+          <Route path="chats" element={<Chat />} />
+          <Route path="registroVehiculo" element={<RegistroVehiculo />} />
+          <Route path="listaEspera" element={<ListaEspera />} />
+          <Route path="faq" element={<Faq />} />
+          <Route path="chatPrivado/:userId" element={<ChatLayout />} />
+          <Route path="perfilExterno/:userId" element={<PerfilExterno />} />
+          <Route path="registroRuta" element={<RegistroRuta />} />
+          <Route path="registroDestino" element={<RegistroDestino />} />
+        </Route>
       </Routes>
     </>
   );

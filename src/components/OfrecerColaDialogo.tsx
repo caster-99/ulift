@@ -3,6 +3,7 @@ import * as React from "react";
 import { grey } from "@mui/material/colors";
 
 import {
+  Autocomplete,
   Dialog,
   styled,
   Box,
@@ -12,12 +13,14 @@ import {
   InputLabel,
   MenuItem,
   TextField,
+  Typography,
 } from "@mui/material";
 import {
   AlarmRounded as TimeIcon,
   EmojiPeopleRounded as PasajerosIcon,
   DirectionsCar as CarIcon,
   LocationOn as LocIcon,
+  RampLeftRounded as RutaIcon,
 } from "@mui/icons-material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Button from "@mui/material/Button";
@@ -26,30 +29,69 @@ import { useNavigate } from "react-router-dom";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { useSnackbar } from "notistack";
+import api_instance from "../api/api_instance";
+import { User, Vehicle, Route } from "../types/index";
+import { useEffect } from "react";
 
 interface DialogProps {
   isOpen: boolean;
   closeDialog: () => void;
 }
+var rutas: string[] = [];
+var vehiculos: string[] = [];
 
 const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
-  const [direccion, setDireccion] = React.useState("");
-  const { enqueueSnackbar } = useSnackbar();
-  const navigate = useNavigate();
-  const handleChange = (event: SelectChangeEvent) => {
-    setDireccion(event.target.value as string);
+  const url = "https://ulift-backend.up.railway.app/api/user/profile";
+  // const url = "http://localhost:3000/api/user/profile";
+  const fetchUser = async () => {
+    const token = localStorage.getItem("token");
+
+    const response = await api_instance.get(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    for (let i = 0; i < vehiculos.length; i++) {
+      vehiculos.pop();
+    }
+
+    for (let i = 0; i < rutas.length; i++) {
+      rutas.pop();
+    }
+
+    for (let i = 0; i < response.data.user.vehicles.length; i++) {
+      vehiculos.push(
+        response.data.user.vehicles[i].plate + " " + response.data.user.vehicles[i].model
+      );
+    }
+    for (let i = 0; i < response.data.user.routes.length; i++) {
+      rutas.push(response.data.user.routes[i].name);
+    }
   };
 
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const [direccion, setDireccion] = React.useState("");
   const [vehiculo, setVehiculo] = React.useState("");
   const [puestos, setPuestos] = React.useState(0);
   const [tiempo, setTiempo] = React.useState(0);
+  const [mujeresOnly, setMujeresOnly] = React.useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
 
-  const handleChangeVehiculo = (event: SelectChangeEvent) => {
-    setVehiculo(event.target.value as string);
-  };
   const irListaEspera = () => {
+    navigate("/listaEspera");
+
     if (direccion !== "" && vehiculo !== "" && puestos >= 1 && tiempo > 1) {
+      console.log("Direccion: " + direccion);
+      console.log("Vehiculo: " + vehiculo);
+      console.log("Puestos: " + puestos);
+      console.log("Tiempo: " + tiempo);
+      console.log("Mujeres: " + mujeresOnly);
       navigate("/listaEspera");
+      rutas = [];
+      vehiculos = [];
     } else {
       enqueueSnackbar("¡Espera, tienes que completar todos los campos de manera válida!", {
         variant: "error",
@@ -82,23 +124,15 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
               }}
             >
               {" "}
-              <LocIcon color="warning" fontSize="large" />
+              <RutaIcon color="warning" fontSize="large" />
               <FormControl fullWidth>
-                <InputLabel id="direccionDestino-label">Ruta</InputLabel>
-
-                <Select
-                  labelId="direccionDestino-label"
+                <Autocomplete
+                  onChange={(event, value) => setDireccion(value as string)}
+                  options={rutas}
                   id="direccionDestino-label"
-                  value={direccion}
-                  label="Ruta"
-                  onChange={handleChange}
                   fullWidth
-                  required
-                >
-                  <MenuItem value={"Los olivos"}>Los olivos</MenuItem>
-                  <MenuItem value={"Altavista"}>Altavista</MenuItem>
-                  <MenuItem value={"Los Mangos"}>Los Mangos</MenuItem>
-                </Select>
+                  renderInput={(params) => <TextField {...params} label="Ruta" />}
+                />
               </FormControl>
             </Box>
             <Box
@@ -111,24 +145,15 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
                 width: "100%",
               }}
             >
-              {" "}
               <CarIcon color="secondary" fontSize="large" />
               <FormControl fullWidth>
-                <InputLabel id="vehiculo-label">Vehículo a usar</InputLabel>
-
-                <Select
-                  labelId="vehiculo-label"
+                <Autocomplete
+                  onChange={(event, value) => setVehiculo(value as string)}
+                  options={vehiculos}
                   id="vehiculo-label"
-                  value={vehiculo}
-                  label="Vehículo a usar"
-                  onChange={handleChangeVehiculo}
                   fullWidth
-                  required
-                >
-                  <MenuItem value={"Toyota"}>Toyota</MenuItem>
-                  <MenuItem value={"Ford"}>Ford</MenuItem>
-                  <MenuItem value={"Cadillac"}>Cadillac</MenuItem>
-                </Select>
+                  renderInput={(params) => <TextField {...params} label="Vehículo" />}
+                />
               </FormControl>
             </Box>
             <Box
@@ -173,11 +198,24 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
                 onChange={(e) => setTiempo(parseInt(e.target.value))}
               />
             </Box>
-            <FormControlLabel
-              control={<Checkbox />}
-              label="Solo aceptar mujeres"
-              defaultValue={0}
-            />
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}
+            >
+              <Checkbox
+                sx={{ "& .MuiSvgIcon-root": { fontSize: 24 } }}
+                inputProps={{
+                  "aria-label": "Solo aceptar mujeres",
+                }}
+                id="mujeresOnly"
+                onChange={(e) => setMujeresOnly(e.target.checked)}
+              />
+              <Typography>Solo aceptar mujeres</Typography>
+            </Box>
             <LoadingButton onClick={irListaEspera} variant="text">
               Aceptar
             </LoadingButton>

@@ -9,13 +9,13 @@ import {
   Grid,
 } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import InfoUserDialogo from "./InfoUserDialogo";
+import InfoHistorialDialogo from "./InfoHistorialDialogo";
 interface UserProps {
   name: string;
   // photo: object;
   time: string;
+  date: string;
   userId: string;
-  seats: number;
   location: string;
   role: string;
 }
@@ -69,12 +69,12 @@ const UserListItem = (props: UserProps): JSX.Element => {
         </CardContent>{" "}
       </Card>{" "}
       <Divider />
-      <InfoUserDialogo
+      <InfoHistorialDialogo
         isOpen={isInfoUserOpen}
         closeDialog={closeInfoUserDialog}
         name={props.name}
-        seats={props.seats}
         location={props.location}
+        date={props.date}
         time={props.time}
         role={props.role}
       />

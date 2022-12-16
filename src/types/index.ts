@@ -9,4 +9,42 @@ export interface User {
   rating: number;
   emergencyContact: string;
   emergencyName: string;
+  vehicles: Vehicle[];
+  destinations: Destination[];
+  routes: Route[];
+}
+
+export interface Vehicle {
+  driverID: string;
+  plate: string;
+  color: string;
+  model: string;
+  seats: number;
+}
+
+export interface Route {
+  driverID: string;
+  rNumber: string;
+  path: [];
+  name: string;
+  active: boolean;
+}
+
+export interface Destination {
+  userID: string;
+  dNumber: string;
+  name: string;
+  lat: string;
+  lng: string;
+}
+
+export interface Lift {
+  driverID: string;
+  passengerID: string;
+  plate: string;
+  liftID: string;
+  dateL: Date;
+  timeL: Date;
+  seats: number;
+  rdNumber: string;
 }

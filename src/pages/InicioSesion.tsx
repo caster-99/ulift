@@ -39,15 +39,15 @@ const InicioSesion = (): JSX.Element => {
     //const url = "https://ulift-backend-production.up.railway.app/api/";
 
     const url = "https://ulift-backend.up.railway.app/api/";
+    // const url = "http://localhost:3000/api/";
     return api_instance
-      .post("https://ulift-backend.up.railway.app/api/login", user)
+      .post(url + "login", user)
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
           enqueueSnackbar("Inicio de sesión exitoso", { variant: "success" });
           const { token } = response.data;
           localStorage.setItem("token", token);
-          console.log("token: " + token);
           navigate(`/`);
         } else {
           enqueueSnackbar("Error al iniciar sesión", { variant: "error" });

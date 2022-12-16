@@ -1,9 +1,23 @@
 import React from "react";
-import { ListItem, Avatar, ListItemAvatar, ListItemText, IconButton, Stack } from "@mui/material";
+import {
+  ListItem,
+  Avatar,
+  ListItemAvatar,
+  ListItemText,
+  IconButton,
+  Stack,
+  Card,
+  Grid,
+  CardContent,
+  Box,
+  Typography,
+  Divider,
+} from "@mui/material";
 import {
   ChatRounded as ChatIcon,
   CheckCircleOutlineRounded as AcceptIcon,
 } from "@mui/icons-material";
+import { grey } from "@mui/material/colors";
 interface UserProps {
   name: string;
   // photo: object;
@@ -11,29 +25,62 @@ interface UserProps {
 
 const UserWaitingListItem = (props: UserProps): JSX.Element => {
   return (
-    <Stack direction="row">
-      <ListItem
-        secondaryAction={
-          <IconButton edge="end">
-            <ChatIcon color="primary" aria-label="chat" />
-          </IconButton>
-        }
+    <Grid item xs={12} sm={6} md={5} m={0} pt={1}>
+      <Card
+        sx={{
+          width: "100%",
+          height: "60px",
+          backgroundColor: grey[100],
+          boxShadow: "none",
+          p: 0,
+          m: 0,
+        }}
       >
-        <ListItemAvatar>
-          <Avatar>N</Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={props.name}
-          primaryTypographyProps={{
-            fontWeight: 600,
+        <CardContent
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            boxShadow: "none",
+            width: "100%",
+            height: "60px",
+            textOverflow: "ellipsis",
+            overflow: "hidden",
           }}
-        />
-      </ListItem>
+        >
+          <Box alignItems="center" mr={2} mt={1}>
+            {/* Aquí se tiene que cambiar para colocar la imagen */}
+            <Avatar sx={{ width: "50px", height: "50px" }}>N</Avatar>
+          </Box>
 
-      <IconButton sx={{ marginRight: 1 }}>
-        <AcceptIcon color="primary" />
-      </IconButton>
-    </Stack>
+          <Box
+            sx={{
+              width: "100%",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+            }}
+          >
+            <Typography
+              sx={{
+                fontWeight: 600,
+              }}
+            >
+              {props.name}
+            </Typography>
+          </Box>
+          <Box>
+            <IconButton
+              sx={{ marginRight: 1 }}
+              onClick={() => {
+                console.log("Aceptar ¿y quitar de la lista?");
+              }}
+            >
+              <AcceptIcon color="primary" />
+            </IconButton>
+          </Box>
+        </CardContent>
+      </Card>
+    </Grid>
   );
 };
 
