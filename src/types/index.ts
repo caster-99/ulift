@@ -37,3 +37,14 @@ export interface Destination {
   lat: string;
   lng: string;
 }
+
+export interface Lift {
+  driverID: string;
+  passengerID: string;
+  plate: string;
+  liftID: string;
+  dateL: Date;
+  timeL: Date;
+  seats: number;
+  rdNumber: string;
+}

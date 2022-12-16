@@ -44,7 +44,7 @@ export const NavBar = (props: Props) => {
   //  const url = "http://localhost:3000/api/user/profile";
   const fetchUser = async () => {
     const token = localStorage.getItem("token");
-    console.log(token);
+
     const response = await api_instance.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -95,6 +95,7 @@ export const NavBar = (props: Props) => {
   };
 
   const handleClickCloseSesion = () => {
+    localStorage.removeItem("token");
     navigate(`/login`);
   };
 

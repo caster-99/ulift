@@ -45,12 +45,20 @@ const RegistroDestino = (): JSX.Element => {
     libraries: ["places", "drawing"],
   });
   const onSubmit = async (user: Values, { setSubmitting }: FormikHelpers<Values>) => {
+    data.append("name", user.name);
     data.append("lat", latitude.toString()!);
     data.append("lng", longitude.toString()!);
+
+    for (let [key, value] of data) {
+      console.log(`${key}: ${value}`);
+    }
+
+    const token = localStorage.getItem("token");
     const config = {
       method: "post",
       url: "https://ulift-backend.up.railway.app/api/user/destination",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       data: data,
@@ -58,8 +66,7 @@ const RegistroDestino = (): JSX.Element => {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        enqueueSnackbar("¡Ahora puedes iniciar sesión!", { variant: "success" });
-        navigate(`/login`);
+        navigate(-1);
       })
       .catch(function (error) {
         console.log(error);
@@ -68,7 +75,6 @@ const RegistroDestino = (): JSX.Element => {
         data.delete("lat");
         data.delete("lng");
       });
-    navigate(-1);
   };
 
   return (
@@ -113,7 +119,7 @@ const RegistroDestino = (): JSX.Element => {
                   )}
 
                   <LoadingButton type="submit" loading={isSubmitting} variant="contained">
-                    Registrar vehículo
+                    Registrar destino
                   </LoadingButton>
                 </Stack>
               )}

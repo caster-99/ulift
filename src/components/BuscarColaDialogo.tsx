@@ -14,6 +14,7 @@ import {
   MenuItem,
   FormControlLabel,
   TextField,
+  Autocomplete,
 } from "@mui/material";
 import {
   DirectionsWalkRounded as CaminarIcon,
@@ -26,31 +27,35 @@ import { useSnackbar } from "notistack";
 import api_instance from "../api/api_instance";
 import { Destination } from "../types/index";
 import Typography from "@mui/material/Typography";
+import { useEffect } from "react";
 
 interface DialogProps {
   isOpen: boolean;
   closeDialog: () => void;
 }
-
+var destinos: string[] = [];
 const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
-  var destinos: Destination[] = [];
-  // const url = "https://ulift-backend.up.railway.app/api/user/profile";
-  const url = "http://localhost:3000/api/user/profile";
+  //var destinos: Destination[] = [];
+
+  const url = "https://ulift-backend.up.railway.app/api/user/profile";
+  //const url = "http://localhost:3000/api/user/profile";
   const fetchUser = async () => {
     const token = localStorage.getItem("token");
-    console.log(token);
+
     const response = await api_instance.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    for (let i = 0; i < response.data.user.destination.length; i++) {
-      console.log(response.data.user.destination[i].name);
-      destinos.push(response.data.user.destination[i]);
+    for (let i = 0; i < destinos.length; i++) {
+      destinos.pop();
     }
-    // console.log(vehiculos);
+
+    for (let i = 0; i < response.data.user.destination.length; i++) {
+      destinos.push(response.data.user.destination[i].name);
+    }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchUser();
   }, []);
 
@@ -60,21 +65,15 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setDireccion(event.target.value as string);
-  };
   const irListaEspera = () => {
     console.log(direccion);
     console.log(metros);
     console.log(mujeresOnly);
     navigate("/listaEspera");
-    // if (direccion !== "") {
-    //   navigate("/listaEspera");
-    // } else {
-    //   enqueueSnackbar("¡Espera, tienes que completar todos los campos de manera válida!", {
-    //     variant: "error",
-    //   });
-    // }
+    if (direccion !== "" && metros.toString() !== "") {
+      destinos = [];
+      navigate("/listaEspera");
+    }
   };
   return (
     <Dialog open={isOpen} onClose={closeDialog}>
@@ -103,20 +102,13 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
           >
             <LocIcon color="warning" fontSize="large" />
             <FormControl fullWidth>
-              <InputLabel id="direccionDestino-label">Dirección</InputLabel>
-
-              <Select
-                labelId="direccionDestino-label"
+              <Autocomplete
+                onChange={(event, value) => setDireccion(value as string)}
+                options={destinos}
                 id="direccionDestino-label"
-                value={direccion}
-                label="Dirección"
-                onChange={handleChange}
                 fullWidth
-              >
-                {destinos.map((destino) => (
-                  <MenuItem value={destino.dNumber}>{destino.name}</MenuItem>
-                ))}
-              </Select>
+                renderInput={(params) => <TextField {...params} label="Destino" />}
+              />
             </FormControl>
           </Box>
           <Box

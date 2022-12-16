@@ -3,6 +3,7 @@ import * as React from "react";
 import { grey } from "@mui/material/colors";
 
 import {
+  Autocomplete,
   Dialog,
   styled,
   Box,
@@ -36,29 +37,35 @@ interface DialogProps {
   isOpen: boolean;
   closeDialog: () => void;
 }
+var rutas: string[] = [];
+var vehiculos: string[] = [];
 
 const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
-  var rutas: Route[] = [];
-  var vehiculos: Vehicle[] = [];
-
   const url = "https://ulift-backend.up.railway.app/api/user/profile";
   // const url = "http://localhost:3000/api/user/profile";
   const fetchUser = async () => {
     const token = localStorage.getItem("token");
-    console.log(token);
+
     const response = await api_instance.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
+    for (let i = 0; i < vehiculos.length; i++) {
+      vehiculos.pop();
+    }
+
+    for (let i = 0; i < rutas.length; i++) {
+      rutas.pop();
+    }
+
     for (let i = 0; i < response.data.user.vehicles.length; i++) {
-      console.log(response.data.user.vehicles[i].plate + "" + response.data.user.vehicles[i].model);
-      vehiculos.push(response.data.user.vehicles[i]);
+      vehiculos.push(
+        response.data.user.vehicles[i].plate + " " + response.data.user.vehicles[i].model
+      );
     }
     for (let i = 0; i < response.data.user.routes.length; i++) {
-      console.log(response.data.user.routes[i].name);
-      rutas.push(response.data.user.routes[i]);
+      rutas.push(response.data.user.routes[i].name);
     }
-    // console.log(vehiculos);
   };
 
   useEffect(() => {
@@ -72,22 +79,24 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
   const [mujeresOnly, setMujeresOnly] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const handleChange = (event: SelectChangeEvent) => {
-    setDireccion(event.target.value as string);
-  };
 
-  const handleChangeVehiculo = (event: SelectChangeEvent) => {
-    setVehiculo(event.target.value as string);
-  };
   const irListaEspera = () => {
     navigate("/listaEspera");
-    // if (direccion !== "" && vehiculo !== "" && puestos >= 1 && tiempo > 1) {
-    //   navigate("/listaEspera");
-    // } else {
-    //   enqueueSnackbar("¡Espera, tienes que completar todos los campos de manera válida!", {
-    //     variant: "error",
-    //   });
-    // }
+
+    if (direccion !== "" && vehiculo !== "" && puestos >= 1 && tiempo > 1) {
+      console.log("Direccion: " + direccion);
+      console.log("Vehiculo: " + vehiculo);
+      console.log("Puestos: " + puestos);
+      console.log("Tiempo: " + tiempo);
+      console.log("Mujeres: " + mujeresOnly);
+      navigate("/listaEspera");
+      rutas = [];
+      vehiculos = [];
+    } else {
+      enqueueSnackbar("¡Espera, tienes que completar todos los campos de manera válida!", {
+        variant: "error",
+      });
+    }
   };
   return (
     <Dialog open={isOpen} onClose={closeDialog}>
@@ -117,21 +126,13 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
               {" "}
               <RutaIcon color="warning" fontSize="large" />
               <FormControl fullWidth>
-                <InputLabel id="direccionDestino-label">Ruta</InputLabel>
-
-                <Select
-                  labelId="direccionDestino-label"
+                <Autocomplete
+                  onChange={(event, value) => setDireccion(value as string)}
+                  options={rutas}
                   id="direccionDestino-label"
-                  value={direccion}
-                  label="Ruta"
-                  onChange={handleChange}
                   fullWidth
-                  required
-                >
-                  {rutas.map((ruta) => (
-                    <MenuItem value={ruta.rNumber}>{ruta.name}</MenuItem>
-                  ))}
-                </Select>
+                  renderInput={(params) => <TextField {...params} label="Ruta" />}
+                />
               </FormControl>
             </Box>
             <Box
@@ -144,26 +145,15 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
                 width: "100%",
               }}
             >
-              {" "}
               <CarIcon color="secondary" fontSize="large" />
               <FormControl fullWidth>
-                <InputLabel id="vehiculo-label">Vehículo a usar</InputLabel>
-
-                <Select
-                  labelId="vehiculo-label"
+                <Autocomplete
+                  onChange={(event, value) => setVehiculo(value as string)}
+                  options={vehiculos}
                   id="vehiculo-label"
-                  value={vehiculo}
-                  label="Vehículo a usar"
-                  onChange={handleChangeVehiculo}
                   fullWidth
-                  required
-                >
-                  {vehiculos.map((vehiculo) => (
-                    <MenuItem value={vehiculo.plate}>
-                      {vehiculo.plate} - {vehiculo.model}
-                    </MenuItem>
-                  ))}
-                </Select>
+                  renderInput={(params) => <TextField {...params} label="Vehículo" />}
+                />
               </FormControl>
             </Box>
             <Box

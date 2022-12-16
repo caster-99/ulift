@@ -1,9 +1,11 @@
 import { Box, Container, Fade, Grid, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 import { NavBar } from "../components/NavBar";
 import UserWaitingListItem from "../components/UserWaitingListItem";
 
 const ListaEspera = (): JSX.Element => {
+  const navigate = useNavigate();
   return (
     <Box>
       <NavBar />
@@ -38,8 +40,15 @@ const ListaEspera = (): JSX.Element => {
               <UserWaitingListItem name="Luisa" />
             </Grid>
           </Container>
-          {/* Cuando haya seleccionado al menos uno, debe habilitarse esta opción */}
-          <Button variant="contained">Empezar viaje</Button>
+          {/* Cuando haya seleccionado al menos uno o el límite indicado y si es conductor , debe habilitarse esta opción */}
+          <Button
+            variant="contained"
+            onClick={() => {
+              navigate("/colaEnProceso");
+            }}
+          >
+            Empezar viaje
+          </Button>
         </Box>
       </Fade>
     </Box>

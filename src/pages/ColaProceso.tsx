@@ -20,6 +20,10 @@ const ColaProceso = (): JSX.Element => {
             </Typography>
             {/* Si no hay nada en proceso aún */}
             <Typography fontSize={{ xs: 14, md: 17 }}>No hay ninguna cola en proceso</Typography>
+
+            <Typography fontSize={{ xs: 14, md: 17 }}>
+              Marca los pasajeros a medida que los vas dejando en sus destinos.
+            </Typography>
           </Container>
         </Box>
       </Fade>

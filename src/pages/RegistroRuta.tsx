@@ -215,7 +215,7 @@ export default class RutaUsuario extends Component<
                 });
 
                 const token = localStorage.getItem("token");
-                console.log(token);
+
                 var config = {
                   method: "post",
                   url: "https://ulift-backend.up.railway.app/api/user/route",

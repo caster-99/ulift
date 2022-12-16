@@ -54,7 +54,7 @@ const PerfilUsuario = (): JSX.Element => {
   //const url = "http://localhost:3000/api/user/profile";
   const fetchUser = async () => {
     const token = localStorage.getItem("token");
-    console.log(token);
+
     const response = await api_instance.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -82,9 +82,7 @@ const PerfilUsuario = (): JSX.Element => {
     console.log(usuario.destinations);
   };
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  fetchUser();
 
   return (
     <Box>
@@ -200,7 +198,7 @@ const PerfilUsuario = (): JSX.Element => {
                 Destinos registrados
               </Typography>
               {/* Mapear los nombres de las rutas registradas */}
-              {usuario.routes.length === 0 && (
+              {usuario.destinations.length === 0 && (
                 <Typography fontSize={{ xs: 14, md: 17 }} m={2}>
                   Error al cargar destinos
                 </Typography>
