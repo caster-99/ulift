@@ -31,6 +31,7 @@ import { useNavigate } from "react-router-dom";
 import api_instance from "../api/api_instance";
 import { User } from "../types/index";
 import InfoCard from "../components/InfoCard";
+import { useSnackbar } from "notistack";
 
 const usuario: User = {
   name: "",
@@ -50,6 +51,8 @@ const usuario: User = {
 
 const PerfilUsuario = (): JSX.Element => {
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
+
   const url = "https://ulift-backend.up.railway.app/api/user/profile";
   //const url = "http://localhost:3000/api/user/profile";
   const fetchUser = async () => {
@@ -293,7 +296,9 @@ const PerfilUsuario = (): JSX.Element => {
             }}
             onClick={() => {
               if (usuario.vehicles.length === 0) {
-                alert("Debe registrar un vehículo antes de registrar una ruta");
+                enqueueSnackbar("Debe registrar un vehículo antes de registrar una ruta", {
+                  variant: "warning",
+                });
               }
               if (usuario.vehicles.length >= 1) {
                 navigate("/registroRuta");
