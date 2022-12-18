@@ -51,7 +51,9 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
     }
 
     for (let i = 0; i < response.data.user.destination.length; i++) {
-      destinos.push(response.data.user.destination[i].name);
+      destinos.push(
+        response.data.user.destination[i].dNumber + " - " + response.data.user.destination[i].name
+      );
     }
   };
 
@@ -66,13 +68,16 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
   const navigate = useNavigate();
 
   const irListaEspera = () => {
-    console.log(direccion);
-    console.log(metros);
-    console.log(mujeresOnly);
-    navigate("/listaEspera");
     if (direccion !== "" && metros.toString() !== "") {
+      console.log(direccion.split(" - ")[0]);
+      console.log(metros);
+      console.log(mujeresOnly);
       destinos = [];
       navigate("/listaEspera");
+    } else {
+      enqueueSnackbar("¡Espera, tienes que completar todos los campos de manera válida!", {
+        variant: "error",
+      });
     }
   };
   return (

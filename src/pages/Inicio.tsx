@@ -86,15 +86,18 @@ const Inicio = (): JSX.Element => {
                 tooltipTitle="Buscar"
                 tooltipOpen
               />
-
-              <BuscarColaDialogo isOpen={isDialogPedirOpen} closeDialog={closePedirDialog} />
+              {isDialogPedirOpen && (
+                <BuscarColaDialogo isOpen={isDialogPedirOpen} closeDialog={closePedirDialog} />
+              )}
               <SpeedDialAction
                 icon={<OfrecerColaIcon />}
                 onClick={openOfrecerDialog}
                 tooltipTitle="Ofrecer"
                 tooltipOpen
               />
-              <OfrecerColaDialogo isOpen={isDialogOfrecerOpen} closeDialog={closeOfrecerDialog} />
+              {isDialogOfrecerOpen && (
+                <OfrecerColaDialogo isOpen={isDialogOfrecerOpen} closeDialog={closeOfrecerDialog} />
+              )}
             </SpeedDial>
           </Container>
         </Box>

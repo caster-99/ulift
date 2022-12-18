@@ -49,7 +49,6 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
     const response = await api_instance.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
-
     for (let i = 0; i < vehiculos.length; i++) {
       vehiculos.pop();
     }
@@ -60,17 +59,16 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
 
     for (let i = 0; i < response.data.user.vehicles.length; i++) {
       vehiculos.push(
-        response.data.user.vehicles[i].plate + " " + response.data.user.vehicles[i].model
+        response.data.user.vehicles[i].plate + " - " + response.data.user.vehicles[i].model
       );
     }
     for (let i = 0; i < response.data.user.routes.length; i++) {
-      rutas.push(response.data.user.routes[i].name);
+      rutas.push(response.data.user.routes[i].rNumber + " - " + response.data.user.routes[i].name);
     }
   };
-
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [isOpen]);
 
   const [direccion, setDireccion] = React.useState("");
   const [vehiculo, setVehiculo] = React.useState("");
@@ -81,15 +79,24 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
   const navigate = useNavigate();
 
   const irListaEspera = () => {
-    navigate("/listaEspera");
-
     if (direccion !== "" && vehiculo !== "" && puestos >= 1 && tiempo > 1) {
-      console.log("Direccion: " + direccion);
-      console.log("Vehiculo: " + vehiculo);
+      //Aquí veo el estado de los hooks para mandar esta info a la BD
+      //obtengo de la dirección(ruta) y vehículo el id correspondiente de su PK compuesta
+      console.log("Direccion: " + direccion.split(" - ")[0]);
+      console.log("Vehiculo: " + vehiculo.split(" - ")[0]);
       console.log("Puestos: " + puestos);
       console.log("Tiempo: " + tiempo);
       console.log("Mujeres: " + mujeresOnly);
+
       navigate("/listaEspera");
+      //Limpio los arreglos por si cambian
+      for (let i = 0; i < vehiculos.length; i++) {
+        vehiculos.pop();
+      }
+
+      for (let i = 0; i < rutas.length; i++) {
+        rutas.pop();
+      }
       rutas = [];
       vehiculos = [];
     } else {
