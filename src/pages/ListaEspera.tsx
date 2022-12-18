@@ -3,9 +3,15 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { NavBar } from "../components/NavBar";
 import UserWaitingListItem from "../components/UserWaitingListItem";
+import ListaEsperaParaConductores from "../components/ListaEsperaParaConductores";
+import ListaEsperaParaPasajeros from "../components/ListaEsperaParaPasajeros";
 
 const ListaEspera = (): JSX.Element => {
   const navigate = useNavigate();
+  //Necesito establecer los tipos de usuario, es decir, saber si es un conducto o un pasajero
+  //porque a cada uno se le va a mostrar algo distinto
+  var tipoUsuario;
+  tipoUsuario = "pasajero";
   return (
     <Box>
       <NavBar />
@@ -17,7 +23,7 @@ const ListaEspera = (): JSX.Element => {
             alignItems: "center",
           }}
         >
-          <Container maxWidth="md" sx={{ p: 3 }}>
+          <Container maxWidth="md" sx={{ p: 3, alignItems: "center" }}>
             <Typography
               color="primary"
               textAlign="left"
@@ -32,23 +38,9 @@ const ListaEspera = (): JSX.Element => {
             <Typography fontSize={{ xs: 14, md: 17 }} mb={{ xs: 2, sm: 3 }}>
               No hay nadie en la lista de espera
             </Typography>
-            <Grid container spacing={{ xs: 2, md: 3 }} m={4} p={0}>
-              <UserWaitingListItem name="Luisa" />
-              <UserWaitingListItem name="Luisa" />
-              <UserWaitingListItem name="Luisa" />
-              <UserWaitingListItem name="Luisa" />
-              <UserWaitingListItem name="Luisa" />
-            </Grid>
+            {tipoUsuario === "conductor" && <ListaEsperaParaConductores />}
+            {tipoUsuario === "pasajero" && <ListaEsperaParaPasajeros />}
           </Container>
-          {/* Cuando haya seleccionado al menos uno o el límite indicado y si es conductor , debe habilitarse esta opción */}
-          <Button
-            variant="contained"
-            onClick={() => {
-              navigate("/colaEnProceso");
-            }}
-          >
-            Empezar viaje
-          </Button>
         </Box>
       </Fade>
     </Box>

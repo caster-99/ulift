@@ -20,6 +20,7 @@ import {
 import { grey } from "@mui/material/colors";
 interface UserProps {
   name: string;
+  id: string;
   // photo: object;
 }
 
@@ -28,7 +29,7 @@ const UserWaitingListItem = (props: UserProps): JSX.Element => {
     <Grid item xs={12} sm={6} md={5} m={0} pt={1}>
       <Card
         sx={{
-          width: "100%",
+          width: "95%",
           height: "60px",
           backgroundColor: grey[100],
           boxShadow: "none",
