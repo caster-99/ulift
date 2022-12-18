@@ -79,7 +79,7 @@ const PerfilUsuario = (): JSX.Element => {
       usuario.role = "Trabajador";
     }
 
-    console.log(usuario.destinations);
+    console.log(usuario.routes);
   };
 
   fetchUser();

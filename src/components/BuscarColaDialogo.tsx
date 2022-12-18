@@ -66,11 +66,10 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
   const navigate = useNavigate();
 
   const irListaEspera = () => {
-    console.log(direccion);
-    console.log(metros);
-    console.log(mujeresOnly);
-    navigate("/listaEspera");
     if (direccion !== "" && metros.toString() !== "") {
+      console.log(direccion);
+      console.log(metros);
+      console.log(mujeresOnly);
       destinos = [];
       navigate("/listaEspera");
     }

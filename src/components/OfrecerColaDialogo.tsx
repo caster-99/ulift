@@ -49,7 +49,6 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
     const response = await api_instance.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
-
     for (let i = 0; i < vehiculos.length; i++) {
       vehiculos.pop();
     }
@@ -64,13 +63,13 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
       );
     }
     for (let i = 0; i < response.data.user.routes.length; i++) {
+      console.log(response.data.user.routes[i].name);
       rutas.push(response.data.user.routes[i].name);
     }
   };
-
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [isOpen]);
 
   const [direccion, setDireccion] = React.useState("");
   const [vehiculo, setVehiculo] = React.useState("");
@@ -81,15 +80,24 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
   const navigate = useNavigate();
 
   const irListaEspera = () => {
-    navigate("/listaEspera");
-
     if (direccion !== "" && vehiculo !== "" && puestos >= 1 && tiempo > 1) {
+      //Aquí veo el estado de los hooks para mandar esta info a la BD
+
       console.log("Direccion: " + direccion);
       console.log("Vehiculo: " + vehiculo);
       console.log("Puestos: " + puestos);
       console.log("Tiempo: " + tiempo);
       console.log("Mujeres: " + mujeresOnly);
+
       navigate("/listaEspera");
+      //Limpio los arreglos por si cambian
+      for (let i = 0; i < vehiculos.length; i++) {
+        vehiculos.pop();
+      }
+
+      for (let i = 0; i < rutas.length; i++) {
+        rutas.pop();
+      }
       rutas = [];
       vehiculos = [];
     } else {
