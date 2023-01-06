@@ -7,10 +7,12 @@ import {
   Card,
   CardContent,
   Grid,
+  IconButton,
 } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import InfoUserDialogo from "./InfoUserDialogo";
 import { useNavigate } from "react-router-dom";
+import { ArrowCircleLeft, ChatRounded } from "@mui/icons-material";
 interface UserProps {
   name: string;
   // photo: object;
@@ -32,7 +34,7 @@ const UsuarioTarjeta = (props: UserProps): JSX.Element => {
       <Card
         sx={{
           width: "100%",
-          height: "75px",
+          height: "50px",
           boxShadow: "none",
           p: 0,
           mb: 0.5,
@@ -46,13 +48,19 @@ const UsuarioTarjeta = (props: UserProps): JSX.Element => {
             alignItems: "center",
             boxShadow: "none",
             width: "100%",
-            height: "80px",
+            height: "100%",
             textOverflow: "ellipsis",
             overflow: "hidden",
             p: 0,
           }}
         >
-          <ListItem>
+          <ListItem
+            secondaryAction={
+              <IconButton>
+                <ArrowCircleLeft />
+              </IconButton>
+            }
+          >
             <ListItemAvatar>
               <Avatar>{props.userId}</Avatar>
             </ListItemAvatar>
@@ -65,7 +73,6 @@ const UsuarioTarjeta = (props: UserProps): JSX.Element => {
           </ListItem>
         </CardContent>
       </Card>
-      <Divider />
     </Grid>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ListItem,
   Avatar,
@@ -25,6 +25,14 @@ interface UserProps {
 }
 
 const UserWaitingListItem = (props: UserProps): JSX.Element => {
+  const [isActive, setIsActive] = useState(false);
+  const handleClick = () => {
+    console.log("Aceptar ¿y quitar de la lista?");
+    setIsActive((current) => !current);
+
+    // setIsActive(true);
+  };
+
   return (
     <Grid item xs={12} sm={6} md={5} m={0} pt={1}>
       <Card
@@ -47,6 +55,8 @@ const UserWaitingListItem = (props: UserProps): JSX.Element => {
             height: "60px",
             textOverflow: "ellipsis",
             overflow: "hidden",
+            backgroundColor: isActive ? "#40B4E5" : "",
+            color: isActive ? "white" : "",
           }}
         >
           <Box alignItems="center" mr={2} mt={1}>
@@ -70,12 +80,7 @@ const UserWaitingListItem = (props: UserProps): JSX.Element => {
             </Typography>
           </Box>
           <Box>
-            <IconButton
-              sx={{ marginRight: 1 }}
-              onClick={() => {
-                console.log("Aceptar ¿y quitar de la lista?");
-              }}
-            >
+            <IconButton sx={{ marginRight: 1 }} onClick={handleClick}>
               <AcceptIcon color="primary" />
             </IconButton>
           </Box>

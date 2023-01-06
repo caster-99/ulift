@@ -11,7 +11,7 @@ const ListaEspera = (): JSX.Element => {
   //Necesito establecer los tipos de usuario, es decir, saber si es un conducto o un pasajero
   //porque a cada uno se le va a mostrar algo distinto
   var tipoUsuario;
-  tipoUsuario = "conductor";
+  tipoUsuario = "pasajero";
   return (
     <Box>
       <NavBar />
