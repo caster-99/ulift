@@ -14,13 +14,58 @@ import BuscarColaDialogo from "../components/BuscarColaDialogo";
 import OfrecerColaDialogo from "../components/OfrecerColaDialogo";
 import ConductorDisponible from "../components/ConductorDisponible";
 import InfoUserDialogo from "../components/InfoUserDialogo";
+import axios from "axios";
+import { Route, Vehicle } from "../types";
 
 const Inicio = (): JSX.Element => {
+  var vehiculos: Vehicle[] = [];
+  var rutas: Route[] = [];
+  const token = localStorage.getItem("token");
+  var queryVehiculos = {
+    method: "get",
+    url: "https://ulift-backend.up.railway.app/api/user/vehicle",
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  var queryRutas = {
+    method: "get",
+    url: "https://ulift-backend.up.railway.app/api/user/route",
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  axios(queryVehiculos)
+    .then(function (response) {
+      vehiculos = response.data.vehicles;
+      console.log(vehiculos);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  axios(queryRutas)
+    .then(function (response) {
+      rutas = response.data.routes;
+      console.log(rutas);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
   const [isDialogOfrecerOpen, setDialogOfrecerOpen] = useState(false);
   const [isDialogPedirOpen, setDialogPedirOpen] = useState(false);
 
   const openOfrecerDialog = () => {
-    setDialogOfrecerOpen(true);
+    if (vehiculos.length === 0) {
+      alert(
+        "No tienes vehiculos registrados. Para poder proceder, debe registrar un vehículo en su perfil."
+      );
+    } else if (rutas.length === 0) {
+      alert(
+        "No tienes rutas registradas. Para poder proceder, debe registrar una ruta en su perfil."
+      );
+    } else {
+      setDialogOfrecerOpen(true);
+    }
   };
 
   const closeOfrecerDialog = () => {

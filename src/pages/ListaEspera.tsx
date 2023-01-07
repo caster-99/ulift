@@ -1,17 +1,14 @@
-import { Box, Container, Fade, Grid, Typography } from "@mui/material";
-import Button from "@mui/material/Button";
+import { Box, Container, Fade, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { NavBar } from "../components/NavBar";
-import UserWaitingListItem from "../components/UserWaitingListItem";
 import ListaEsperaParaConductores from "../components/ListaEsperaParaConductores";
 import ListaEsperaParaPasajeros from "../components/ListaEsperaParaPasajeros";
 
 const ListaEspera = (): JSX.Element => {
-  const navigate = useNavigate();
   //Necesito establecer los tipos de usuario, es decir, saber si es un conducto o un pasajero
   //porque a cada uno se le va a mostrar algo distinto
   var tipoUsuario;
-  tipoUsuario = "pasajero";
+  tipoUsuario = "conductor";
   return (
     <Box>
       <NavBar />

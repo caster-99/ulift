@@ -5,7 +5,6 @@ import {
   Button,
   Checkbox,
   Container,
-  Grid,
   List,
   ListItem,
   ListItemAvatar,
@@ -13,13 +12,10 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import UsuarioTarjeta from "./UsuarioTarjeta";
-import UserWaitingListItem from "./UserWaitingListItem";
-import { useNavigate } from "react-router-dom";
 import { User } from "../types";
+import { grey } from "@mui/material/colors";
 
 const CheckParaConductores = (): JSX.Element => {
-  const navigate = useNavigate();
   const p1: User = {
     name: "Luisa",
     email: "luisa",
@@ -41,7 +37,7 @@ const CheckParaConductores = (): JSX.Element => {
     email: "luisa",
     gender: "Femenino",
     role: "Estudiante",
-    id: "1234",
+    id: "11121",
     photo: "https://i.imgur.com/0cQ3X7A.png",
     trips: 0,
     rating: 0,
@@ -57,7 +53,7 @@ const CheckParaConductores = (): JSX.Element => {
     email: "luisa",
     gender: "Femenino",
     role: "Estudiante",
-    id: "1234",
+    id: "4567",
     photo: "https://i.imgur.com/0cQ3X7A.png",
     trips: 0,
     rating: 0,
@@ -73,7 +69,7 @@ const CheckParaConductores = (): JSX.Element => {
     email: "luisa",
     gender: "Femenino",
     role: "Estudiante",
-    id: "1234",
+    id: "8910",
     photo: "https://i.imgur.com/0cQ3X7A.png",
     trips: 0,
     rating: 0,
@@ -108,6 +104,7 @@ const CheckParaConductores = (): JSX.Element => {
         <List dense sx={{ width: "100%", maxWidth: 360 }}>
           {pasajeros.map((user) => (
             <UserListItem
+              key={user.id}
               id={user.id}
               name={user.name}
               email={user.email}
@@ -138,20 +135,22 @@ const CheckParaConductores = (): JSX.Element => {
 
 export default CheckParaConductores;
 
-export const UserListItem = (values: User, listId: number): JSX.Element => {
+export const UserListItem = (user: User): JSX.Element => {
+  const foto = "https://ulift-backend.up.railway.app/" + user.photo;
   const [checked, setChecked] = React.useState([0]);
 
-  const handleToggle = (value: number) => () => {
-    const currentIndex = checked.indexOf(value);
+  const handleToggle = (value: string) => () => {
+    const currentIndex = checked.indexOf(parseInt(value));
     const newChecked = [...checked];
 
     if (currentIndex === -1) {
-      newChecked.push(value);
+      newChecked.push(parseInt(value));
     } else {
       newChecked.splice(currentIndex, 1);
     }
 
     setChecked(newChecked);
+    console.log(value);
   };
 
   return (
@@ -160,18 +159,24 @@ export const UserListItem = (values: User, listId: number): JSX.Element => {
       secondaryAction={
         <Checkbox
           edge="end"
-          onChange={handleToggle(listId)}
-          checked={checked.indexOf(listId) !== -1}
-          disabled={checked.indexOf(listId) !== -1}
+          onChange={handleToggle(user.id)}
+          checked={checked.indexOf(parseInt(user.id)) !== -1}
+          disabled={checked.indexOf(parseInt(user.id)) !== -1}
         />
       }
-      sx={{ width: "100%", height: "50px" }}
+      sx={{
+        width: "100%",
+        height: "60px",
+        mt: 1.5,
+        backgroundColor: grey[100],
+        borderRadius: 2,
+      }}
     >
       <ListItemButton>
         <ListItemAvatar>
-          <Avatar src={values.photo} />
+          <Avatar sx={{ width: 50, height: 50 }} src={foto} />
         </ListItemAvatar>
-        <ListItemText primary={values.name} id={values.id} />
+        <Typography sx={{ fontWeight: 600, marginLeft: 1 }}>{user.name}</Typography>
       </ListItemButton>
     </ListItem>
   );

@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import UsuarioTarjeta from "./UsuarioTarjeta";
 import { User } from "../types";
 
-const ListaConductores = (): JSX.Element => {
+const ListaPasajeros = (): JSX.Element => {
   const p1: User = {
     name: "Luisa",
     email: "luisa",
@@ -97,4 +97,4 @@ const ListaConductores = (): JSX.Element => {
     </Box>
   );
 };
-export default ListaConductores;
+export default ListaPasajeros;

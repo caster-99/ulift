@@ -1,3 +1,4 @@
+//Para usar en el historial de colas
 import React, { useState } from "react";
 import {
   ListItem,
@@ -12,7 +13,7 @@ import Divider from "@mui/material/Divider";
 import InfoHistorialDialogo from "./InfoHistorialDialogo";
 interface UserProps {
   name: string;
-  // photo: object;
+  // photo: string;
   time: string;
   date: string;
   userId: string;

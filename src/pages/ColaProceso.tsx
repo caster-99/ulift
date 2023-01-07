@@ -18,7 +18,7 @@ import CheckParaPasajeros from "../components/CheckParaPasajeros";
 
 const ColaProceso = (): JSX.Element => {
   var tipoUsuario;
-  tipoUsuario = "pasajero";
+  tipoUsuario = "conductor";
 
   return (
     <Box>

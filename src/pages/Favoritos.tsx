@@ -10,7 +10,7 @@ import {
   HailRounded as PasajeroFavoritoIcon,
   DriveEtaRounded as ConductorFavoritoIcon,
 } from "@mui/icons-material";
-import ListaUsuarios from "../components/ListaUsuarios";
+import ListaUsuarios from "../components/ListaPasajeros";
 import ListaConductores from "../components/ListaConductores";
 
 const Favoritos = (): JSX.Element => {

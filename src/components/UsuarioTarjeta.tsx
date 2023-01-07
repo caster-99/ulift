@@ -12,32 +12,31 @@ import {
 import Divider from "@mui/material/Divider";
 import InfoUserDialogo from "./InfoUserDialogo";
 import { useNavigate } from "react-router-dom";
-import { ArrowCircleLeft, ChatRounded } from "@mui/icons-material";
-interface UserProps {
-  name: string;
-  // photo: object;
-  time: string;
-  userId: string;
-  seats: number;
-  location: string;
-  role: string;
-}
+import { ArrowCircleRight, ChatRounded } from "@mui/icons-material";
+import { User } from "../types";
+import { grey } from "@mui/material/colors";
 
-const UsuarioTarjeta = (props: UserProps): JSX.Element => {
+const UsuarioTarjeta = (props: User): JSX.Element => {
   const navigate = useNavigate();
   const openInfoUserDialog = () => {
-    navigate("/perfilExterno/" + props.userId);
+    navigate("/perfilExterno/" + props.id);
   };
+  const foto = "https://ulift-backend.up.railway.app/" + props.photo;
 
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Card
         sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           width: "100%",
-          height: "50px",
+          height: "70px",
           boxShadow: "none",
           p: 0,
           mb: 0.5,
+          borderRadius: 2,
+          backgroundColor: grey[100],
         }}
         onClick={openInfoUserDialog}
       >
@@ -48,21 +47,16 @@ const UsuarioTarjeta = (props: UserProps): JSX.Element => {
             alignItems: "center",
             boxShadow: "none",
             width: "100%",
-            height: "100%",
+            height: "60px",
             textOverflow: "ellipsis",
             overflow: "hidden",
             p: 0,
+            m: 0,
           }}
         >
-          <ListItem
-            secondaryAction={
-              <IconButton>
-                <ArrowCircleLeft />
-              </IconButton>
-            }
-          >
+          <ListItem sx={{ mt: 2, height: 60 }}>
             <ListItemAvatar>
-              <Avatar>{props.userId}</Avatar>
+              <Avatar sx={{ width: 50, height: 50 }} src={foto} />
             </ListItemAvatar>
             <ListItemText
               primary={props.name}
