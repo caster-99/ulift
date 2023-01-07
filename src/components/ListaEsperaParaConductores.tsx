@@ -134,11 +134,18 @@ export const PasajeroListaEspera = (user: User): JSX.Element => {
   const [isActive, setIsActive] = useState(false);
 
   const handleClick = (id: string) => () => {
-    setIsActive((current) => !current);
-    if (pasajeros.find((user) => user.id === id)) {
+    if (isActive === false) {
+      setIsActive((current) => !current);
       elegidos.push(pasajeros.find((user) => user.id === id) as User);
       console.log(elegidos.flatMap((user) => user.name + " " + user.id));
+    } else {
+      if (pasajeros.find((user) => user.id === id)) {
+        setIsActive((current) => !current);
+        elegidos.splice(elegidos.indexOf(pasajeros.find((user) => user.id === id) as User), 1);
+        console.log(elegidos.flatMap((user) => user.name + " " + user.id));
+      }
     }
+
     // setIsActive(true);
   };
 
