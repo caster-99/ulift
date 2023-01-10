@@ -15,12 +15,18 @@ import OfrecerColaDialogo from "../components/OfrecerColaDialogo";
 import ConductorDisponible from "../components/ConductorDisponible";
 import InfoUserDialogo from "../components/InfoUserDialogo";
 import axios from "axios";
-import { Route, Vehicle } from "../types";
+import { Lift, Route, Vehicle } from "../types";
 import AlertaDialogo from "../components/AlertaDialogo";
 
-const Inicio = (): JSX.Element => {
-  var vehiculos: Vehicle[] = [];
-  var rutas: Route[] = [];
+var vehiculos: Vehicle[] = [];
+var rutas: Route[] = [];
+var colas: Lift[] = [];
+
+var flagVehiculos: boolean = false;
+var flagRutas: boolean = false;
+var flagColas: boolean = false;
+
+const fetchInfo = async () => {
   const token = localStorage.getItem("token");
   var queryVehiculos = {
     method: "get",
@@ -34,10 +40,18 @@ const Inicio = (): JSX.Element => {
     headers: { Authorization: `Bearer ${token}` },
   };
 
+  var queryColas = {
+    method: "get",
+    url: "https://ulift-backend.up.railway.app/api/lift/match/0/0/0/0",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
   axios(queryVehiculos)
     .then(function (response) {
       vehiculos = response.data.vehicles;
-      console.log(vehiculos);
+      flagVehiculos = true;
     })
     .catch(function (error) {
       console.log(error);
@@ -46,15 +60,27 @@ const Inicio = (): JSX.Element => {
   axios(queryRutas)
     .then(function (response) {
       rutas = response.data.routes;
-      console.log(rutas);
+      flagRutas = true;
     })
     .catch(function (error) {
       console.log(error);
     });
 
+  axios(queryColas)
+    .then(function (response) {
+      colas = response.data.lifts;
+      flagColas = true;
+      console.log(colas);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+const Inicio = (): JSX.Element => {
+
+
   const [isDialogOfrecerOpen, setDialogOfrecerOpen] = useState(false);
   const [isDialogPedirOpen, setDialogPedirOpen] = useState(false);
-  const [alerta, setAlerta] = useState(false);
 
   const openOfrecerDialog = () => {
     if (vehiculos.length === 0) {
@@ -81,7 +107,7 @@ const Inicio = (): JSX.Element => {
   const closePedirDialog = () => {
     setDialogPedirOpen(false);
   };
-
+  fetchInfo();
   return (
     <Box>
       <NavBar />
@@ -100,23 +126,22 @@ const Inicio = (): JSX.Element => {
                 Conductores disponibles
               </Typography>
               {/* Si no hay nada en proceso aún */}
-              <Typography fontSize={{ xs: 14, md: 17 }}>
-                No hay ningún conductor disponible
-              </Typography>
+
+              {colas.length === 0 && (
+                <Typography fontSize={{ xs: 14, md: 17 }}>
+                  No hay ningún conductor disponible
+                </Typography>
+              )}
 
               {/* Si hay conductores disponibles, se saca de la API directamente y se muestra 
               la siguiente información */}
-
-              <Grid container spacing={{ xs: 2, md: 3 }}>
-                <ConductorDisponible
-                  name="Luisa"
-                  time="10"
-                  seats={2}
-                  location="Los olivos"
-                  userId="1234"
-                  role="Estudiante"
-                />
-              </Grid>
+              {colas.length > 0 && (
+                <Grid container spacing={{ xs: 2, md: 3 }}>
+                  {colas.map((cola) => (
+                    <Typography fontSize={{ xs: 14, md: 17 }} key={cola.liftID}>Conductores disponibles</Typography>
+                  ))}
+                </Grid>
+              )}
             </Box>
             <SpeedDial
               ariaLabel="acciones"

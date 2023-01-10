@@ -22,14 +22,12 @@ import CardContent from "@mui/material/CardContent";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import InfoUserDialogo from "./InfoUserDialogo";
+import { Lift, User } from "../types";
+
+
 interface UserProps {
-  name: string;
-  // photo: object;
-  time: string;
-  userId: string;
-  seats: number;
-  location: string;
-  role: string;
+  driver:User,
+  lift:Lift
 }
 
 const ConductorDisponible = (props: UserProps): JSX.Element => {
@@ -86,7 +84,7 @@ const ConductorDisponible = (props: UserProps): JSX.Element => {
                   fontWeight: 600,
                 }}
               >
-                {props.name}
+                {props.driver.name}
               </Typography>
             </Box>
             <Box
@@ -105,7 +103,7 @@ const ConductorDisponible = (props: UserProps): JSX.Element => {
                   color: grey,
                 }}
               >
-                Tiempo de espera: {props.time} minutos
+                Tiempo de espera: {props.lift.waitTime} minutos
               </Typography>
             </Box>
             <Box
@@ -124,7 +122,7 @@ const ConductorDisponible = (props: UserProps): JSX.Element => {
                   color: grey,
                 }}
               >
-                Puestos disponibles: {props.seats} puestos
+                Puestos disponibles: {props.lift.seats} puestos
               </Typography>
             </Box>
           </Box>
@@ -134,11 +132,11 @@ const ConductorDisponible = (props: UserProps): JSX.Element => {
       <InfoUserDialogo
         isOpen={isInfoUserOpen}
         closeDialog={closeInfoUserDialog}
-        name={props.name}
-        seats={props.seats}
-        location={props.location}
-        time={props.time}
-        role={props.role}
+        name={props.driver.name}
+        seats={props.lift.seats}
+        location={props.lift.rdName}
+        time={props.lift.waitTime.toString()}
+        role={props.driver.role}
       />
     </Grid>
   );

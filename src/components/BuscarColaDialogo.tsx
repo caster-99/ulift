@@ -28,6 +28,7 @@ import api_instance from "../api/api_instance";
 import { Destination } from "../types/index";
 import Typography from "@mui/material/Typography";
 import { useEffect } from "react";
+import axios from "axios";
 
 interface DialogProps {
   isOpen: boolean;
@@ -72,7 +73,23 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
       console.log(direccion.split(" - ")[0]);
       console.log(metros);
       console.log(mujeresOnly);
+
+      const token = localStorage.getItem("token");
+      const url = "https://ulift-backend.up.railway.app/api/lift/match";
+
+      var data = "";
+
+      var config = {
+        method: "get",
+        url: url,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: data,
+      };
+
       destinos = [];
+
       navigate("/listaEspera");
     } else {
       enqueueSnackbar("¡Espera, tienes que completar todos los campos de manera válida!", {

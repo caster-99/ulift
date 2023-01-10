@@ -47,4 +47,7 @@ export interface Lift {
   timeL: Date;
   seats: number;
   rdNumber: string;
+  rdName: string;
+  waitTime: number;
+  path:string;
 }
