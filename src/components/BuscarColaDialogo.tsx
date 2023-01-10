@@ -68,6 +68,31 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
+  const pedirCola = async (url: string, token: string) => {
+    var config = {
+      method: "get",
+      url: url,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        enqueueSnackbar("¡Solicitud de cola creada con exito! Espera que un conductor te acepte.", {
+          variant: "success",
+        });
+        navigate("/listaEspera");
+      })
+      .catch(function (error) {
+        console.log(error);
+        enqueueSnackbar("¡No se pudo crear la solicitud de cola!", {
+          variant: "error",
+        });
+      });
+  };
+
   const irListaEspera = () => {
     if (direccion !== "" && metros.toString() !== "") {
       const token = localStorage.getItem("token");
@@ -76,8 +101,8 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
       if (mujeresOnly) {
         mujeres = 1;
       }
-      var lat:number=0;
-      var lng:number=0;
+      var lat: number = 0;
+      var lng: number = 0;
 
       var destino = {
         method: "get",
@@ -89,64 +114,37 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
 
       axios(destino)
         .then(function (response) {
-          for (let i = 0; i < response.data.destination.length; i++) { 
+          for (let i = 0; i < response.data.destination.length; i++) {
             if (response.data.destination[i].dNumber === parseInt(direccion.split(" - ")[0])) {
               lat = response.data.destination[i].lat!;
               lng = response.data.destination[i].lng!;
               console.log(lat);
               console.log(lng);
             }
+            const url =
+              "https://ulift-backend.up.railway.app/api/lift/match/" +
+              mujeres +
+              "/" +
+              lat +
+              "/" +
+              lng +
+              "/" +
+              metros;
+            pedirCola(url, token!);
           }
-
-
         })
         .catch(function (error) {
           console.log(error);
         });
 
-       const url =
-        "https://ulift-backend.up.railway.app/api/lift/match/" +
-        mujeres +
-        "/" +
-        lat +
-        "/" +
-        lng +
-        "/" +
-        metros;
-
-   console.log(url);
-
-      // var config = {
-      //   method: "get",
-      //   url: url,
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   }
-      // };
-
-      // axios(config)
-      //   .then(function (response) {
-      //     console.log(JSON.stringify(response.data));
-      //     enqueueSnackbar("¡Solicitud de cola creada con exito! Espera que un conductor te acepte.", {
-      //       variant: "success",
-      //     });
-      //     navigate("/listaEspera");
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //     enqueueSnackbar("¡No se pudo crear la solicitud de cola!", {
-      //       variant: "error",
-      //     });
-      //   });
-
-
+      console.log(url);
 
       destinos = [];
     } else {
       enqueueSnackbar("¡Espera, tienes que completar todos los campos de manera válida!", {
         variant: "error",
       });
-     }
+    }
   };
   return (
     <Dialog open={isOpen} onClose={closeDialog}>
