@@ -5,15 +5,21 @@ import {
   Button,
   Checkbox,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   List,
   ListItem,
   ListItemAvatar,
   ListItemButton,
   ListItemText,
+  Rating,
   Typography,
 } from "@mui/material";
 import { User } from "../types";
 import { grey } from "@mui/material/colors";
+import RatingDialogo from "./RatingDialogo";
 
 const CheckParaConductores = (): JSX.Element => {
   const p1: User = {
@@ -86,6 +92,20 @@ const CheckParaConductores = (): JSX.Element => {
   pasajeros.push(p3);
   pasajeros.push(p4);
 
+  const [open, setOpen] = React.useState(false);
+
+  const abrirDialogo = () => {
+    setOpen(true);
+  };
+  const cerrarDialogo = () => {
+    setOpen(false);
+  };
+
+  const finViaje = () => {
+    console.log("Viaje finalizado");
+    abrirDialogo();
+  };
+
   return (
     <Box>
       <Typography fontSize={{ xs: 14, md: 17 }} textAlign="left">
@@ -122,13 +142,17 @@ const CheckParaConductores = (): JSX.Element => {
           ))}
         </List>
       </Container>
-      <Button
-        variant="contained"
-        sx={{ width: "100%", marginTop: "10px" }}
-        //    onClick={() => navigate("/")}
-      >
+      <Button variant="contained" sx={{ width: "100%", marginTop: "10px" }} onClick={finViaje}>
         Finalizar viaje (debe aparecer cuando todos sean dejados)
       </Button>
+      {open && (
+        <RatingDialogo
+          isOpen={open}
+          closeDialog={cerrarDialogo}
+          pasajeros={pasajeros}
+          tipo="conductor"
+        />
+      )}
     </Box>
   );
 };
@@ -150,7 +174,11 @@ export const UserListItem = (user: User): JSX.Element => {
     }
 
     setChecked(newChecked);
-    console.log(value);
+
+    const d = new Date();
+    let hour = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+    console.log("Viaje de " + value + " finalizado a las: " + hour);
+    //Aquí se debe mandar a la bd o agregar a un arreglo la info de cuando se dejó
   };
 
   return (

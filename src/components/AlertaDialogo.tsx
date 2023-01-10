@@ -47,7 +47,7 @@ const AlertaDialogo = (props: DialogProps) => {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open={open}>
       <DialogTitle> {props.titulo}</DialogTitle>
       <DialogContent>
         <DialogContentText>{props.mensaje}</DialogContentText>

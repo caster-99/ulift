@@ -16,6 +16,7 @@ import ConductorDisponible from "../components/ConductorDisponible";
 import InfoUserDialogo from "../components/InfoUserDialogo";
 import axios from "axios";
 import { Route, Vehicle } from "../types";
+import AlertaDialogo from "../components/AlertaDialogo";
 
 const Inicio = (): JSX.Element => {
   var vehiculos: Vehicle[] = [];
@@ -53,6 +54,7 @@ const Inicio = (): JSX.Element => {
 
   const [isDialogOfrecerOpen, setDialogOfrecerOpen] = useState(false);
   const [isDialogPedirOpen, setDialogPedirOpen] = useState(false);
+  const [alerta, setAlerta] = useState(false);
 
   const openOfrecerDialog = () => {
     if (vehiculos.length === 0) {
@@ -144,6 +146,13 @@ const Inicio = (): JSX.Element => {
                 <OfrecerColaDialogo isOpen={isDialogOfrecerOpen} closeDialog={closeOfrecerDialog} />
               )}
             </SpeedDial>
+            {/* {alerta && (
+              <AlertaDialogo
+                isOpen={alerta}
+                titulo="¡No puede ofrecer una cola aún!"
+                mensaje="No tienes vehiculos registrados. Para poder proceder, debe registrar un vehículo en su perfil."
+              />
+            )} */}
           </Container>
         </Box>
       </Fade>
