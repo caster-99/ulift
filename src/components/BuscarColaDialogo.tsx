@@ -70,12 +70,48 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
 
   const irListaEspera = () => {
     if (direccion !== "" && metros.toString() !== "") {
-      console.log(direccion.split(" - ")[0]);
-      console.log(metros);
-      console.log(mujeresOnly);
-
       const token = localStorage.getItem("token");
-      const url = "https://ulift-backend.up.railway.app/api/lift/match";
+
+      var mujeres = 0;
+      if (mujeresOnly) {
+        mujeres = 1;
+      }
+      var lat;
+      var lng;
+
+      var destino = {
+        method: "get",
+        url: "https://ulift-backend.up.railway.app/api/user/destination",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      axios(destino)
+        .then(function (response) {
+       /*    for (let i = 0; i < response.data.length; i++) {
+            if (response.data[i].destination.dNumber === direccion.split(" - ")[0]) {
+              lat = response.data[i].lat;
+              lng = response.data[i].lng;
+              console.log(lat);
+              console.log(lng);
+            }
+          } */
+          console.log(response.data.destination[0]);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+      const url =
+        "https://ulift-backend.up.railway.app/api/lift/match/" +
+        mujeres +
+        "/" +
+        lat +
+        "/" +
+        lng +
+        "/" +
+        metros;
 
       var data = "";
 
@@ -84,13 +120,24 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
         url: url,
         headers: {
           Authorization: `Bearer ${token}`,
-        },
-        data: data,
+        }
       };
 
+      axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          enqueueSnackbar("¡Solicitud de cola creada con exito! Espera que un conductor te acepte.", {
+            variant: "success",
+          });
+          navigate("/listaEspera");
+        })
+        .catch(function (error) {
+          console.log(error);
+          enqueueSnackbar("¡No se pudo crear la solicitud de cola!", {
+            variant: "error",
+          });
+        });
       destinos = [];
-
-      navigate("/listaEspera");
     } else {
       enqueueSnackbar("¡Espera, tienes que completar todos los campos de manera válida!", {
         variant: "error",
