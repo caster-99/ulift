@@ -32,7 +32,7 @@ export interface Route {
 
 export interface Destination {
   userID: string;
-  dNumber: string;
+  dNumber: number;
   name: string;
   lat: string;
   lng: string;
