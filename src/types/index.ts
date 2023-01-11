@@ -51,3 +51,4 @@ export interface Lift {
   waitTime: number;
   path:string;
 }
+

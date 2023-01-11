@@ -18,9 +18,30 @@ import axios from "axios";
 import { Lift, Route, Vehicle } from "../types";
 import AlertaDialogo from "../components/AlertaDialogo";
 
+interface Colas {
+  color: string;
+  date: Date;
+  distanceLastNode: number;
+  driverID: number;
+  email: string;
+  gender: string;
+  lastname: string;
+  liftID: number;
+  model: string;
+  name: string;
+  path: string;
+  photo: string;
+  plate: string;
+  rName: string;
+  rate: number;
+  role: string;
+  seats: number;
+  time: Date;
+  waitingTime: number;
+}
 var vehiculos: Vehicle[] = [];
 var rutas: Route[] = [];
-var colas: Lift[] = [];
+var colas: Colas[] = [];
 
 var flagVehiculos: boolean = false;
 var flagRutas: boolean = false;
@@ -77,8 +98,6 @@ const fetchInfo = async () => {
     });
 };
 const Inicio = (): JSX.Element => {
-
-
   const [isDialogOfrecerOpen, setDialogOfrecerOpen] = useState(false);
   const [isDialogPedirOpen, setDialogPedirOpen] = useState(false);
 
@@ -137,8 +156,29 @@ const Inicio = (): JSX.Element => {
               la siguiente información */}
               {colas.length > 0 && (
                 <Grid container spacing={{ xs: 2, md: 3 }}>
-                  {colas.map((cola) => (
-                    <Typography fontSize={{ xs: 14, md: 17 }} key={cola.liftID}>Conductores disponibles</Typography>
+                  {colas.map((cola, index) => (
+                    <ConductorDisponible
+                      key={index}
+                      color={cola.color}
+                      date={cola.date}
+                      distanceLastNode={cola.distanceLastNode}
+                      driverID={cola.driverID}
+                      email={cola.email}
+                      gender={cola.gender}
+                      lastname={cola.lastname}
+                      liftID={cola.liftID}
+                      model={cola.model}
+                      name={cola.name}
+                      path={cola.path}
+                      photo={cola.photo}
+                      plate={cola.plate}
+                      rName={cola.rName}
+                      rate={cola.rate}
+                      role={cola.role}
+                      seats={cola.seats}
+                      time={cola.time}
+                      waitingTime={cola.waitingTime}
+                    />
                   ))}
                 </Grid>
               )}

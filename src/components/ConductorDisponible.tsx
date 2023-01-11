@@ -26,9 +26,26 @@ import { Lift, User } from "../types";
 
 
 interface UserProps {
-  driver:User,
-  lift:Lift
-}
+  color: string;
+  date:Date;
+  distanceLastNode:number;
+  driverID: number;
+  email: string;
+  gender: string;
+  lastname: string;
+  liftID: number;
+  model: string;
+  name: string;
+  path: string;
+  photo: string;
+  plate: string;
+  rName: string;
+  rate:number;
+  role:string;
+  seats:number;
+  time:Date;
+  waitingTime:number;
+  }
 
 const ConductorDisponible = (props: UserProps): JSX.Element => {
   const [isInfoUserOpen, setDialogInfoUser] = useState(false);
@@ -84,7 +101,7 @@ const ConductorDisponible = (props: UserProps): JSX.Element => {
                   fontWeight: 600,
                 }}
               >
-                {props.driver.name}
+                {props.name +' ' +props.lastname}
               </Typography>
             </Box>
             <Box
@@ -103,7 +120,7 @@ const ConductorDisponible = (props: UserProps): JSX.Element => {
                   color: grey,
                 }}
               >
-                Tiempo de espera: {props.lift.waitTime} minutos
+                Tiempo de espera: {props.waitingTime} minutos
               </Typography>
             </Box>
             <Box
@@ -122,7 +139,7 @@ const ConductorDisponible = (props: UserProps): JSX.Element => {
                   color: grey,
                 }}
               >
-                Puestos disponibles: {props.lift.seats} puestos
+                Puestos disponibles: {props.seats} puestos
               </Typography>
             </Box>
           </Box>
@@ -132,11 +149,11 @@ const ConductorDisponible = (props: UserProps): JSX.Element => {
       <InfoUserDialogo
         isOpen={isInfoUserOpen}
         closeDialog={closeInfoUserDialog}
-        name={props.driver.name}
-        seats={props.lift.seats}
-        location={props.lift.rdName}
-        time={props.lift.waitTime.toString()}
-        role={props.driver.role}
+        name={props.name+' '+props.lastname}
+        seats={props.seats}
+        location={props.rName}
+        time={props.waitingTime.toString()}
+        role={props.role}
       />
     </Grid>
   );

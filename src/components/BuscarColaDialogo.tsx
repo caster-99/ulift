@@ -79,14 +79,12 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
 
     axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
         enqueueSnackbar("¡Solicitud de cola creada con exito! Espera que un conductor te acepte.", {
           variant: "success",
         });
         navigate("/listaEspera");
       })
       .catch(function (error) {
-        console.log(error);
         enqueueSnackbar("¡No se pudo crear la solicitud de cola!", {
           variant: "error",
         });
@@ -116,8 +114,8 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
         .then(function (response) {
           for (let i = 0; i < response.data.destination.length; i++) {
             if (response.data.destination[i].dNumber === parseInt(direccion.split(" - ")[0])) {
-              lat = response.data.destination[i].lat!;
-              lng = response.data.destination[i].lng!;
+              lat = response.data.destination[i].lat;
+              lng = response.data.destination[i].lng;
               console.log(lat);
               console.log(lng);
             }
