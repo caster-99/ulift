@@ -1,5 +1,5 @@
 import { Box, Container, Fab, Fade, Grid, Tooltip, Typography, Tabs } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { NavBar } from "../components/NavBar";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
@@ -97,6 +97,7 @@ const fetchInfo = async () => {
       console.log(error);
     });
 };
+
 const Inicio = (): JSX.Element => {
   const [isDialogOfrecerOpen, setDialogOfrecerOpen] = useState(false);
   const [isDialogPedirOpen, setDialogPedirOpen] = useState(false);
@@ -126,7 +127,11 @@ const Inicio = (): JSX.Element => {
   const closePedirDialog = () => {
     setDialogPedirOpen(false);
   };
-  fetchInfo();
+
+  useEffect(() => {
+    fetchInfo();
+  }, []);
+
   return (
     <Box>
       <NavBar />

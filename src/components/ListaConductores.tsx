@@ -2,81 +2,19 @@ import React from "react";
 import { Box } from "@mui/material";
 import UsuarioTarjeta from "./UsuarioTarjeta";
 import { User } from "../types";
+import Typography from "@mui/material/Typography";
 
-const ListaConductores = (): JSX.Element => {
-  const p1: User = {
-    name: "Luisa",
-    email: "luisa",
-    gender: "Femenino",
-    role: "Estudiante",
-    id: "1234",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
-  };
+interface Props {
+  conductores: User[];
+}
 
-  const p2: User = {
-    name: "Maria",
-    email: "luisa",
-    gender: "Femenino",
-    role: "Estudiante",
-    id: "11121",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
-  };
-
-  const p3: User = {
-    name: "Ana",
-    email: "luisa",
-    gender: "Femenino",
-    role: "Estudiante",
-    id: "4567",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
-  };
-
-  const p4: User = {
-    name: "Eva",
-    email: "luisa",
-    gender: "Femenino",
-    role: "Estudiante",
-    id: "8910",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
-  };
-  var pasajeros: User[] = [];
-
-  pasajeros.push(p1);
-  pasajeros.push(p2);
-  pasajeros.push(p3);
-  pasajeros.push(p4);
-
+const ListaConductores = ({ conductores }: Props): JSX.Element => {
   return (
     <Box display={"flex"} flexDirection="column">
-      {pasajeros.map((user) => (
+      {conductores.length === 0 && (
+        <Typography fontSize={{ xs: 14, md: 17 }}>No hay ningún conductor disponible</Typography>
+      )}
+      {conductores.map((user) => (
         <UsuarioTarjeta
           key={user.id}
           id={user.id}

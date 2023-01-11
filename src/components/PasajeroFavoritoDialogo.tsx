@@ -14,6 +14,8 @@ import {
 } from "@mui/material";
 import { AccountCircle, Close as CloseIcon } from "@mui/icons-material";
 import { useSnackbar } from "notistack";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface DialogProps {
   isOpen: boolean;
@@ -24,31 +26,44 @@ const PasajeroFavoritoDialogo = ({ isOpen, closeDialog }: DialogProps) => {
   const [favorito, setFavorito] = useState("");
   const [adding, setAdding] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
 
   const handleAddFavorito = async () => {
-    // if (
-    //   user.email === favorito ||
-    //   form.collaborators.find((c) => c.email === favorito)
-    // ) {
-    //   return enqueueSnackbar("Este usuario ya es colaborador", {
-    //     variant: "error",
-    //   });
-    // }
-
-    // const { error } = await addFavorito(form, favorito);
-
+    console.log("Agregando pasajero favorito " + favorito);
     setAdding(true);
+    const token = localStorage.getItem("token");
+    const url = "https://ulift-backend.up.railway.app/api/";
+    //   const url = "http://localhost:3000/api/lift";
+    var data = JSON.stringify({
+      // plate: vehiculo.split(" - ")[0],
+      // rNumber: direccion.split(" - ")[0],
+      // seats: puestos,
+      // waitingTime: tiempo,
+    });
 
-    // if (error) {
-    //   return enqueueSnackbar("No hay usuarios con este email", {
-    //     variant: "error",
-    //   });
-    // }
+    console.log(data);
 
-    enqueueSnackbar("Pasajero favorito agregado", { variant: "success" });
+    const config = {
+      method: "post",
+      url: url,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
 
-    setFavorito("");
-    closeDialog();
+    axios(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        enqueueSnackbar("Pasajero favorito agregado", { variant: "success" });
+        setFavorito("");
+        closeDialog();
+      })
+      .catch((error) => {
+        console.log(error);
+        enqueueSnackbar("¡Error a crear la cola!", { variant: "error" });
+      });
   };
 
   return (

@@ -93,11 +93,19 @@ const PerfilUsuario = (): JSX.Element => {
       <Box justifyContent="space-between" flexDirection="column" flexGrow={1}>
         <Container maxWidth="md" sx={{ p: 2 }}>
           <Profile
+            id={usuario.id}
             name={usuario.name}
-            id={usuario.email}
+            email={usuario.email}
+            role={usuario.role}
+            gender={usuario.gender}
             photo={usuario.photo}
-            rides={usuario.trips}
+            trips={usuario.trips}
             rating={usuario.rating}
+            emergencyContact={usuario.emergencyContact}
+            emergencyName={usuario.emergencyName}
+            vehicles={usuario.vehicles}
+            destinations={usuario.destinations}
+            routes={usuario.routes}
           />
           <Box
             sx={{

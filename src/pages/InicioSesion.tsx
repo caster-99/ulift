@@ -65,7 +65,14 @@ const InicioSesion = (): JSX.Element => {
       <Typography component="h1" fontWeight="600" fontSize="24px" align="center" mb={3}>
         Inicio de sesión
       </Typography>
-      <Typography fontWeight="500" fontSize="16px" align="center" mb={3}>
+      <Typography
+        fontWeight="500"
+        fontSize="16px"
+        align="center"
+        mb={3}
+        component={"h2"}
+        variant={"h2"}
+      >
         Ingresa tus datos para continuar
       </Typography>
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>

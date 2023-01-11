@@ -17,6 +17,7 @@ import UnAuth from "./components/UnAuth";
 import PerfilExterno from "./pages/PerfilExterno";
 import RegistroRuta from "./pages/RegistroRuta";
 import RegistroDestino from "./pages/RegistroDestino";
+import WrapperPerfilExterno from "./pages/WrapperPerfilExterno";
 
 const App = (): JSX.Element => {
   return (
@@ -50,7 +51,7 @@ const App = (): JSX.Element => {
         <Route path="listaEspera" element={<ListaEspera />} />
         <Route path="faq" element={<Faq />} />
         <Route path="chatPrivado/:userId" element={<ChatLayout />} />
-        <Route path="perfilExterno/:userId" element={<PerfilExterno />} />
+        <Route path="perfilExterno/:userId" element={<WrapperPerfilExterno />} />
         <Route path="registroRuta" element={<RegistroRuta />} />
         <Route path="registroDestino" element={<RegistroDestino />} />
       </Routes>

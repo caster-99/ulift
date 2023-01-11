@@ -158,7 +158,14 @@ const Registro = (): JSX.Element => {
       >
         <ArrowBackRoundedIcon />
       </IconButton>
-      <Typography component="h1" fontWeight="600" fontSize="24px" align="center" mb={3}>
+      <Typography
+        component={"h2"}
+        variant={"h2"}
+        fontWeight="600"
+        fontSize="24px"
+        align="center"
+        mb={3}
+      >
         Registro de usuario
       </Typography>
       <Typography fontWeight="500" fontSize="16px" align="center" mb={3}>
