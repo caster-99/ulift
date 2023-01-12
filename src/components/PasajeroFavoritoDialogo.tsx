@@ -32,13 +32,10 @@ const PasajeroFavoritoDialogo = ({ isOpen, closeDialog }: DialogProps) => {
     console.log("Agregando pasajero favorito " + favorito);
     setAdding(true);
     const token = localStorage.getItem("token");
-    const url = "https://ulift-backend.up.railway.app/api/";
+    const url = "https://ulift-backend.up.railway.app/api/favorites";
     //   const url = "http://localhost:3000/api/lift";
     var data = JSON.stringify({
-      // plate: vehiculo.split(" - ")[0],
-      // rNumber: direccion.split(" - ")[0],
-      // seats: puestos,
-      // waitingTime: tiempo,
+      email: favorito,
     });
 
     console.log(data);
@@ -56,13 +53,17 @@ const PasajeroFavoritoDialogo = ({ isOpen, closeDialog }: DialogProps) => {
     axios(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
-        enqueueSnackbar("Pasajero favorito agregado", { variant: "success" });
+        enqueueSnackbar("Usuario favorito agregado", { variant: "success" });
+        setAdding(false);
         setFavorito("");
         closeDialog();
       })
       .catch((error) => {
         console.log(error);
-        enqueueSnackbar("¡Error a crear la cola!", { variant: "error" });
+        enqueueSnackbar("¡Error al guardar favorito!", { variant: "error" });
+        setAdding(false);
+        setFavorito("");
+        closeDialog();
       });
   };
 
@@ -75,7 +76,7 @@ const PasajeroFavoritoDialogo = ({ isOpen, closeDialog }: DialogProps) => {
           alignItems: "center",
         }}
       >
-        Pasajero favorito
+        Usuario favorito
         <Tooltip title="Cerrar" arrow>
           <IconButton onClick={closeDialog}>
             <CloseIcon />
@@ -84,7 +85,7 @@ const PasajeroFavoritoDialogo = ({ isOpen, closeDialog }: DialogProps) => {
       </DialogTitle>
       <DialogContent sx={{ background: "inherit" }}>
         <List sx={{ background: "inherit" }}>
-          <ListSubheader sx={{ background: "inherit" }}>Agregar pasajero favorito</ListSubheader>
+          <ListSubheader sx={{ background: "inherit" }}>Agregar usuario favorito</ListSubheader>
           <ListItem
             component="form"
             sx={{

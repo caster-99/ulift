@@ -12,15 +12,21 @@ import {
 import Divider from "@mui/material/Divider";
 import InfoUserDialogo from "./InfoUserDialogo";
 import { useNavigate } from "react-router-dom";
-import { ArrowCircleRight, ChatRounded } from "@mui/icons-material";
+import { ArrowCircleRight, ChatRounded, PropaneSharp } from "@mui/icons-material";
 import { User } from "../types";
 import { grey } from "@mui/material/colors";
+import InfoFavoritoDialogo from "./InfoFavoritoDialogo";
 
 const UsuarioTarjeta = (user: User): JSX.Element => {
-  const navigate = useNavigate();
+  const [isInfoUserOpen, setDialogInfoUser] = useState(false);
   const openInfoUserDialog = () => {
-    navigate("/perfilExterno/" + user.id);
+    setDialogInfoUser(true);
   };
+
+  const closeInfoUserDialog = () => {
+    setDialogInfoUser(false);
+  };
+
   const foto = "https://ulift-backend.up.railway.app/" + user.photo;
 
   return (
@@ -67,6 +73,15 @@ const UsuarioTarjeta = (user: User): JSX.Element => {
           </ListItem>
         </CardContent>
       </Card>
+      <InfoFavoritoDialogo
+        isOpen={isInfoUserOpen}
+        closeDialog={closeInfoUserDialog}
+        name={user.name}
+        trips={user.trips}
+        role={user.role}
+        photo={user.photo}
+        rating={user.rating}
+      />
     </Grid>
   );
 };
