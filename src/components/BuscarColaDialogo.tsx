@@ -82,7 +82,7 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
         enqueueSnackbar("¡Solicitud de cola creada con exito! Espera que un conductor te acepte.", {
           variant: "success",
         });
-        navigate("/listaEspera");
+        navigate("/listaEspera/pasajero");
       })
       .catch(function (error) {
         enqueueSnackbar("¡No se pudo crear la solicitud de cola!", {

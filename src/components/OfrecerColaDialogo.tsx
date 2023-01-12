@@ -34,7 +34,6 @@ import { User, Vehicle, Route } from "../types/index";
 import { useEffect } from "react";
 import axios from "axios";
 
-
 interface DialogProps {
   isOpen: boolean;
   closeDialog: () => void;
@@ -51,7 +50,6 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
     const response = await api_instance.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
-
 
     for (let i = 0; i < vehiculos.length; i++) {
       vehiculos.pop();
@@ -92,17 +90,17 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
       console.log("Tiempo: " + tiempo);
       console.log("Mujeres: " + mujeresOnly);
 
-      const token =localStorage.getItem("token");
+      const token = localStorage.getItem("token");
       const url = "https://ulift-backend.up.railway.app/api/lift";
       // const url = "http://localhost:3000/api/lift";
-    var data=JSON.stringify({
-      "plate": vehiculo.split(" - ")[0],
-      "rNumber": direccion.split(" - ")[0],
-      "seats": puestos,
-      "waitingTime": tiempo});
+      var data = JSON.stringify({
+        plate: vehiculo.split(" - ")[0],
+        rNumber: direccion.split(" - ")[0],
+        seats: puestos,
+        waitingTime: tiempo,
+      });
 
       console.log(data);
-
 
       const config = {
         method: "post",
@@ -114,20 +112,19 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
         data: data,
       };
 
-
-      
       axios(config)
         .then((response) => {
           console.log(JSON.stringify(response.data));
-          enqueueSnackbar("Cola creada, espera que alguien te envie una solicitud", { variant: "success" });
-          navigate('/listaEspera');
+          enqueueSnackbar("Cola creada, espera que alguien te envie una solicitud", {
+            variant: "success",
+          });
+          navigate("/listaEspera/conductor");
         })
         .catch((error) => {
           console.log(error);
           enqueueSnackbar("¡Error a crear la cola!", { variant: "error" });
         });
 
-      
       //Limpio los arreglos por si cambian
       for (let i = 0; i < vehiculos.length; i++) {
         vehiculos.pop();
@@ -138,9 +135,6 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
       }
       rutas = [];
       vehiculos = [];
-
-      
-
     } else {
       enqueueSnackbar("¡Espera, tienes que completar todos los campos de manera válida!", {
         variant: "error",

@@ -82,8 +82,6 @@ export default class RutaUsuario extends Component<
       google.maps.event.addListener(map, "click", function (e: any) {
         let latLng = { lat: e.latLng.lat(), lng: e.latLng.lng() };
 
-        console.log(latLng);
-
         self.setState({
           markers: [...self.state.markers, latLng],
         });
@@ -94,13 +92,6 @@ export default class RutaUsuario extends Component<
   }
 
   handleMapClick(e: any, directionsService: any, directionsRenderer: any, latLng: any) {
-    console.log(e);
-
-    console.log(directionsService);
-    console.log(directionsRenderer);
-
-    console.log(this.state.markers);
-
     directionsRenderer.setMap(this.state.map);
     this.calculateAndDisplayRoute(directionsService, directionsRenderer, latLng);
   }
@@ -121,9 +112,6 @@ export default class RutaUsuario extends Component<
 
     const destiny: google.maps.LatLngLiteral = latLng;
 
-    console.log("//////////////////////////");
-    console.log(destiny);
-
     directionsService
       .route({
         origin: ucab,
@@ -137,7 +125,6 @@ export default class RutaUsuario extends Component<
         }
 
         this.setState({ path: JSON.stringify(response.routes[0].overview_path) });
-        console.log(response.routes[0].overview_path);
 
         const latlng: google.maps.LatLngLiteral = this.state.markers[this.state.markers.length - 1];
 

@@ -3,6 +3,8 @@ import {
   Avatar,
   Box,
   Button,
+  Card,
+  CardContent,
   IconButton,
   List,
   ListItem,
@@ -10,7 +12,11 @@ import {
   ListItemButton,
   Typography,
 } from "@mui/material";
-import { CheckCircleOutlineRounded as AcceptIcon } from "@mui/icons-material";
+import {
+  CheckCircleOutlineRounded as AcceptIcon,
+  ChatRounded,
+  DriveEtaRounded as LocIcon,
+} from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
 import { User } from "../types";
@@ -132,6 +138,7 @@ export default ListaEsperaParaConductores;
 export const PasajeroListaEspera = (user: User): JSX.Element => {
   const foto = "https://ulift-backend.up.railway.app/" + user.photo;
   const [isActive, setIsActive] = useState(false);
+  const navigate = useNavigate();
 
   const handleClick = (id: string) => () => {
     if (isActive === false) {
@@ -148,30 +155,69 @@ export const PasajeroListaEspera = (user: User): JSX.Element => {
 
     // setIsActive(true);
   };
+  const goChat = (id: string) => () => {
+    navigate("/chatPrivado/" + id);
+  };
 
   return (
-    <ListItem
-      disablePadding
-      secondaryAction={
-        <IconButton sx={{ marginRight: 1 }} onClick={handleClick(user.id)}>
-          <AcceptIcon color="primary" />
-        </IconButton>
-      }
+    <Card
       sx={{
-        width: "100%",
+        width: "95%",
         height: "60px",
+        backgroundColor: grey[100],
+        boxShadow: "none",
+        p: 0,
+        m: 0,
         mt: 1.5,
-        backgroundColor: isActive ? "#40B4E5" : grey[100],
-        color: isActive ? "white" : "",
         borderRadius: 2,
       }}
     >
-      <ListItemButton>
-        <ListItemAvatar>
-          <Avatar sx={{ width: 50, height: 50 }} src={foto} />
-        </ListItemAvatar>
-        <Typography sx={{ fontWeight: 600, marginLeft: 1 }}>{user.name}</Typography>
-      </ListItemButton>
-    </ListItem>
+      <CardContent
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          boxShadow: "none",
+          width: "100%",
+          height: "60px",
+          textOverflow: "ellipsis",
+          overflow: "hidden",
+        }}
+      >
+        <Box alignItems="center" mr={2} mt={1}>
+          {/* Aquí se tiene que cambiar para colocar la imagen */}
+          <Avatar sx={{ width: "50px", height: "50px" }}>N</Avatar>
+        </Box>
+
+        <Box
+          sx={{
+            width: "100%",
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+          }}
+        >
+          <Typography
+            sx={{
+              fontWeight: 600,
+            }}
+          >
+            {user.name}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          <IconButton sx={{ marginRight: 1 }} onClick={goChat(user.id)}>
+            <ChatRounded color="primary" />
+          </IconButton>
+          <IconButton sx={{ marginRight: 1 }} onClick={handleClick(user.id)}>
+            <LocIcon />
+          </IconButton>
+        </Box>
+      </CardContent>
+    </Card>
   );
 };

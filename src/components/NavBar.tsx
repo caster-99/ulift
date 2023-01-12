@@ -30,6 +30,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import logo from "../assets/logo512.png";
 import api_instance from "../api/api_instance";
+import axios from "axios";
 
 const drawerWidth = 240;
 
@@ -39,7 +40,7 @@ interface Props {
 
 export const NavBar = (props: Props) => {
   var numeroEmergencia = "";
-
+  var tipoUsuario: string;
   const url = "https://ulift-backend.up.railway.app/api/user/profile";
   //  const url = "http://localhost:3000/api/user/profile";
   const fetchUser = async () => {
@@ -55,13 +56,25 @@ export const NavBar = (props: Props) => {
 
   useEffect(() => {
     fetchUser();
+    const token = localStorage.getItem("token");
+
+    var config = {
+      method: "get",
+      url: "https://ulift-backend.up.railway.app/api/user/status",
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    axios(config).then(function (response) {
+      console.log(JSON.stringify(response.data.status));
+      tipoUsuario = response.data.status;
+      console.log(tipoUsuario);
+    });
   }, []);
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-
   // Maneja la redirección de cada una de las opciones del menú
 
   const handleClickFav = () => {
@@ -80,14 +93,22 @@ export const NavBar = (props: Props) => {
     navigate(`/historial`);
   };
   const handleClickColasenProceso = () => {
-    navigate(`/colaEnProceso`);
+    if (tipoUsuario === '"D"') {
+      navigate(`/colaEnProceso/conductor`);
+    } else {
+      navigate(`/colaEnProceso/pasajero`);
+    }
   };
   const handleClickChats = () => {
     navigate(`/chats`);
   };
 
   const handleClickListaEspera = () => {
-    navigate(`/listaEspera`);
+    if (tipoUsuario === '"D"') {
+      navigate(`/listaEspera/conductor`);
+    } else {
+      navigate(`/listaEspera/pasajero`);
+    }
   };
 
   const handleClickFaq = () => {
@@ -154,6 +175,14 @@ export const NavBar = (props: Props) => {
         </ListItem>
         <Divider />
         <ListItem disablePadding>
+          <ListItemButton onClick={handleClickListaEspera}>
+            <ListItemIcon>
+              <WaitingListIcon />
+            </ListItemIcon>
+            <ListItemText>Lista de espera</ListItemText>
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
           <ListItemButton onClick={handleClickColasenProceso}>
             <ListItemIcon>
               <ColaProcesoIcon />
@@ -161,22 +190,14 @@ export const NavBar = (props: Props) => {
             <ListItemText>Cola en proceso</ListItemText>
           </ListItemButton>
         </ListItem>
-        <ListItem disablePadding>
+        {/* <ListItem disablePadding>
           <ListItemButton onClick={handleClickChats}>
             <ListItemIcon>
               <ChatIcon />
             </ListItemIcon>
             <ListItemText>Chats</ListItemText>
           </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton onClick={handleClickListaEspera}>
-            <ListItemIcon>
-              <WaitingListIcon />
-            </ListItemIcon>
-            <ListItemText>Lista de espera</ListItemText>
-          </ListItemButton>
-        </ListItem>{" "}
+        </ListItem> */}
         <Divider />
         <Box
           sx={{

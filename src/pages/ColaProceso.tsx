@@ -15,10 +15,12 @@ import { NavBar } from "../components/NavBar";
 import React from "react";
 import CheckParaConductores from "../components/CheckParaConductores";
 import CheckParaPasajeros from "../components/CheckParaPasajeros";
+import { useParams } from "react-router-dom";
 
 const ColaProceso = (): JSX.Element => {
-  var tipoUsuario;
-  tipoUsuario = "pasajero";
+  var tipoUsuario: string;
+  const params = useParams();
+  tipoUsuario = params.tipo!;
 
   return (
     <Box>

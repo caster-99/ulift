@@ -178,7 +178,11 @@ const PerfilUsuario = (): JSX.Element => {
               )}
               <Grid container spacing={{ xs: 2, md: 3 }}>
                 {usuario.vehicles?.map((v) => (
-                  <InfoCard title={"Placa: " + v.plate} subtitile={"Modelo: " + v.model} />
+                  <InfoCard
+                    key={v.plate}
+                    title={"Placa: " + v.plate}
+                    subtitile={"Modelo: " + v.model}
+                  />
                 ))}
               </Grid>
             </Box>
@@ -197,6 +201,7 @@ const PerfilUsuario = (): JSX.Element => {
               <Grid container spacing={{ xs: 2, md: 3 }}>
                 {usuario.routes?.map((v) => (
                   <InfoCard
+                    key={v.rNumber}
                     title={"Nombre de la ruta: " + v.name}
                     subtitile={"Activa: " + v.active}
                   />

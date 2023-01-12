@@ -45,10 +45,10 @@ const App = (): JSX.Element => {
         <Route path="perfil" element={<PerfilUsuario />} />
         <Route path="historial" element={<HistorialColas />} />
         <Route path="favoritos" element={<Favoritos />} />
-        <Route path="colaEnProceso" element={<ColaProceso />} />
+        <Route path="colaEnProceso/:tipo" element={<ColaProceso />} />
         <Route path="chats" element={<Chat />} />
         <Route path="registroVehiculo" element={<RegistroVehiculo />} />
-        <Route path="listaEspera" element={<ListaEspera />} />
+        <Route path="listaEspera/:tipo" element={<ListaEspera />} />
         <Route path="faq" element={<Faq />} />
         <Route path="chatPrivado/:userId" element={<ChatLayout />} />
         <Route path="perfilExterno/:userId" element={<WrapperPerfilExterno />} />
