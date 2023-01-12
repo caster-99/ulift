@@ -80,11 +80,11 @@ const ListaEspera = (): JSX.Element => {
   };
 
   const p4: User = {
-    name: "Eva",
-    email: "luisa",
-    gender: "Femenino",
+    name: "Roberson",
+    email: "ragarcia.19@est.ucab.edu.ve",
+    gender: "Masculino",
     role: "Estudiante",
-    id: "8910",
+    id: "1",
     photo: "https://i.imgur.com/0cQ3X7A.png",
     trips: 0,
     rating: 0,
