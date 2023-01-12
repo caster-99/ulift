@@ -21,135 +21,61 @@ import { useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
 import { User } from "../types";
 
-const p1: User = {
-  name: "Luisa",
-  email: "luisa",
-  gender: "Femenino",
-  role: "Estudiante",
-  id: "1234",
-  photo: "https://i.imgur.com/0cQ3X7A.png",
-  trips: 0,
-  rating: 0,
-  emergencyContact: "123456789",
-  emergencyName: "Luisa",
-  vehicles: [],
-  destinations: [],
-  routes: [],
-};
-
-const p2: User = {
-  name: "Maria",
-  email: "luisa",
-  gender: "Femenino",
-  role: "Estudiante",
-  id: "11121",
-  photo: "https://i.imgur.com/0cQ3X7A.png",
-  trips: 0,
-  rating: 0,
-  emergencyContact: "123456789",
-  emergencyName: "Luisa",
-  vehicles: [],
-  destinations: [],
-  routes: [],
-};
-
-const p3: User = {
-  name: "Ana",
-  email: "luisa",
-  gender: "Femenino",
-  role: "Estudiante",
-  id: "4567",
-  photo: "https://i.imgur.com/0cQ3X7A.png",
-  trips: 0,
-  rating: 0,
-  emergencyContact: "123456789",
-  emergencyName: "Luisa",
-  vehicles: [],
-  destinations: [],
-  routes: [],
-};
-
-const p4: User = {
-  name: "Eva",
-  email: "luisa",
-  gender: "Femenino",
-  role: "Estudiante",
-  id: "8910",
-  photo: "https://i.imgur.com/0cQ3X7A.png",
-  trips: 0,
-  rating: 0,
-  emergencyContact: "123456789",
-  emergencyName: "Luisa",
-  vehicles: [],
-  destinations: [],
-  routes: [],
-};
-var pasajeros: User[] = [];
-
-pasajeros.push(p1);
-pasajeros.push(p2);
-pasajeros.push(p3);
-pasajeros.push(p4);
+interface Props {
+  usuario: User;
+  pasajeros: User[];
+}
 
 var elegidos: User[] = [];
 
-const ListaEsperaParaConductores = (): JSX.Element => {
+const ListaEsperaParaConductores = ({ pasajeros }: Props): JSX.Element => {
   const navigate = useNavigate();
+  console.log("Lista de solicitudes de cola");
+  console.log(pasajeros);
 
   return (
     <Box display={"flex"} flexDirection="column" alignItems="center" justifyContent="center">
       <List dense sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
         {pasajeros.map((user) => (
-          <PasajeroListaEspera
-            key={user.id}
-            id={user.id}
-            name={user.name}
-            email={user.email}
-            role={user.role}
-            gender={user.gender}
-            photo={user.photo}
-            trips={user.trips}
-            rating={user.rating}
-            emergencyContact={user.emergencyContact}
-            emergencyName={user.emergencyName}
-            vehicles={user.vehicles}
-            destinations={user.destinations}
-            routes={user.routes}
-          />
+          <PasajeroListaEspera usuario={user} pasajeros={pasajeros} key={user.id} />
         ))}
       </List>
 
       {/* Cuando haya seleccionado al menos uno o el límite indicado y si es conductor , debe habilitarse esta opción */}
-      <Button
-        variant="contained"
-        onClick={() => {
-          //
-          navigate("/colaEnProceso");
-        }}
-      >
-        Empezar viaje
-      </Button>
+      {pasajeros.length > 0 && (
+        <Button
+          variant="contained"
+          onClick={() => {
+            navigate("/colaEnProceso");
+          }}
+        >
+          Empezar viaje
+        </Button>
+      )}
     </Box>
   );
 };
 
 export default ListaEsperaParaConductores;
 
-export const PasajeroListaEspera = (user: User): JSX.Element => {
-  const foto = "https://ulift-backend.up.railway.app/" + user.photo;
+export const PasajeroListaEspera = ({ usuario, pasajeros }: Props): JSX.Element => {
+  const foto = "https://ulift-backend.up.railway.app/" + usuario.photo;
   const [isActive, setIsActive] = useState(false);
   const navigate = useNavigate();
 
   const handleClick = (id: string) => () => {
     if (isActive === false) {
       setIsActive((current) => !current);
-      elegidos.push(pasajeros.find((user) => user.id === id) as User);
-      console.log(elegidos.flatMap((user) => user.name + " " + user.id));
+      elegidos.push(pasajeros.find((usuario) => usuario.id === id) as User);
+      console.log(elegidos.flatMap((usuario) => usuario.name + " " + usuario.id));
     } else {
-      if (pasajeros.find((user) => user.id === id)) {
+      if (pasajeros.find((usuario) => usuario.id === id)) {
         setIsActive((current) => !current);
-        elegidos.splice(elegidos.indexOf(pasajeros.find((user) => user.id === id) as User), 1);
-        console.log(elegidos.flatMap((user) => user.name + " " + user.id));
+        elegidos.splice(
+          elegidos.indexOf(pasajeros.find((usuario) => usuario.id === id) as User),
+          1
+        );
+        console.log(elegidos.flatMap((usuario) => usuario.name + " " + usuario.id));
       }
     }
 
@@ -164,7 +90,8 @@ export const PasajeroListaEspera = (user: User): JSX.Element => {
       sx={{
         width: "95%",
         height: "60px",
-        backgroundColor: grey[100],
+        backgroundColor: isActive ? "#40B4E5" : grey[100],
+        color: isActive ? "white" : "",
         boxShadow: "none",
         p: 0,
         m: 0,
@@ -201,7 +128,7 @@ export const PasajeroListaEspera = (user: User): JSX.Element => {
               fontWeight: 600,
             }}
           >
-            {user.name}
+            {usuario.name}
           </Typography>
         </Box>
         <Box
@@ -210,10 +137,10 @@ export const PasajeroListaEspera = (user: User): JSX.Element => {
             flexDirection: "row",
           }}
         >
-          <IconButton sx={{ marginRight: 1 }} onClick={goChat(user.id)}>
+          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.id)}>
             <ChatRounded color="primary" />
           </IconButton>
-          <IconButton sx={{ marginRight: 1 }} onClick={handleClick(user.id)}>
+          <IconButton sx={{ marginRight: 1 }} onClick={handleClick(usuario.id)}>
             <LocIcon />
           </IconButton>
         </Box>

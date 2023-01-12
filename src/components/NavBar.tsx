@@ -56,20 +56,19 @@ export const NavBar = (props: Props) => {
 
   useEffect(() => {
     fetchUser();
-    const token = localStorage.getItem("token");
-
-    var config = {
-      method: "get",
-      url: "https://ulift-backend.up.railway.app/api/user/status",
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
-    axios(config).then(function (response) {
-      console.log(JSON.stringify(response.data.status));
-      tipoUsuario = response.data.status;
-      console.log(tipoUsuario);
-    });
   }, []);
+
+  const token = localStorage.getItem("token");
+
+  var config = {
+    method: "get",
+    url: "https://ulift-backend.up.railway.app/api/user/status",
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  axios(config).then(function (response) {
+    tipoUsuario = response.data.status;
+  });
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -93,7 +92,7 @@ export const NavBar = (props: Props) => {
     navigate(`/historial`);
   };
   const handleClickColasenProceso = () => {
-    if (tipoUsuario === '"D"') {
+    if (tipoUsuario === "D") {
       navigate(`/colaEnProceso/conductor`);
     } else {
       navigate(`/colaEnProceso/pasajero`);
@@ -104,7 +103,7 @@ export const NavBar = (props: Props) => {
   };
 
   const handleClickListaEspera = () => {
-    if (tipoUsuario === '"D"') {
+    if (tipoUsuario === "D") {
       navigate(`/listaEspera/conductor`);
     } else {
       navigate(`/listaEspera/pasajero`);

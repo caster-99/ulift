@@ -21,96 +21,15 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { grey } from "@mui/material/colors";
 
-const ListaEsperaParaPasajeros = (): JSX.Element => {
-  const p1: User = {
-    name: "Luisa",
-    email: "luisa",
-    gender: "Femenino",
-    role: "Estudiante",
-    id: "1234",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
-  };
-
-  const p2: User = {
-    name: "Maria",
-    email: "luisa",
-    gender: "Femenino",
-    role: "Estudiante",
-    id: "11121",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
-  };
-
-  const p3: User = {
-    name: "Ana",
-    email: "luisa",
-    gender: "Femenino",
-    role: "Estudiante",
-    id: "4567",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
-  };
-
-  const p4: User = {
-    name: "Eva",
-    email: "luisa",
-    gender: "Femenino",
-    role: "Estudiante",
-    id: "8910",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
-  };
-  var pasajeros: User[] = [];
-
-  pasajeros.push(p1);
-  pasajeros.push(p2);
-  pasajeros.push(p3);
-  pasajeros.push(p4);
-
+interface Props {
+  usuario: User;
+  pasajeros: User[];
+}
+const ListaEsperaParaPasajeros = ({ pasajeros }: Props): JSX.Element => {
   return (
     <Box display={"flex"} flexDirection="column">
       {pasajeros.map((user) => (
-        <Conductor
-          key={user.id}
-          id={user.id}
-          name={user.name}
-          email={user.email}
-          role={user.role}
-          gender={user.gender}
-          photo={user.photo}
-          trips={user.trips}
-          rating={user.rating}
-          emergencyContact={user.emergencyContact}
-          emergencyName={user.emergencyName}
-          vehicles={user.vehicles}
-          destinations={user.destinations}
-          routes={user.routes}
-        />
+        <Conductor key={user.id} usuario={user} pasajeros={pasajeros} />
       ))}
     </Box>
   );
@@ -118,12 +37,13 @@ const ListaEsperaParaPasajeros = (): JSX.Element => {
 
 export default ListaEsperaParaPasajeros;
 
-export const Conductor = (user: User): JSX.Element => {
-  const foto = "https://ulift-backend.up.railway.app/" + user.photo;
+export const Conductor = ({ usuario }: Props): JSX.Element => {
+  const foto = "https://ulift-backend.up.railway.app/" + usuario.photo;
 
   const navigate = useNavigate();
   const handleClick = (id: string) => () => {
-    navigate("/colaEnProceso");
+    navigate("/colaEnProceso/pasajero");
+    console.log(id);
   };
 
   const goChat = (id: string) => () => {
@@ -157,7 +77,7 @@ export const Conductor = (user: User): JSX.Element => {
       >
         <Box alignItems="center" mr={2} mt={1}>
           {/* Aquí se tiene que cambiar para colocar la imagen */}
-          <Avatar sx={{ width: "50px", height: "50px" }}>N</Avatar>
+          <Avatar sx={{ width: 50, height: 50, marginBottom: 1 }} src={foto} />
         </Box>
 
         <Box
@@ -172,7 +92,7 @@ export const Conductor = (user: User): JSX.Element => {
               fontWeight: 600,
             }}
           >
-            {user.name}
+            {usuario.name}
           </Typography>
         </Box>
         <Box
@@ -181,10 +101,10 @@ export const Conductor = (user: User): JSX.Element => {
             flexDirection: "row",
           }}
         >
-          <IconButton sx={{ marginRight: 1 }} onClick={goChat(user.id)}>
+          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.id)}>
             <ChatRounded color="primary" />
           </IconButton>
-          <IconButton sx={{ marginRight: 1 }} onClick={handleClick(user.id)}>
+          <IconButton sx={{ marginRight: 1 }} onClick={handleClick(usuario.id)}>
             <PedirColaIcon />
           </IconButton>
         </Box>
