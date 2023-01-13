@@ -13,12 +13,13 @@ import Divider from "@mui/material/Divider";
 import InfoHistorialDialogo from "./InfoHistorialDialogo";
 interface UserProps {
   name: string;
-  // photo: string;
-  time: string;
   date: string;
-  userId: string;
+  time: string;
+  car: string;
+  photo: string;
+  plate: string;
+  rate: number;
   location: string;
-  role: string;
 }
 
 const UserListItem = (props: UserProps): JSX.Element => {
@@ -58,7 +59,7 @@ const UserListItem = (props: UserProps): JSX.Element => {
         >
           <ListItem>
             <ListItemAvatar>
-              <Avatar>{props.userId}</Avatar>
+              <Avatar>A</Avatar>
             </ListItemAvatar>
             <ListItemText
               primary={props.name}
@@ -77,7 +78,11 @@ const UserListItem = (props: UserProps): JSX.Element => {
         location={props.location}
         date={props.date}
         time={props.time}
-        role={props.role}
+        car={props.car}
+        photo={props.photo}
+        plate={props.plate}
+        rate={props.rate}
+        //role={props.role}
       />
     </Grid>
   );

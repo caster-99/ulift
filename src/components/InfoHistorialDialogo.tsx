@@ -23,7 +23,11 @@ interface DialogProps {
   time: string;
   date: string;
   location: string;
-  role: string;
+  //role: string;
+  car: string;
+  photo: string;
+  plate: string;
+  rate: number;
 }
 
 const InfoHistorialDialogo = (props: DialogProps) => {
@@ -52,13 +56,14 @@ const InfoHistorialDialogo = (props: DialogProps) => {
         {/* Aquí se tiene que cambiar para colocar la imagen */}
         <Avatar sx={{ width: "80px", height: "80px" }}>N</Avatar>
 
-        <Typography sx={{ fontWeight: 600, fontSize: "18px",}}>
-          {props.name}
-        </Typography>
-        <Typography>{props.role}</Typography>
+        <Typography sx={{ fontWeight: 600, fontSize: "18px" }}>{props.name}</Typography>
+        {/* <Typography>{props.role}</Typography> */}
         <Typography>Hora: {props.time}</Typography>
         <Typography>Fecha: {props.date}</Typography>
         <Typography>Destino: {props.location}</Typography>
+        <Typography>Vehiculo: {props.car}</Typography>
+        <Typography>Placa: {props.plate}</Typography>
+        <Typography>Rating: {props.rate}</Typography>
       </DialogContent>
     </Dialog>
   );

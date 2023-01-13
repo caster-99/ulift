@@ -1,58 +1,28 @@
 import React from "react";
 import { Box } from "@mui/material";
 import UserListItem from "./UserListItem";
+import { Colas } from "../types";
 
-const ListaHistorialUsuarios = (): JSX.Element => {
+interface Props {
+  historial: Colas[];
+}
+
+const ListaHistorialUsuarios = ({ historial }: Props): JSX.Element => {
   return (
     <Box display={"flex"} flexDirection="column">
-      <UserListItem
-        name="Luisa"
-        time="11:34 AM"
-        date="14/12/2022"
-        location="Los olivos"
-        userId="1234"
-        role="Estudiante"
-      />
-      <UserListItem
-        name="Luisa"
-        time="11:34 AM"
-        date="14/12/2022"
-        location="Los olivos"
-        userId="1234"
-        role="Estudiante"
-      />
-      <UserListItem
-        name="Luisa"
-        time="11:34 AM"
-        date="14/12/2022"
-        location="Los olivos"
-        userId="1234"
-        role="Estudiante"
-      />
-      <UserListItem
-        name="Luisa"
-        time="11:34 AM"
-        date="14/12/2022"
-        location="Los olivos"
-        userId="1234"
-        role="Estudiante"
-      />
-      <UserListItem
-        name="Luisa"
-        time="11:34 AM"
-        date="14/12/2022"
-        location="Los olivos"
-        userId="1234"
-        role="Estudiante"
-      />
-      <UserListItem
-        name="Luisa"
-        time="11:34 AM"
-        date="14/12/2022"
-        location="Los olivos"
-        userId="1234"
-        role="Estudiante"
-      />
+      {historial.map((cola) => (
+        <UserListItem
+          name={cola.name}
+          time={cola.time}
+          date={cola.date}
+          location={cola.routename}
+          car={cola.car}
+          photo={cola.photo}
+          plate={cola.plate}
+          rate={cola.rate}
+          //role="Estudiante"
+        />
+      ))}
     </Box>
   );
 };

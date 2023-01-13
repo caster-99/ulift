@@ -49,6 +49,16 @@ export interface Lift {
   rdNumber: string;
   rdName: string;
   waitTime: number;
-  path:string;
+  path: string;
 }
 
+export interface Colas {
+  date: string;
+  car: string;
+  name: string;
+  photo: string;
+  plate: string;
+  rate: number;
+  time: string;
+  routename: string;
+}
