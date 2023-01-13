@@ -39,13 +39,14 @@ const CheckParaConductores = (): JSX.Element => {
   };
 
   const finViaje = () => {
-var config = {
+    var config = {
       method: "post",
       url: "https://ulift-backend.up.railway.app/api/lift/complete",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
-    };axios(config)
+    };
+    axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
         enqueueSnackbar("Cola finalizada recuerda calificar a tus pasajeros.", {
@@ -58,7 +59,6 @@ var config = {
       .catch(function (error) {
         console.log(error);
       });
-
   };
 
   const fetchUser = async () => {
@@ -68,6 +68,7 @@ var config = {
     console.log("elegidos: " + localStorage.getItem("elegidos")!);
     var elegidosString = JSON.parse(localStorage.getItem("elegidos")!);
     pasajeros = elegidosString;
+    console.log(pasajeros);
   };
 
   fetchUser();
@@ -131,18 +132,17 @@ export const UserListItem = (user: User): JSX.Element => {
       newChecked.splice(currentIndex, 1);
     }
 
-
     const d = new Date();
     let hour = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 
     //Aquí se debe mandar a la bd o agregar a un arreglo la info de cuando se dejó
 
     var config = {
-      method: 'post',
-      url: 'https://ulift-backend.up.railway.app/api/lift/driverCheck/' + value,
+      method: "post",
+      url: "https://ulift-backend.up.railway.app/api/lift/driverCheck/" + value,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
-      }
+      },
     };
 
     axios(config)

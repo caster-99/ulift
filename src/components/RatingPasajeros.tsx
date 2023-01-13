@@ -12,6 +12,7 @@ import { useState } from "react";
 import { User } from "../types";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 interface DialogProps {
   isOpen: boolean;
@@ -23,10 +24,40 @@ const RatingPasajeros = ({ isOpen, closeDialog, p }: DialogProps): JSX.Element =
   const navigate = useNavigate();
   const [value, setValue] = useState<number | null>(0);
   const [hover, setHover] = useState(-1);
-  console.log("pasajeros " + p);
+  console.log("elegidos: " + localStorage.getItem("elegidos")!);
+  var elegidosString = JSON.parse(localStorage.getItem("elegidos")!);
+  p = elegidosString;
+  console.log("pasajeros en el rating " + p);
 
   const cerrarDialogo = () => {
     console.log(value);
+
+    //luego de que se mande el rating
+
+    for (let i = 0; i < p.length; i++) {
+      var data = JSON.stringify({
+        receiverID: p[i].id,
+        rate: value,
+      });
+      var config = {
+        method: "post",
+        url: "https://ulift-backend.up.railway.app/api/lift/rating",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+
     setTimeout(() => {
       closeDialog();
 
