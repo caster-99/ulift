@@ -19,7 +19,7 @@ interface ColasDisponibles {
   color: string;
   date: Date;
   distanceLastNode: number;
-  driverID: number;
+  id: number;
   email: string;
   gender: string;
   lastname: string;
@@ -60,7 +60,7 @@ const ListaEsperaParaConductores = (): JSX.Element => {
     let j = 0;
     for (let i = 0; i < elegidos.length; i++) {
       var data = JSON.stringify({
-        id: elegidos[i].driverID,
+        id: elegidos[i].id,
         dNumber: 1,
       });
       console.log(data);
@@ -150,23 +150,21 @@ export const PasajeroListaEspera = ({ usuario, solicitudes }: SolicitudUsuarios)
   const navigate = useNavigate();
   solicitudes = requests;
   console.log(
-    "arreglo de requests " + requests.flatMap((usuario) => usuario.nameU + " " + usuario.driverID)
+    "arreglo de requests " + requests.flatMap((usuario) => usuario.nameU + " " + usuario.id)
   );
   const handleClick = (id: number) => () => {
     if (isActive === false) {
       setIsActive((current) => !current);
-      elegidos.push(solicitudes.find((usuario) => usuario.driverID === id) as ColasDisponibles);
-      console.log(elegidos.flatMap((usuario) => usuario.nameU + " " + usuario.driverID));
+      elegidos.push(solicitudes.find((usuario) => usuario.id === id) as ColasDisponibles);
+      console.log(elegidos.flatMap((usuario) => usuario.nameU + " " + usuario.id));
     } else {
-      if (solicitudes.find((usuario) => usuario.driverID === id)) {
+      if (solicitudes.find((usuario) => usuario.id === id)) {
         setIsActive((current) => !current);
         elegidos.splice(
-          elegidos.indexOf(
-            solicitudes.find((usuario) => usuario.driverID === id) as ColasDisponibles
-          ),
+          elegidos.indexOf(solicitudes.find((usuario) => usuario.id === id) as ColasDisponibles),
           1
         );
-        console.log(elegidos.flatMap((usuario) => usuario.nameU + " " + usuario.driverID));
+        console.log(elegidos.flatMap((usuario) => usuario.nameU + " " + usuario.id));
       }
     }
 
@@ -229,10 +227,10 @@ export const PasajeroListaEspera = ({ usuario, solicitudes }: SolicitudUsuarios)
             flexDirection: "row",
           }}
         >
-          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.driverID)}>
+          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.id)}>
             <ChatRounded color="primary" />
           </IconButton>
-          <IconButton sx={{ marginRight: 1 }} onClick={handleClick(usuario.driverID)}>
+          <IconButton sx={{ marginRight: 1 }} onClick={handleClick(usuario.id)}>
             <LocIcon />
           </IconButton>
         </Box>

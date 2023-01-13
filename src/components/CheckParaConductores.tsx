@@ -24,10 +24,32 @@ import RatingPasajeros from "./RatingPasajeros";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 
+interface ColasDisponibles {
+  color: string;
+  date: Date;
+  distanceLastNode: number;
+  id: number;
+  email: string;
+  gender: string;
+  lastname: string;
+  liftID: number;
+  model: string;
+  nameU: string;
+  path: string;
+  photo: string;
+  plate: string;
+  rName: string;
+  rate: number;
+  role: string;
+  seats: number;
+  time: Date;
+  waitingTime: number;
+}
+
 const CheckParaConductores = (): JSX.Element => {
   const { enqueueSnackbar } = useSnackbar();
 
-  var pasajeros: User[] = [];
+  var pasajeros: ColasDisponibles[] = [];
 
   const [open, setOpen] = React.useState(false);
 
@@ -92,18 +114,24 @@ const CheckParaConductores = (): JSX.Element => {
             <UserListItem
               key={user.id}
               id={user.id}
-              name={user.name}
+              nameU={user.nameU}
+              lastname={user.lastname}
               email={user.email}
               role={user.role}
               gender={user.gender}
               photo={user.photo}
-              trips={user.trips}
-              rating={user.rating}
-              emergencyContact={user.emergencyContact}
-              emergencyName={user.emergencyName}
-              vehicles={user.vehicles}
-              destinations={user.destinations}
-              routes={user.routes}
+              color={user.color}
+              date={user.date}
+              distanceLastNode={user.distanceLastNode}
+              liftID={user.liftID}
+              model={user.model}
+              path={user.path}
+              plate={user.plate}
+              rName={user.rName}
+              rate={user.rate}
+              seats={user.seats}
+              time={user.time}
+              waitingTime={user.waitingTime}
             />
           ))}
         </List>
@@ -118,16 +146,16 @@ const CheckParaConductores = (): JSX.Element => {
 
 export default CheckParaConductores;
 
-export const UserListItem = (user: User): JSX.Element => {
+export const UserListItem = (user: ColasDisponibles): JSX.Element => {
   const foto = "https://ulift-backend.up.railway.app/" + user.photo;
   const [checked, setChecked] = React.useState([0]);
 
-  const handleToggle = (value: string) => () => {
-    const currentIndex = checked.indexOf(parseInt(value));
+  const handleToggle = (value: number) => () => {
+    const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
 
     if (currentIndex === -1) {
-      newChecked.push(parseInt(value));
+      newChecked.push(value);
     } else {
       newChecked.splice(currentIndex, 1);
     }
@@ -163,8 +191,8 @@ export const UserListItem = (user: User): JSX.Element => {
         <Checkbox
           edge="end"
           onChange={handleToggle(user.id)}
-          checked={checked.indexOf(parseInt(user.id)) !== -1}
-          disabled={checked.indexOf(parseInt(user.id)) !== -1}
+          checked={checked.indexOf(user.id) !== -1}
+          disabled={checked.indexOf(user.id) !== -1}
         />
       }
       sx={{
@@ -179,7 +207,9 @@ export const UserListItem = (user: User): JSX.Element => {
         <ListItemAvatar>
           <Avatar sx={{ width: 50, height: 50 }} src={foto} />
         </ListItemAvatar>
-        <Typography sx={{ fontWeight: 600, marginLeft: 1 }}>{user.name}</Typography>
+        <Typography sx={{ fontWeight: 600, marginLeft: 1 }}>
+          {user.nameU} {user.lastname}
+        </Typography>
       </ListItemButton>
     </ListItem>
   );

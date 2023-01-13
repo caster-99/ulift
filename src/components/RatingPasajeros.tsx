@@ -14,10 +14,32 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+interface ColasDisponibles {
+  color: string;
+  date: Date;
+  distanceLastNode: number;
+  id: number;
+  email: string;
+  gender: string;
+  lastname: string;
+  liftID: number;
+  model: string;
+  nameU: string;
+  path: string;
+  photo: string;
+  plate: string;
+  rName: string;
+  rate: number;
+  role: string;
+  seats: number;
+  time: Date;
+  waitingTime: number;
+}
+
 interface DialogProps {
   isOpen: boolean;
   closeDialog: () => void;
-  p: User[];
+  p: ColasDisponibles[];
 }
 
 const RatingPasajeros = ({ isOpen, closeDialog, p }: DialogProps): JSX.Element => {
@@ -90,7 +112,9 @@ const RatingPasajeros = ({ isOpen, closeDialog, p }: DialogProps): JSX.Element =
                   justifyContent: "space-evenly",
                 }}
               >
-                <Typography mr="2px">{user.name} </Typography>
+                <Typography mr="2px">
+                  {user.nameU} {user.lastname}{" "}
+                </Typography>
                 <Rating
                   name="hover-feedback"
                   value={value}
