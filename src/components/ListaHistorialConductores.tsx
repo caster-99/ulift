@@ -1,25 +1,28 @@
 import React from "react";
 import { Box } from "@mui/material";
 import UserListItem from "./UserListItem";
-import { Lift } from "../types";
+import { Colas } from "../types";
 
 interface Props {
-  historial: Lift[];
+  historial: Colas[];
 }
 
-const ListaHistorialConductores = (/* { historial }: Props */): JSX.Element => {
+const ListaHistorialConductores = ({ historial }: Props): JSX.Element => {
   return (
     <Box display={"flex"} flexDirection="column">
-      {/* {historial.map((lift) => (
+      {historial.map((cola) => (
         <UserListItem
-          name="Luisa"
-          time="11:34 AM"
-          date="14/12/2022"
-          location="Los olivos"
-          userId="1234"
-          role="Estudiante"
+          name={cola.name}
+          time={cola.time}
+          date={cola.date}
+          location={cola.routename}
+          car={cola.car}
+          photo={cola.photo}
+          plate={cola.plate}
+          rate={cola.rate}
+          //role="Estudiante"
         />
-      ))} */}
+      ))}
     </Box>
   );
 };

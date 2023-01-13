@@ -6,6 +6,9 @@ import ListaHistorialUsuarios from "../components/ListaHistorialUsuarios";
 import ListaHistorialConductores from "../components/ListaHistorialConductores";
 import React from "react";
 import axios from "axios";
+import { Colas } from "../types";
+
+var historial: Colas[] = [];
 
 const HistorialColas = (): JSX.Element => {
   const fetchHist = () => {
@@ -20,19 +23,23 @@ const HistorialColas = (): JSX.Element => {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data.history));
-        /* favoritos = response.data.favorites.map((fav: any) => {
-          var usuarios = {} as User; //arreglo auxiliar
+        historial = response.data.history.map((hist: any) => {
+          var trip = {} as Colas; //arreglo auxiliar
 
-          usuarios.name = fav.nameU;
-          usuarios.trips = fav.n_trips;
-          usuarios.rating = fav.rate;
-          usuarios.photo = fav.photo;
+          trip.name = hist.name + " " + hist.lastname;
+          trip.routename = hist.routename;
+          trip.time = hist.time.toString();
+          trip.date = hist.date.toString();
+          trip.car = hist.model + " " + hist.color;
+          trip.photo = hist.photo;
+          trip.rate = hist.rate;
+          trip.plate = hist.plate;
 
-          return usuarios;
+          return trip;
         });
 
-        console.log(favoritos);
-        console.log(favoritos.length); */
+        console.log(historial);
+        console.log(historial.length);
       })
       .catch(function (error) {
         console.log(error);
@@ -70,10 +77,10 @@ const HistorialColas = (): JSX.Element => {
                 </TabList>
               </Box>
               <TabPanel value="1">
-                <ListaHistorialConductores />
+                <ListaHistorialConductores historial={historial} />
               </TabPanel>
               <TabPanel value="2">
-                <ListaHistorialUsuarios />
+                <ListaHistorialUsuarios historial={historial} />
               </TabPanel>
             </TabContext>
           </Container>
