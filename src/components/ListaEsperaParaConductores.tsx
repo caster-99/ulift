@@ -82,20 +82,6 @@ const ListaEsperaParaConductores = (): JSX.Element => {
         },
       };
 
-      var data = JSON.stringify({
-        liftID: 1,
-      });
-
-      var createRatings = {
-        method: "post",
-        url: "https://ulift-backend.up.railway.app/api/lift/createR",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-        data: data,
-      };
-
       axios(config).then(function (response) {
         console.log("Ejecutando accept");
         console.log(JSON.stringify(response.data.message));
@@ -104,17 +90,32 @@ const ListaEsperaParaConductores = (): JSX.Element => {
       axios(startLift).then(function (response) {
         console.log("Ejecutando start");
         console.log(JSON.stringify(response.data));
-        axios(createRatings).then(function (response) {
-          console.log("Ejecutando create ratings");
-          console.log(JSON.stringify(response.data));
-        });
-        setTimeout(() => {
-          localStorage.setItem("elegidos", JSON.stringify(elegidos));
-          flag = true;
-          navigate("/colaEnProceso/conductor");
-        }, 8000);
       });
     }
+
+    var data = JSON.stringify({
+      liftID: elegidos[0].liftID,
+    });
+
+    var createRatings = {
+      method: "post",
+      url: "https://ulift-backend.up.railway.app/api/lift/createR",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(createRatings).then(function (response) {
+      console.log("Ejecutando create ratings");
+      console.log(JSON.stringify(response.data));
+      setTimeout(() => {
+        localStorage.setItem("elegidos", JSON.stringify(elegidos));
+        flag = true;
+        navigate("/colaEnProceso/conductor");
+      }, 8000);
+    });
   }
 
   return (
