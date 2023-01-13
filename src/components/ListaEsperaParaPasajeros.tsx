@@ -73,7 +73,7 @@ export const Conductor = ({ usuario }: Props): JSX.Element => {
   };
 
   const goChat = (id: string) => () => {
-    navigate("/chatPrivado/" + id);
+    navigate("/chat/" + id);
   };
 
   return (

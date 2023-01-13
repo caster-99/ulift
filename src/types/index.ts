@@ -52,3 +52,16 @@ export interface Lift {
   path:string;
 }
 
+export interface Message {
+  senderID: string,
+  receiverID: string,
+  dateMessage: Date,
+  messageID: string,
+  statusMessage: boolean,
+  room: string
+}
+
+export interface OptionMessage {
+  messageID: string,
+  description: string
+}

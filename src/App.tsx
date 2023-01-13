@@ -18,9 +18,7 @@ import PerfilExterno from "./pages/PerfilExterno";
 import RegistroRuta from "./pages/RegistroRuta";
 import RegistroDestino from "./pages/RegistroDestino";
 import WrapperPerfilExterno from "./pages/WrapperPerfilExterno";
-import io from "socket.io-client";
 
-const socket = io("http://localhost:3001");
 
 const App = (): JSX.Element => {
   return (
@@ -49,11 +47,10 @@ const App = (): JSX.Element => {
         <Route path="historial" element={<HistorialColas />} />
         <Route path="favoritos" element={<Favoritos />} />
         <Route path="colaEnProceso/:tipo" element={<ColaProceso />} />
-        <Route path="chats" element={<Chat />} />
         <Route path="registroVehiculo" element={<RegistroVehiculo />} />
         <Route path="listaEspera/:tipo" element={<ListaEspera />} />
         <Route path="faq" element={<Faq />} />
-        <Route path="chatPrivado/:userId" element={<ChatLayout />} />
+        <Route path="chat/:userId" element={<ChatLayout />} />
         <Route path="perfilExterno/:userId" element={<WrapperPerfilExterno />} />
         <Route path="registroRuta" element={<RegistroRuta />} />
         <Route path="registroDestino" element={<RegistroDestino />} />

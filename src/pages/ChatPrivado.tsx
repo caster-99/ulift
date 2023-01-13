@@ -2,9 +2,35 @@ import { Box, Container, Fade, Typography } from "@mui/material";
 import React from "react";
 import { useParams } from "react-router-dom";
 import HeaderChat from "../components/HeaderChat";
+import axios from "axios";
+import { OptionMessage } from "../types";
+/*import io from "socket.io-client";
+
+const socket = io("http://localhost:3001");*/
 
 const ChatPrivado = (): JSX.Element => {
   const params = useParams();
+
+  var requests: OptionMessage[] = [];
+  const token = localStorage.getItem("token");
+  var requestAConductores = {
+    method: "get",
+    url: "https://ulift-backend.up.railway.app/api/chat/chat",
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  axios(requestAConductores)
+    .then(function (response) {
+      requests = response.data.requests;
+      console.log("requests");
+      console.log(requests);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
+
   return (
     <Box>
       <HeaderChat />

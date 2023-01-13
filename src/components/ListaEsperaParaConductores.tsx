@@ -82,7 +82,7 @@ export const PasajeroListaEspera = ({ usuario, pasajeros }: Props): JSX.Element 
     // setIsActive(true);
   };
   const goChat = (id: string) => () => {
-    navigate("/chatPrivado/" + id);
+    navigate("/chat/" + id);
   };
 
   return (

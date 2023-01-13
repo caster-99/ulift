@@ -42,7 +42,7 @@ const ChatMini = (props: UserProps): JSX.Element => {
         <CardActionArea
           sx={{ p: 0, display: "flex", height: "100%" }}
           component={Link}
-          to={`/chatPrivado/${props.userId}`}
+          to={`/chat/${props.userId}`}
         >
           <CardContent
             sx={{
