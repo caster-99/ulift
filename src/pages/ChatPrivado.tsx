@@ -13,15 +13,21 @@ const ChatPrivado = (): JSX.Element => {
 
   var requests: OptionMessage[] = [];
   const token = localStorage.getItem("token");
+  var data = JSON.stringify({
+    "messageID" : 1
+  });
   var requestMessage = {
-    method: "get",
+    method: "post",
     url: "http://localhost:3002/api/messages",
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { Authorization: `Bearer ${token}`,
+    "Content-Type" : "application/json"
+   },
+    data: data
   };
 
   axios(requestMessage)
     .then(function (response) {
-      requests = response.data.messages;
+      requests = response.data.description;
       console.log("requests");
       console.log(requests);
     })
