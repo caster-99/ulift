@@ -27,13 +27,25 @@ interface DialogProps {
 }
 
 interface ColasDisponibles {
-  id: string;
+  color: string;
+  date: Date;
+  distanceLastNode: number;
+  driverID: number;
   email: string;
-  nameU: string;
+  gender: string;
   lastname: string;
-  liftID: string;
+  liftID: number;
+  model: string;
+  name: string;
+  path: string;
   photo: string;
+  plate: string;
+  rName: string;
+  rate: number;
   role: string;
+  seats: number;
+  time: Date;
+  waitingTime: number;
 }
 
 var destinos: string[] = [];
@@ -90,7 +102,10 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
         console.log(response.data.lifts);
         conductores = response.data.lifts;
         localStorage.setItem("conductores", JSON.stringify(conductores));
-        navigate("/listaEspera/pasajero");
+        console.log("localStorage: " + localStorage.getItem("conductores"));
+        setTimeout(() => {
+          navigate("/listaEspera/pasajero");
+        }, 5000);
       })
       .catch(function (error) {
         enqueueSnackbar("¡No se pudo crear la solicitud de cola!", {
@@ -142,8 +157,6 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
         .catch(function (error) {
           console.log(error);
         });
-
-      console.log(url);
 
       destinos = [];
     } else {

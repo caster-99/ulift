@@ -38,6 +38,16 @@ interface Props {
   window?: () => Window;
 }
 
+interface ColasDisponibles {
+  id: string;
+  email: string;
+  nameU: string;
+  lastname: string;
+  liftID: string;
+  photo: string;
+  role: string;
+}
+
 export const NavBar = (props: Props) => {
   var numeroEmergencia = "";
   var tipoUsuario: string;
@@ -66,8 +76,20 @@ export const NavBar = (props: Props) => {
     headers: { Authorization: `Bearer ${token}` },
   };
 
+  var requestAConductores = {
+    method: "get",
+    url: "https://ulift-backend.up.railway.app/api/lift/requests",
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
   axios(config).then(function (response) {
     tipoUsuario = response.data.status;
+  });
+
+  axios(requestAConductores).then(function (response) {
+    var requests: ColasDisponibles[] = response.data.requests;
+    localStorage.setItem("requests", JSON.stringify(requests));
+    console.log("requests: " + localStorage.getItem("requests"));
   });
 
   const { window } = props;

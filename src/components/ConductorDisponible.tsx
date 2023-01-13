@@ -37,6 +37,8 @@ const ConductorDisponible = (props: UserProps): JSX.Element => {
     setDialogInfoUser(false);
   };
 
+  const foto = "https://ulift-backend.up.railway.app/" + props.photo;
+
   return (
     <Grid item xs={12} sm={6} md={5}>
       <Card
@@ -64,7 +66,7 @@ const ConductorDisponible = (props: UserProps): JSX.Element => {
         >
           <Box alignItems="center" mr={2}>
             {/* Aquí se tiene que cambiar para colocar la imagen */}
-            <Avatar sx={{ width: "50px", height: "50px" }}>N</Avatar>
+            <Avatar sx={{ width: 50, height: 50, marginBottom: 1 }} src={foto} />
           </Box>
 
           <Box sx={{ display: "flex", flexDirection: "column", width: "360px" }}>

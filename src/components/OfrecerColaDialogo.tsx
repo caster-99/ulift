@@ -126,8 +126,9 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
           });
           axios(requestAConductores).then((res) => {
             requests = res.data.requests;
-            navigate("/listaEspera/conductor");
             localStorage.setItem("requests", JSON.stringify(requests));
+            console.log("requests: " + localStorage.getItem("requests"));
+            navigate("/listaEspera/conductor");
           });
         })
         .catch((error) => {

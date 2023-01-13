@@ -38,14 +38,39 @@ const ListaEsperaParaConductores = (): JSX.Element => {
   const fetchUser = async () => {
     var requestsString = JSON.parse(localStorage.getItem("requests")!);
     requests = requestsString;
-    console.log(requests);
+    console.log("arreglo de requests" + requests);
   };
 
   const navigate = useNavigate();
 
   function empezarViaje() {
     //aqui se debe pasar la lista de elegidos a la cola en proceso
-    navigate("/colaEnProceso/conductor");
+    let j = 0;
+    for (let i = 0; i < elegidos.length; i++) {
+      var data = JSON.stringify({
+        id: elegidos[i].id,
+        dNumber: 1,
+      });
+      console.log(data);
+      var config = {
+        method: "post",
+        url: "https://ulift-backend.up.railway.app/api/lift/accept",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      axios(config).then(function (response) {
+        console.log(JSON.stringify(response.data.message));
+        j++;
+      });
+    }
+
+    setTimeout(() => {
+      navigate("/colaEnProceso/conductor");
+    }, 8000);
   }
 
   fetchUser();

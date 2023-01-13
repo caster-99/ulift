@@ -98,6 +98,7 @@ const fetchInfo = async () => {
 };
 
 const Inicio = (): JSX.Element => {
+  console.log(localStorage.getItem("token"));
   const [isDialogOfrecerOpen, setDialogOfrecerOpen] = useState(false);
   const [isDialogPedirOpen, setDialogPedirOpen] = useState(false);
 
