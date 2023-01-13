@@ -7,9 +7,9 @@ import { grey } from "@mui/material/colors";
 import axios from "axios";
 
 interface ColasDisponibles {
-  driverID: string;
+  id: string;
   email: string;
-  name: string;
+  nameU: string;
   lastname: string;
   liftID: string;
   photo: string;
@@ -20,9 +20,9 @@ const ListaEsperaParaPasajeros = (): JSX.Element => {
   var pasajeros: ColasDisponibles[] = [];
 
   const p1: ColasDisponibles = {
-    driverID: "string",
+    id: "string",
     email: "string",
-    name: "string",
+    nameU: "string",
     lastname: "string",
     liftID: "string",
     photo: "string",
@@ -35,9 +35,9 @@ const ListaEsperaParaPasajeros = (): JSX.Element => {
       {pasajeros.map((user, index) => (
         <Conductor
           key={index}
-          driverID={user.driverID}
+          id={user.id}
           email={user.email}
-          name={user.name}
+          nameU={user.nameU}
           lastname={user.lastname}
           liftID={user.liftID}
           photo={user.photo}
@@ -130,7 +130,7 @@ export const Conductor = (usuario: ColasDisponibles): JSX.Element => {
               fontWeight: 600,
             }}
           >
-            {usuario.name}
+            {usuario.nameU}
           </Typography>
         </Box>
         <Box
@@ -139,7 +139,7 @@ export const Conductor = (usuario: ColasDisponibles): JSX.Element => {
             flexDirection: "row",
           }}
         >
-          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.driverID)}>
+          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.id)}>
             <ChatRounded color="primary" />
           </IconButton>
           <IconButton sx={{ marginRight: 1 }} onClick={handleClick(usuario.liftID)}>

@@ -1,4 +1,4 @@
-import { Box, Container, Fade, Typography } from "@mui/material";
+import { Button, Box, Container, Fade, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { NavBar } from "../components/NavBar";
 import ListaEsperaParaConductores from "../components/ListaEsperaParaConductores";
@@ -65,11 +65,12 @@ const ListaEspera = (): JSX.Element => {
             >
               Lista de espera
             </Typography>
-            {requests.length === 0 && (
+            {/* {requests.length === 0 && (
               <Typography fontSize={{ xs: 14, md: 17 }} mb={{ xs: 2, sm: 3 }}>
                 No hay nadie en la lista de espera
               </Typography>
-            )}
+            )} */}
+
             {tipoUsuario === "conductor" && <ListaEsperaParaConductores />}
             {tipoUsuario === "pasajero" && <ListaEsperaParaPasajeros />}
           </Container>

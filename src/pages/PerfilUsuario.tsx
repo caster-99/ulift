@@ -221,8 +221,9 @@ const PerfilUsuario = (): JSX.Element => {
               )}
 
               <Grid container spacing={{ xs: 2, md: 3 }}>
-                {usuario.destinations?.map((v) => (
+                {usuario.destinations?.map((v, index) => (
                   <InfoCard
+                    key={index}
                     title={"Nombre del destino: " + v.name}
                     subtitile={"Latitud y Longitud: " + v.lat + " " + v.lng}
                   />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -15,14 +15,10 @@ import { grey } from "@mui/material/colors";
 import { User } from "../types";
 import axios from "axios";
 
-interface Props {
-  usuario: User;
-  pasajeros: User[];
-}
 interface ColasDisponibles {
-  driverID: string;
+  id: string;
   email: string;
-  name: string;
+  nameU: string;
   lastname: string;
   liftID: string;
   photo: string;
@@ -39,40 +35,50 @@ var elegidos: ColasDisponibles[] = [];
 const ListaEsperaParaConductores = (): JSX.Element => {
   var requests: ColasDisponibles[] = [];
   const token = localStorage.getItem("token");
-  var requestAConductores = {
-    method: "get",
-    url: "https://ulift-backend.up.railway.app/api/lift/requests",
-    headers: { Authorization: `Bearer ${token}` },
-  };
 
-  axios(requestAConductores)
-    .then(function (response) {
-      requests = response.data.requests;
-      console.log("requests");
-      console.log(requests);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+  const fetchUser = async () => {
+    // var requestAConductores = {
+    //   method: "get",
+    //   url: "https://ulift-backend.up.railway.app/api/lift/requests",
+    //   headers: { Authorization: `Bearer ${token}` },
+    // };
+
+    // axios(requestAConductores)
+    //   .then(function (response) {
+    //     requests = response.data.requests;
+    //     console.log("requests");
+    //     console.log(requests);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
+    var requestsString = JSON.parse(localStorage.getItem("requests")!);
+    requests = requestsString;
+    console.log(requests);
+  };
 
   const navigate = useNavigate();
   // console.log("Lista de solicitudes de cola");
   // console.log(pasajeros);
 
+  fetchUser();
+
   return (
     <Box display={"flex"} flexDirection="column" alignItems="center" justifyContent="center">
+      {/* <Button onClick={refreshPage}>Refrescar</Button> */}
+      {/* Cuando haya seleccionado al menos uno o el límite indicado y si es conductor , debe habilitarse esta opción */}
+
       <List dense sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
         {requests.map((user, index) => (
           <PasajeroListaEspera usuario={user} solicitudes={requests} key={index} />
         ))}
       </List>
 
-      {/* Cuando haya seleccionado al menos uno o el límite indicado y si es conductor , debe habilitarse esta opción */}
       {requests.length > 0 && (
         <Button
           variant="contained"
           onClick={() => {
-            navigate("/colaEnProceso");
+            navigate("/colaEnProceso/conductor");
           }}
         >
           Empezar viaje
@@ -92,18 +98,16 @@ export const PasajeroListaEspera = ({ usuario, solicitudes }: SolicitudUsuarios)
   const handleClick = (id: string) => () => {
     if (isActive === false) {
       setIsActive((current) => !current);
-      elegidos.push(solicitudes.find((usuario) => usuario.driverID === id) as ColasDisponibles);
-      console.log(elegidos.flatMap((usuario) => usuario.name + " " + usuario.driverID));
+      elegidos.push(solicitudes.find((usuario) => usuario.id === id) as ColasDisponibles);
+      console.log(elegidos.flatMap((usuario) => usuario.nameU + " " + usuario.id));
     } else {
-      if (solicitudes.find((usuario) => usuario.driverID === id)) {
+      if (solicitudes.find((usuario) => usuario.id === id)) {
         setIsActive((current) => !current);
         elegidos.splice(
-          elegidos.indexOf(
-            solicitudes.find((usuario) => usuario.driverID === id) as ColasDisponibles
-          ),
+          elegidos.indexOf(solicitudes.find((usuario) => usuario.id === id) as ColasDisponibles),
           1
         );
-        console.log(elegidos.flatMap((usuario) => usuario.name + " " + usuario.driverID));
+        console.log(elegidos.flatMap((usuario) => usuario.nameU + " " + usuario.id));
       }
     }
 
@@ -154,9 +158,10 @@ export const PasajeroListaEspera = ({ usuario, solicitudes }: SolicitudUsuarios)
           <Typography
             sx={{
               fontWeight: 600,
+              fontStyle: "bold",
             }}
           >
-            {usuario.name}
+            {usuario.nameU} {usuario.lastname}
           </Typography>
         </Box>
         <Box
@@ -165,10 +170,10 @@ export const PasajeroListaEspera = ({ usuario, solicitudes }: SolicitudUsuarios)
             flexDirection: "row",
           }}
         >
-          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.driverID)}>
+          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.id)}>
             <ChatRounded color="primary" />
           </IconButton>
-          <IconButton sx={{ marginRight: 1 }} onClick={handleClick(usuario.driverID)}>
+          <IconButton sx={{ marginRight: 1 }} onClick={handleClick(usuario.id)}>
             <LocIcon />
           </IconButton>
         </Box>

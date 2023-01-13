@@ -40,7 +40,7 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
     const response = await api_instance.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
-
+    console.log(response.data.user.routes);
     for (let i = 0; i < vehiculos.length; i++) {
       vehiculos.pop();
     }
@@ -62,6 +62,16 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
     fetchUser();
   }, [isOpen]);
 
+  interface ColasDisponibles {
+    id: string;
+    email: string;
+    nameU: string;
+    lastname: string;
+    liftID: string;
+    photo: string;
+    role: string;
+  }
+
   const [direccion, setDireccion] = React.useState("");
   const [vehiculo, setVehiculo] = React.useState("");
   const [puestos, setPuestos] = React.useState(0);
@@ -69,6 +79,7 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
   const [mujeresOnly, setMujeresOnly] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+  var requests: ColasDisponibles[] = [];
 
   const irListaEspera = () => {
     if (direccion !== "" && vehiculo !== "" && puestos >= 1 && tiempo > 1) {
@@ -101,13 +112,23 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
         data: data,
       };
 
+      var requestAConductores = {
+        method: "get",
+        url: "https://ulift-backend.up.railway.app/api/lift/requests",
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
       axios(config)
         .then((response) => {
           console.log(JSON.stringify(response.data));
           enqueueSnackbar("Cola creada, espera que alguien te envie una solicitud", {
             variant: "success",
           });
-          navigate("/listaEspera/conductor");
+          axios(requestAConductores).then((res) => {
+            requests = res.data.requests;
+            navigate("/listaEspera/conductor");
+            localStorage.setItem("requests", JSON.stringify(requests));
+          });
         })
         .catch((error) => {
           console.log(error);
