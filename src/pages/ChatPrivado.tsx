@@ -13,23 +13,21 @@ const ChatPrivado = (): JSX.Element => {
 
   var requests: OptionMessage[] = [];
   const token = localStorage.getItem("token");
-  var requestAConductores = {
+  var requestMessage = {
     method: "get",
-    url: "https://ulift-backend.up.railway.app/api/chat/chat",
+    url: "http://localhost:3002/api/messages",
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  axios(requestAConductores)
+  axios(requestMessage)
     .then(function (response) {
-      requests = response.data.requests;
+      requests = response.data.messages;
       console.log("requests");
       console.log(requests);
     })
     .catch(function (error) {
       console.log(error);
     });
-
-
 
   return (
     <Box>
