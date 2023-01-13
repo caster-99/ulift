@@ -1,28 +1,38 @@
 import React from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
 import RatingDialogo from "./RatingDialogo";
+import { useSnackbar } from "notistack";
 import { User } from "../types";
+import axios from "axios";
 
 const CheckParaPasajeros = (): JSX.Element => {
   var conductor: User[] = [];
+  const { enqueueSnackbar } = useSnackbar();
 
-  const user: User = {
-    name: "Eva",
-    email: "luisa",
-    gender: "Femenino",
-    role: "Estudiante",
-    id: "8910",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
+  //Solicitar a la API el destino en el que fue dejado el pasajero
+
+  var user: User;
+
+  var config = {
+    method: "get",
+    url: "https://ulift-backend.up.railway.app/api/lift/driver",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
 
-  conductor.push(user);
+  axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      user = response.data.driver;
+      console.log(user);
+      conductor.push(user);
+      console.log(conductor);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
   const [open, setOpen] = React.useState(false);
 
@@ -35,9 +45,29 @@ const CheckParaPasajeros = (): JSX.Element => {
 
   const handleClick = () => {
     const d = new Date();
-    let hour = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
-    console.log("Viaje finalizado a las: " + hour);
-    abrirDialogo();
+    let hour = d.getHours() + ":" + d.getMinutes();
+
+    var config = {
+      method: "post",
+      url: "https://ulift-backend.up.railway.app/api/lift/complete",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        enqueueSnackbar("Cola finalizada a las " + hour + ", recuerda calificar a tu conductor.", {
+          variant: "success",
+        });
+        setTimeout(() => {
+          abrirDialogo();
+        }, 5000);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
   return (
     <Box display={"flex"} flexDirection="column">
@@ -45,7 +75,7 @@ const CheckParaPasajeros = (): JSX.Element => {
         Indica si fuiste dejado en el lugar correcto:
       </Typography>
       <Typography fontSize={{ xs: 17, md: 20 }} fontWeight="500" textAlign="center" margin={4}>
-        Al menos XXX metros de XXXX
+        En las cercanías de XXXX
       </Typography>
       <Container
         maxWidth="md"
@@ -59,7 +89,7 @@ const CheckParaPasajeros = (): JSX.Element => {
       >
         <Button variant="contained" sx={{ width: "100%", marginTop: "10px" }} onClick={handleClick}>
           Viaje finalizado
-        </Button>{" "}
+        </Button>
         {open && (
           <RatingDialogo
             isOpen={open}

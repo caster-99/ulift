@@ -11,6 +11,7 @@ import StarIcon from "@mui/icons-material/Star";
 import { useState } from "react";
 import { User } from "../types";
 import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
 
 interface DialogProps {
   isOpen: boolean;
@@ -20,12 +21,22 @@ interface DialogProps {
 }
 
 const RatingPassanger = ({ isOpen, closeDialog, pasajeros, tipo }: DialogProps): JSX.Element => {
+  const navigate = useNavigate();
   const [value, setValue] = useState<number | null>(0);
   const [hover, setHover] = useState(-1);
+  console.log("conductor " + pasajeros);
 
   const cerrarDialogo = () => {
     console.log(value);
-    closeDialog();
+    setTimeout(() => {
+      closeDialog();
+      if (tipo === "conductor") {
+        localStorage.removeItem("requests");
+      }
+      localStorage.removeItem("conductores");
+
+      navigate("/");
+    }, 5000);
   };
 
   return (

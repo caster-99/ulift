@@ -1,18 +1,11 @@
 import * as React from "react";
-
-import { grey } from "@mui/material/colors";
-
 import {
   Checkbox,
   Dialog,
-  styled,
   Box,
   DialogTitle,
   DialogContent,
   FormControl,
-  InputLabel,
-  MenuItem,
-  FormControlLabel,
   TextField,
   Autocomplete,
 } from "@mui/material";
@@ -20,12 +13,10 @@ import {
   DirectionsWalkRounded as CaminarIcon,
   LocationOnRounded as LocIcon,
 } from "@mui/icons-material";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import api_instance from "../api/api_instance";
-import { Destination } from "../types/index";
 import Typography from "@mui/material/Typography";
 import { useEffect } from "react";
 import axios from "axios";
@@ -34,7 +25,32 @@ interface DialogProps {
   isOpen: boolean;
   closeDialog: () => void;
 }
+
+interface ColasDisponibles {
+  color: string;
+  date: Date;
+  distanceLastNode: number;
+  driverID: number;
+  email: string;
+  gender: string;
+  lastname: string;
+  liftID: number;
+  model: string;
+  name: string;
+  path: string;
+  photo: string;
+  plate: string;
+  rName: string;
+  rate: number;
+  role: string;
+  seats: number;
+  time: Date;
+  waitingTime: number;
+}
+
 var destinos: string[] = [];
+var conductores: ColasDisponibles[] = [];
+
 const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
   //var destinos: Destination[] = [];
 
@@ -82,7 +98,14 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
         enqueueSnackbar("¡Solicitud de cola creada con exito! Espera que un conductor te acepte.", {
           variant: "success",
         });
-        navigate("/listaEspera/pasajero");
+        //guardo en localStorage los conductores disponibles
+        console.log(response.data.lifts);
+        conductores = response.data.lifts;
+        localStorage.setItem("conductores", JSON.stringify(conductores));
+        console.log("localStorage: " + localStorage.getItem("conductores"));
+        setTimeout(() => {
+          navigate("/listaEspera/pasajero");
+        }, 5000);
       })
       .catch(function (error) {
         enqueueSnackbar("¡No se pudo crear la solicitud de cola!", {
@@ -134,8 +157,6 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
         .catch(function (error) {
           console.log(error);
         });
-
-      console.log(url);
 
       destinos = [];
     } else {

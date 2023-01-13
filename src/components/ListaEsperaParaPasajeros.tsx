@@ -7,41 +7,62 @@ import { grey } from "@mui/material/colors";
 import axios from "axios";
 
 interface ColasDisponibles {
-  id: string;
+  color: string;
+  date: Date;
+  distanceLastNode: number;
+  driverID: number;
   email: string;
-  nameU: string;
+  gender: string;
   lastname: string;
-  liftID: string;
+  liftID: number;
+  model: string;
+  name: string;
+  path: string;
   photo: string;
+  plate: string;
+  rName: string;
+  rate: number;
   role: string;
+  seats: number;
+  time: Date;
+  waitingTime: number;
 }
 
 const ListaEsperaParaPasajeros = (): JSX.Element => {
   var pasajeros: ColasDisponibles[] = [];
 
-  const p1: ColasDisponibles = {
-    id: "string",
-    email: "string",
-    nameU: "string",
-    lastname: "string",
-    liftID: "string",
-    photo: "string",
-    role: "string",
+  const fetchUser = async () => {
+    var requestsString = JSON.parse(localStorage.getItem("conductores")!);
+    pasajeros = requestsString;
+    console.log(pasajeros);
   };
-  pasajeros.push(p1);
+
+  fetchUser();
 
   return (
     <Box display={"flex"} flexDirection="column">
-      {pasajeros.map((user, index) => (
+      {pasajeros.map((cola, index) => (
         <Conductor
           key={index}
-          id={user.id}
-          email={user.email}
-          nameU={user.nameU}
-          lastname={user.lastname}
-          liftID={user.liftID}
-          photo={user.photo}
-          role={user.role}
+          color={cola.color}
+          date={cola.date}
+          distanceLastNode={cola.distanceLastNode}
+          driverID={cola.driverID}
+          email={cola.email}
+          gender={cola.gender}
+          lastname={cola.lastname}
+          liftID={cola.liftID}
+          model={cola.model}
+          name={cola.name}
+          path={cola.path}
+          photo={cola.photo}
+          plate={cola.plate}
+          rName={cola.rName}
+          rate={cola.rate}
+          role={cola.role}
+          seats={cola.seats}
+          time={cola.time}
+          waitingTime={cola.waitingTime}
         />
       ))}
     </Box>
@@ -56,7 +77,6 @@ export const Conductor = (usuario: ColasDisponibles): JSX.Element => {
   const navigate = useNavigate();
 
   const handleClick = (id: string) => () => {
-    navigate("/colaEnProceso/pasajero");
     console.log(id);
 
     const data = JSON.stringify({
@@ -77,7 +97,10 @@ export const Conductor = (usuario: ColasDisponibles): JSX.Element => {
 
     axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
+        console.log(JSON.stringify(response.data.message));
+        setTimeout(() => {
+          navigate("/colaEnProceso/pasajero");
+        }, 5000);
       })
       .catch(function (error) {
         console.log(error);
@@ -130,7 +153,7 @@ export const Conductor = (usuario: ColasDisponibles): JSX.Element => {
               fontWeight: 600,
             }}
           >
-            {usuario.nameU}
+            {usuario.name} {usuario.lastname}
           </Typography>
         </Box>
         <Box
@@ -139,10 +162,10 @@ export const Conductor = (usuario: ColasDisponibles): JSX.Element => {
             flexDirection: "row",
           }}
         >
-          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.id)}>
+          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.driverID.toString())}>
             <ChatRounded color="primary" />
           </IconButton>
-          <IconButton sx={{ marginRight: 1 }} onClick={handleClick(usuario.liftID)}>
+          <IconButton sx={{ marginRight: 1 }} onClick={handleClick(usuario.liftID.toString())}>
             <PedirColaIcon />
           </IconButton>
         </Box>

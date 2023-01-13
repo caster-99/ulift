@@ -106,6 +106,14 @@ const CheckParaConductores = (): JSX.Element => {
     abrirDialogo();
   };
 
+  const fetchUser = async () => {
+    // var requestsString = JSON.parse(localStorage.getItem("requests")!);
+    // requests = requestsString;
+    // console.log("arreglo de requests" + requests);
+    console.log("elegidos: " + localStorage.getItem("elegidos")!);
+  };
+
+  fetchUser();
   return (
     <Box>
       <Typography fontSize={{ xs: 14, md: 17 }} textAlign="left">

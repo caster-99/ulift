@@ -11,20 +11,12 @@ import {
 } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import InfoHistorialDialogo from "./InfoHistorialDialogo";
-interface UserProps {
-  name: string;
-  date: string;
-  time: string;
-  car: string;
-  photo: string;
-  plate: string;
-  rate: number;
-  location: string;
-}
+import { Colas } from "../types";
 
-const UserListItem = (props: UserProps): JSX.Element => {
+const UserListItem = (props: Colas): JSX.Element => {
   const [isInfoUserOpen, setDialogInfoUser] = useState(false);
-
+  const foto = "https://ulift-backend.up.railway.app/" + props.photo;
+  console.log(props);
   const openInfoUserDialog = () => {
     setDialogInfoUser(true);
   };
@@ -59,7 +51,7 @@ const UserListItem = (props: UserProps): JSX.Element => {
         >
           <ListItem>
             <ListItemAvatar>
-              <Avatar>A</Avatar>
+              <Avatar sx={{ width: 50, height: 50 }} src={foto} />
             </ListItemAvatar>
             <ListItemText
               primary={props.name}
@@ -68,21 +60,13 @@ const UserListItem = (props: UserProps): JSX.Element => {
               }}
             />
           </ListItem>
-        </CardContent>{" "}
-      </Card>{" "}
+        </CardContent>
+      </Card>
       <Divider />
       <InfoHistorialDialogo
         isOpen={isInfoUserOpen}
         closeDialog={closeInfoUserDialog}
-        name={props.name}
-        location={props.location}
-        date={props.date}
-        time={props.time}
-        car={props.car}
-        photo={props.photo}
-        plate={props.plate}
-        rate={props.rate}
-        //role={props.role}
+        cola={props}
       />
     </Grid>
   );

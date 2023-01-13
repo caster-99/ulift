@@ -31,56 +31,70 @@ interface SolicitudUsuarios {
 }
 
 var elegidos: ColasDisponibles[] = [];
+var flag: boolean = false;
 
 const ListaEsperaParaConductores = (): JSX.Element => {
   var requests: ColasDisponibles[] = [];
-  const token = localStorage.getItem("token");
 
   const fetchUser = async () => {
-    // var requestAConductores = {
-    //   method: "get",
-    //   url: "https://ulift-backend.up.railway.app/api/lift/requests",
-    //   headers: { Authorization: `Bearer ${token}` },
-    // };
-
-    // axios(requestAConductores)
-    //   .then(function (response) {
-    //     requests = response.data.requests;
-    //     console.log("requests");
-    //     console.log(requests);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
     var requestsString = JSON.parse(localStorage.getItem("requests")!);
     requests = requestsString;
-    console.log(requests);
+    console.log("arreglo de requests" + requests);
   };
 
   const navigate = useNavigate();
-  // console.log("Lista de solicitudes de cola");
-  // console.log(pasajeros);
+
+  function empezarViaje() {
+    //aqui se debe pasar la lista de elegidos a la cola en proceso
+    let j = 0;
+    for (let i = 0; i < elegidos.length; i++) {
+      var data = JSON.stringify({
+        id: elegidos[i].id,
+        dNumber: 1,
+      });
+      console.log(data);
+      var config = {
+        method: "post",
+        url: "https://ulift-backend.up.railway.app/api/lift/accept",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      axios(config).then(function (response) {
+        console.log(JSON.stringify(response.data.message));
+      });
+    }
+
+    setTimeout(() => {
+      localStorage.setItem("elegidos", JSON.stringify(elegidos));
+      flag = true;
+      navigate("/colaEnProceso/conductor");
+    }, 8000);
+  }
 
   fetchUser();
 
   return (
     <Box display={"flex"} flexDirection="column" alignItems="center" justifyContent="center">
-      {/* <Button onClick={refreshPage}>Refrescar</Button> */}
       {/* Cuando haya seleccionado al menos uno o el límite indicado y si es conductor , debe habilitarse esta opción */}
+      {flag && (
+        <Typography fontSize={{ xs: 14, md: 17 }} mb={{ xs: 2, sm: 3 }}>
+          Proceso terminado
+        </Typography>
+      )}
+      {!flag && (
+        <List dense sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+          {requests.map((user, index) => (
+            <PasajeroListaEspera usuario={user} solicitudes={requests} key={index} />
+          ))}
+        </List>
+      )}
 
-      <List dense sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-        {requests.map((user, index) => (
-          <PasajeroListaEspera usuario={user} solicitudes={requests} key={index} />
-        ))}
-      </List>
-
-      {requests.length > 0 && (
-        <Button
-          variant="contained"
-          onClick={() => {
-            navigate("/colaEnProceso/conductor");
-          }}
-        >
+      {!flag && requests.length > 0 && (
+        <Button variant="contained" onClick={empezarViaje}>
           Empezar viaje
         </Button>
       )}

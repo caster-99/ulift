@@ -8,18 +8,27 @@ interface Props {
 }
 
 const ListaHistorialConductores = ({ historial }: Props): JSX.Element => {
+  console.log(historial);
   return (
     <Box display={"flex"} flexDirection="column">
-      {historial.map((cola) => (
+      {historial.map((cola, index) => (
         <UserListItem
+          liftID={cola.liftID}
+          email={cola.email}
           name={cola.name}
+          lastname={cola.lastname}
+          routename={cola.routename}
+          waitingTime={cola.waitingTime}
           time={cola.time}
           date={cola.date}
-          location={cola.routename}
-          car={cola.car}
+          model={cola.model}
+          color={cola.color}
           photo={cola.photo}
-          plate={cola.plate}
           rate={cola.rate}
+          plate={cola.plate}
+          seats={cola.seats}
+          path={cola.path}
+          key={index}
           //role="Estudiante"
         />
       ))}
