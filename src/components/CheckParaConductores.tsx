@@ -20,6 +20,7 @@ import {
 import { User } from "../types";
 import { grey } from "@mui/material/colors";
 import RatingDialogo from "./RatingDialogo";
+import RatingPasajeros from "./RatingPasajeros";
 
 const CheckParaConductores = (): JSX.Element => {
   const p1: User = {
@@ -37,60 +38,7 @@ const CheckParaConductores = (): JSX.Element => {
     destinations: [],
     routes: [],
   };
-
-  const p2: User = {
-    name: "Maria",
-    email: "luisa",
-    gender: "Femenino",
-    role: "Estudiante",
-    id: "11121",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
-  };
-
-  const p3: User = {
-    name: "Ana",
-    email: "luisa",
-    gender: "Femenino",
-    role: "Estudiante",
-    id: "4567",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
-  };
-
-  const p4: User = {
-    name: "Eva",
-    email: "luisa",
-    gender: "Femenino",
-    role: "Estudiante",
-    id: "8910",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
-  };
   var pasajeros: User[] = [];
-
-  pasajeros.push(p1);
-  pasajeros.push(p2);
-  pasajeros.push(p3);
-  pasajeros.push(p4);
 
   const [open, setOpen] = React.useState(false);
 
@@ -111,6 +59,8 @@ const CheckParaConductores = (): JSX.Element => {
     // requests = requestsString;
     // console.log("arreglo de requests" + requests);
     console.log("elegidos: " + localStorage.getItem("elegidos")!);
+    var elegidosString = JSON.parse(localStorage.getItem("elegidos")!);
+    pasajeros = elegidosString;
   };
 
   fetchUser();
@@ -151,16 +101,9 @@ const CheckParaConductores = (): JSX.Element => {
         </List>
       </Container>
       <Button variant="contained" sx={{ width: "100%", marginTop: "10px" }} onClick={finViaje}>
-        Finalizar viaje (debe aparecer cuando todos sean dejados)
+        Finalizar viaje
       </Button>
-      {open && (
-        <RatingDialogo
-          isOpen={open}
-          closeDialog={cerrarDialogo}
-          pasajeros={pasajeros}
-          tipo="conductor"
-        />
-      )}
+      {open && <RatingPasajeros isOpen={open} closeDialog={cerrarDialogo} p={pasajeros} />}
     </Box>
   );
 };

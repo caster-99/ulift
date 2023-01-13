@@ -5,13 +5,12 @@ import { useSnackbar } from "notistack";
 import { User } from "../types";
 import axios from "axios";
 
+var conductor: User;
+
 const CheckParaPasajeros = (): JSX.Element => {
-  var conductor: User[] = [];
   const { enqueueSnackbar } = useSnackbar();
 
   //Solicitar a la API el destino en el que fue dejado el pasajero
-
-  var user: User;
 
   var config = {
     method: "get",
@@ -25,9 +24,8 @@ const CheckParaPasajeros = (): JSX.Element => {
   axios(config)
     .then(function (response) {
       console.log(JSON.stringify(response.data));
-      user = response.data.driver;
-      console.log(user);
-      conductor.push(user);
+      conductor = response.data.driver;
+
       console.log(conductor);
     })
     .catch(function (error) {
@@ -69,6 +67,7 @@ const CheckParaPasajeros = (): JSX.Element => {
         console.log(error);
       });
   };
+
   return (
     <Box display={"flex"} flexDirection="column">
       <Typography fontSize={{ xs: 14, md: 17 }} textAlign="left">
@@ -91,12 +90,7 @@ const CheckParaPasajeros = (): JSX.Element => {
           Viaje finalizado
         </Button>
         {open && (
-          <RatingDialogo
-            isOpen={open}
-            closeDialog={cerrarDialogo}
-            pasajeros={conductor}
-            tipo="pasajero"
-          />
+          <RatingDialogo isOpen={open} closeDialog={cerrarDialogo} p={conductor} tipo="pasajero" />
         )}
       </Container>
     </Box>

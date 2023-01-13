@@ -27,51 +27,9 @@ const HistorialColas = (): JSX.Element => {
           histConductor[i] = response.data.liftsConductor[i];
         }
 
-        // histConductor = response.data.liftsConductor.map((hist: any) => {
-        //   var trip = {} as Colas; //arreglo auxiliar
-        //   trip.liftID = hist.liftID;
-        //   trip.email = hist.email;
-        //   trip.name = hist.name;
-        //   trip.lastname = hist.lastname;
-        //   trip.routename = hist.routename;
-        //   trip.waitingTime = hist.waitingTime;
-        //   trip.time = hist.time;
-        //   trip.date = hist.date;
-        //   trip.model = hist.model;
-        //   trip.color = hist.color;
-        //   trip.photo = hist.photo;
-        //   trip.rate = hist.rate;
-        //   trip.plate = hist.plate;
-        //   trip.seats = hist.seats;
-        //   trip.path = hist.path;
-        //   console.log(hist);
-        //   return trip;
-        // }
-
         for (let i = 0; i < response.data.liftsPasajero.length; i++) {
           histPasajero[i] = response.data.liftsPasajero[i];
         }
-        // histPasajero = response.data.liftsPasajero.map((hist: any) => {
-        //   var trip = {} as Colas; //arreglo auxiliar
-
-        //   trip.liftID = hist.liftID;
-        //   trip.email = hist.email;
-        //   trip.name = hist.name;
-        //   trip.lastname = hist.lastname;
-        //   trip.routename = hist.routename;
-        //   trip.waitingTime = hist.waitingTime;
-        //   trip.time = hist.time;
-        //   trip.date = hist.date;
-        //   trip.model = hist.model;
-        //   trip.color = hist.color;
-        //   trip.photo = hist.photo;
-        //   trip.rate = hist.rate;
-        //   trip.plate = hist.plate;
-        //   trip.seats = hist.seats;
-        //   trip.path = hist.path;
-
-        //   return trip;
-        // });
       })
       .catch(function (error) {
         console.log(error);
@@ -100,7 +58,11 @@ const HistorialColas = (): JSX.Element => {
             >
               Historial de colas
             </Typography>
-            <Typography fontSize={{ xs: 14, md: 17 }}>No hay colas que mostrar</Typography>
+            {histConductor.length === 0 ||
+              (histPasajero.length === 0 && (
+                <Typography fontSize={{ xs: 14, md: 17 }}>No hay colas que mostrar</Typography>
+              ))}
+
             <TabContext value={value}>
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <TabList onChange={handleChange} variant="fullWidth">

@@ -32,16 +32,15 @@ interface SolicitudUsuarios {
 
 var elegidos: ColasDisponibles[] = [];
 var flag: boolean = false;
+var requests: ColasDisponibles[] = [];
 
 const ListaEsperaParaConductores = (): JSX.Element => {
-  var requests: ColasDisponibles[] = [];
-
   const fetchUser = async () => {
+    console.log(localStorage.getItem("requests")!);
     var requestsString = JSON.parse(localStorage.getItem("requests")!);
     requests = requestsString;
-    console.log("arreglo de requests" + requests);
   };
-
+  fetchUser();
   const navigate = useNavigate();
 
   function empezarViaje() {
@@ -65,17 +64,14 @@ const ListaEsperaParaConductores = (): JSX.Element => {
 
       axios(config).then(function (response) {
         console.log(JSON.stringify(response.data.message));
+        setTimeout(() => {
+          localStorage.setItem("elegidos", JSON.stringify(elegidos));
+          flag = true;
+          navigate("/colaEnProceso/conductor");
+        }, 8000);
       });
     }
-
-    setTimeout(() => {
-      localStorage.setItem("elegidos", JSON.stringify(elegidos));
-      flag = true;
-      navigate("/colaEnProceso/conductor");
-    }, 8000);
   }
-
-  fetchUser();
 
   return (
     <Box display={"flex"} flexDirection="column" alignItems="center" justifyContent="center">
@@ -108,7 +104,10 @@ export const PasajeroListaEspera = ({ usuario, solicitudes }: SolicitudUsuarios)
   const foto = "https://ulift-backend.up.railway.app/" + usuario.photo;
   const [isActive, setIsActive] = useState(false);
   const navigate = useNavigate();
-
+  solicitudes = requests;
+  console.log(
+    "arreglo de requests " + requests.flatMap((usuario) => usuario.nameU + " " + usuario.id)
+  );
   const handleClick = (id: string) => () => {
     if (isActive === false) {
       setIsActive((current) => !current);

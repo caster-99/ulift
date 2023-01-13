@@ -9,9 +9,9 @@ interface Props {
 const ListaPasajeros = ({ pasajeros }: Props): JSX.Element => {
   return (
     <Box display={"flex"} flexDirection="column">
-      {pasajeros.map((user) => (
+      {pasajeros.map((user, index) => (
         <UsuarioTarjeta
-          key={user.id}
+          key={index}
           id={user.id}
           name={user.name}
           email={user.email}

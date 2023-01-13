@@ -1,18 +1,10 @@
-import { SpeedDial } from "@mui/lab";
-import { Box, Container, SpeedDialAction, SpeedDialIcon, Typography, Fab } from "@mui/material";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { Box, Container, Typography, Fab } from "@mui/material";
 import Fade from "@mui/material/Fade";
 import React, { useEffect, useState } from "react";
 import { NavBar } from "../components/NavBar";
-import ConductoresFavoritosDialogo from "../components/ConductoresFavoritosDialogo";
 import PasajeroFavoritoDialogo from "../components/PasajeroFavoritoDialogo";
-import {
-  HailRounded as PasajeroFavoritoIcon,
-  DriveEtaRounded as ConductorFavoritoIcon,
-  Add as AgregarUsuarioIcon,
-} from "@mui/icons-material";
-import ListaUsuarios from "../components/ListaPasajeros";
-import ListaConductores from "../components/ListaConductores";
+import { Add as AgregarUsuarioIcon } from "@mui/icons-material";
+import ListaPasajeros from "../components/ListaPasajeros";
 import axios from "axios";
 import { User } from "../types";
 
@@ -90,7 +82,7 @@ const Favoritos = (): JSX.Element => {
                 Aun no tienes usuarios favoritos
               </Typography>
             )}
-            {favoritos.length! > 0 && <ListaUsuarios pasajeros={favoritos} />}
+            {favoritos.length! > 0 && <ListaPasajeros pasajeros={favoritos} />}
 
             <Fab
               aria-label="agregar"

@@ -1,20 +1,4 @@
-import * as React from "react";
-import {
-  Dialog,
-  styled,
-  Box,
-  DialogTitle,
-  DialogContent,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Avatar,
-  Typography,
-} from "@mui/material";
-import { LocationOnRounded as LocIcon } from "@mui/icons-material";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { LoadingButton } from "@mui/lab";
-import { useNavigate } from "react-router-dom";
+import { Dialog, DialogTitle, DialogContent, Avatar, Typography } from "@mui/material";
 import { Colas } from "../types";
 
 interface DialogProps {
@@ -25,14 +9,9 @@ interface DialogProps {
 
 const InfoHistorialDialogo = (props: DialogProps) => {
   const foto = "https://ulift-backend.up.railway.app/" + props.cola.photo;
-  /* const [direccion, setDireccion] = React.useState("");
-  const navigate = useNavigate();
-  const handleChange = (event: SelectChangeEvent) => {
-    setDireccion(event.target.value as string);
-  };
-  const irListaEspera = () => {
-    navigate(`/listaEspera`);
-  }; */
+
+  console.log(props.cola);
+
   return (
     <Dialog open={props.isOpen} onClose={props.closeDialog}>
       <DialogTitle textAlign={"center"} color={"primary"}>
@@ -51,9 +30,9 @@ const InfoHistorialDialogo = (props: DialogProps) => {
         <Avatar sx={{ width: 50, height: 50, marginBottom: 1 }} src={foto} />
 
         <Typography sx={{ fontWeight: 600, fontSize: "18px" }}>
-          {props.cola.name} {props.cola.lastname} {props.cola.email}
+          {props.cola.name} {props.cola.lastname}
         </Typography>
-        {/* <Typography>{props.role}</Typography> */}
+
         <Typography>Hora: {props.cola.time}</Typography>
         <Typography>Fecha: {props.cola.date}</Typography>
         <Typography>Destino: {props.cola.routename}</Typography>
