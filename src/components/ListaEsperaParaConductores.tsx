@@ -31,6 +31,7 @@ interface SolicitudUsuarios {
 }
 
 var elegidos: ColasDisponibles[] = [];
+var flag: boolean = false;
 
 const ListaEsperaParaConductores = (): JSX.Element => {
   var requests: ColasDisponibles[] = [];
@@ -64,11 +65,12 @@ const ListaEsperaParaConductores = (): JSX.Element => {
 
       axios(config).then(function (response) {
         console.log(JSON.stringify(response.data.message));
-        j++;
       });
     }
 
     setTimeout(() => {
+      localStorage.setItem("elegidos", JSON.stringify(elegidos));
+      flag = true;
       navigate("/colaEnProceso/conductor");
     }, 8000);
   }
@@ -78,14 +80,20 @@ const ListaEsperaParaConductores = (): JSX.Element => {
   return (
     <Box display={"flex"} flexDirection="column" alignItems="center" justifyContent="center">
       {/* Cuando haya seleccionado al menos uno o el límite indicado y si es conductor , debe habilitarse esta opción */}
+      {flag && (
+        <Typography fontSize={{ xs: 14, md: 17 }} mb={{ xs: 2, sm: 3 }}>
+          Proceso terminado
+        </Typography>
+      )}
+      {!flag && (
+        <List dense sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+          {requests.map((user, index) => (
+            <PasajeroListaEspera usuario={user} solicitudes={requests} key={index} />
+          ))}
+        </List>
+      )}
 
-      <List dense sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-        {requests.map((user, index) => (
-          <PasajeroListaEspera usuario={user} solicitudes={requests} key={index} />
-        ))}
-      </List>
-
-      {requests.length > 0 && (
+      {!flag && requests.length > 0 && (
         <Button variant="contained" onClick={empezarViaje}>
           Empezar viaje
         </Button>
