@@ -5,12 +5,46 @@ import { NavBar } from "../components/NavBar";
 import ListaHistorialUsuarios from "../components/ListaHistorialUsuarios";
 import ListaHistorialConductores from "../components/ListaHistorialConductores";
 import React from "react";
+import axios from "axios";
 
 const HistorialColas = (): JSX.Element => {
+  const fetchHist = () => {
+    const token = localStorage.getItem("token");
+
+    var config = {
+      method: "get",
+      url: "https://ulift-backend.up.railway.app/api/lift/history",
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data.history));
+        /* favoritos = response.data.favorites.map((fav: any) => {
+          var usuarios = {} as User; //arreglo auxiliar
+
+          usuarios.name = fav.nameU;
+          usuarios.trips = fav.n_trips;
+          usuarios.rating = fav.rate;
+          usuarios.photo = fav.photo;
+
+          return usuarios;
+        });
+
+        console.log(favoritos);
+        console.log(favoritos.length); */
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  fetchHist();
   const [value, setValue] = React.useState("1");
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
+
   return (
     <Box>
       <NavBar />
