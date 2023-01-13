@@ -53,12 +53,19 @@ export interface Lift {
 }
 
 export interface Colas {
-  date: string;
-  car: string;
+  liftID: string;
+  email: string;
   name: string;
+  lastname: string;
   photo: string;
-  plate: string;
+  routename: string;
+  waitingTime: number;
   rate: number;
   time: string;
-  routename: string;
+  date: string;
+  plate: string;
+  model: string;
+  color: string;
+  seats: number;
+  path: string;
 }

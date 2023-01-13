@@ -8,7 +8,8 @@ import React from "react";
 import axios from "axios";
 import { Colas } from "../types";
 
-var historial: Colas[] = [];
+var histConductor: Colas[] = [];
+var histPasajero: Colas[] = [];
 
 const HistorialColas = (): JSX.Element => {
   const fetchHist = () => {
@@ -22,24 +23,55 @@ const HistorialColas = (): JSX.Element => {
 
     axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data.history));
-        historial = response.data.history.map((hist: any) => {
-          var trip = {} as Colas; //arreglo auxiliar
+        for (let i = 0; i < response.data.liftsConductor.length; i++) {
+          histConductor[i] = response.data.liftsConductor[i];
+        }
 
-          trip.name = hist.name + " " + hist.lastname;
-          trip.routename = hist.routename;
-          trip.time = hist.time.toString();
-          trip.date = hist.date.toString();
-          trip.car = hist.model + " " + hist.color;
-          trip.photo = hist.photo;
-          trip.rate = hist.rate;
-          trip.plate = hist.plate;
+        // histConductor = response.data.liftsConductor.map((hist: any) => {
+        //   var trip = {} as Colas; //arreglo auxiliar
+        //   trip.liftID = hist.liftID;
+        //   trip.email = hist.email;
+        //   trip.name = hist.name;
+        //   trip.lastname = hist.lastname;
+        //   trip.routename = hist.routename;
+        //   trip.waitingTime = hist.waitingTime;
+        //   trip.time = hist.time;
+        //   trip.date = hist.date;
+        //   trip.model = hist.model;
+        //   trip.color = hist.color;
+        //   trip.photo = hist.photo;
+        //   trip.rate = hist.rate;
+        //   trip.plate = hist.plate;
+        //   trip.seats = hist.seats;
+        //   trip.path = hist.path;
+        //   console.log(hist);
+        //   return trip;
+        // }
 
-          return trip;
-        });
+        for (let i = 0; i < response.data.liftsPasajero.length; i++) {
+          histPasajero[i] = response.data.liftsPasajero[i];
+        }
+        // histPasajero = response.data.liftsPasajero.map((hist: any) => {
+        //   var trip = {} as Colas; //arreglo auxiliar
 
-        console.log(historial);
-        console.log(historial.length);
+        //   trip.liftID = hist.liftID;
+        //   trip.email = hist.email;
+        //   trip.name = hist.name;
+        //   trip.lastname = hist.lastname;
+        //   trip.routename = hist.routename;
+        //   trip.waitingTime = hist.waitingTime;
+        //   trip.time = hist.time;
+        //   trip.date = hist.date;
+        //   trip.model = hist.model;
+        //   trip.color = hist.color;
+        //   trip.photo = hist.photo;
+        //   trip.rate = hist.rate;
+        //   trip.plate = hist.plate;
+        //   trip.seats = hist.seats;
+        //   trip.path = hist.path;
+
+        //   return trip;
+        // });
       })
       .catch(function (error) {
         console.log(error);
@@ -77,14 +109,10 @@ const HistorialColas = (): JSX.Element => {
                 </TabList>
               </Box>
               <TabPanel value="1">
-                <ListaHistorialConductores historial={historial} />
-              </TabPanel>
-              <TabPanel value="2">
-                <ListaHistorialUsuarios historial={historial} />
+                <ListaHistorialConductores historial={histConductor} />
               </TabPanel>
               <TabPanel value="2">
                 <ListaHistorialUsuarios historial={histPasajero} />
->>>>>>> Stashed changes
               </TabPanel>
             </TabContext>
           </Container>

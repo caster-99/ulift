@@ -15,22 +15,16 @@ import { LocationOnRounded as LocIcon } from "@mui/icons-material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
+import { Colas } from "../types";
 
 interface DialogProps {
   isOpen: boolean;
   closeDialog: () => void;
-  name: string;
-  time: string;
-  date: string;
-  location: string;
-  //role: string;
-  car: string;
-  photo: string;
-  plate: string;
-  rate: number;
+  cola: Colas;
 }
 
 const InfoHistorialDialogo = (props: DialogProps) => {
+  const foto = "https://ulift-backend.up.railway.app/" + props.cola.photo;
   /* const [direccion, setDireccion] = React.useState("");
   const navigate = useNavigate();
   const handleChange = (event: SelectChangeEvent) => {
@@ -54,16 +48,18 @@ const InfoHistorialDialogo = (props: DialogProps) => {
         }}
       >
         {/* Aquí se tiene que cambiar para colocar la imagen */}
-        <Avatar sx={{ width: "80px", height: "80px" }}>N</Avatar>
+        <Avatar sx={{ width: 50, height: 50, marginBottom: 1 }} src={foto} />
 
-        <Typography sx={{ fontWeight: 600, fontSize: "18px" }}>{props.name}</Typography>
+        <Typography sx={{ fontWeight: 600, fontSize: "18px" }}>
+          {props.cola.name} {props.cola.lastname} {props.cola.email}
+        </Typography>
         {/* <Typography>{props.role}</Typography> */}
-        <Typography>Hora: {props.time}</Typography>
-        <Typography>Fecha: {props.date}</Typography>
-        <Typography>Destino: {props.location}</Typography>
-        <Typography>Vehiculo: {props.car}</Typography>
-        <Typography>Placa: {props.plate}</Typography>
-        <Typography>Rating: {props.rate}</Typography>
+        <Typography>Hora: {props.cola.time}</Typography>
+        <Typography>Fecha: {props.cola.date}</Typography>
+        <Typography>Destino: {props.cola.routename}</Typography>
+        <Typography>Vehiculo: {props.cola.model}</Typography>
+        <Typography>Placa: {props.cola.plate}</Typography>
+        <Typography>Rating: {props.cola.rate}</Typography>
       </DialogContent>
     </Dialog>
   );

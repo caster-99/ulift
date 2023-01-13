@@ -90,7 +90,6 @@ export const NavBar = (props: Props) => {
 
   axios(getMode)
     .then(function (response) {
-      console.log(JSON.stringify(response.data.mode));
       localStorage.setItem("mode", JSON.stringify(response.data.mode));
     })
     .catch(function (error) {
@@ -104,7 +103,6 @@ export const NavBar = (props: Props) => {
   axios(requestAConductores).then(function (response) {
     var requests: ColasDisponibles[] = response.data.requests;
     localStorage.setItem("requests", JSON.stringify(requests));
-    console.log("requests: " + localStorage.getItem("requests"));
   });
 
   const { window } = props;
