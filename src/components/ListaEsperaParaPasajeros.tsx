@@ -19,16 +19,11 @@ interface ColasDisponibles {
 const ListaEsperaParaPasajeros = (): JSX.Element => {
   var pasajeros: ColasDisponibles[] = [];
 
-  const p1: ColasDisponibles = {
-    id: "string",
-    email: "string",
-    nameU: "string",
-    lastname: "string",
-    liftID: "string",
-    photo: "string",
-    role: "string",
+  const fetchUser = async () => {
+    var requestsString = JSON.parse(localStorage.getItem("conductores")!);
+    pasajeros = requestsString;
+    console.log(pasajeros);
   };
-  pasajeros.push(p1);
 
   return (
     <Box display={"flex"} flexDirection="column">

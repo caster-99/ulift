@@ -34,38 +34,24 @@ var elegidos: ColasDisponibles[] = [];
 
 const ListaEsperaParaConductores = (): JSX.Element => {
   var requests: ColasDisponibles[] = [];
-  const token = localStorage.getItem("token");
 
   const fetchUser = async () => {
-    // var requestAConductores = {
-    //   method: "get",
-    //   url: "https://ulift-backend.up.railway.app/api/lift/requests",
-    //   headers: { Authorization: `Bearer ${token}` },
-    // };
-
-    // axios(requestAConductores)
-    //   .then(function (response) {
-    //     requests = response.data.requests;
-    //     console.log("requests");
-    //     console.log(requests);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
     var requestsString = JSON.parse(localStorage.getItem("requests")!);
     requests = requestsString;
     console.log(requests);
   };
 
   const navigate = useNavigate();
-  // console.log("Lista de solicitudes de cola");
-  // console.log(pasajeros);
+
+  function empezarViaje() {
+    //aqui se debe pasar la lista de elegidos a la cola en proceso
+    navigate("/colaEnProceso/conductor");
+  }
 
   fetchUser();
 
   return (
     <Box display={"flex"} flexDirection="column" alignItems="center" justifyContent="center">
-      {/* <Button onClick={refreshPage}>Refrescar</Button> */}
       {/* Cuando haya seleccionado al menos uno o el límite indicado y si es conductor , debe habilitarse esta opción */}
 
       <List dense sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
@@ -75,12 +61,7 @@ const ListaEsperaParaConductores = (): JSX.Element => {
       </List>
 
       {requests.length > 0 && (
-        <Button
-          variant="contained"
-          onClick={() => {
-            navigate("/colaEnProceso/conductor");
-          }}
-        >
+        <Button variant="contained" onClick={empezarViaje}>
           Empezar viaje
         </Button>
       )}

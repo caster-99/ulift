@@ -74,6 +74,19 @@ const ListaEspera = (): JSX.Element => {
             {tipoUsuario === "conductor" && <ListaEsperaParaConductores />}
             {tipoUsuario === "pasajero" && <ListaEsperaParaPasajeros />}
           </Container>
+          <Button
+            onClick={() => {
+              window.location.reload();
+            }}
+            sx={{
+              mt: 5,
+              bottom: 0,
+              left: 0,
+              right: 0,
+            }}
+          >
+            Refrescar
+          </Button>
         </Box>
       </Fade>
     </Box>
