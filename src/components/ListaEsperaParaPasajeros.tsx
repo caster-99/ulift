@@ -47,29 +47,28 @@ export const Conductor = ({ usuario }: Props): JSX.Element => {
     console.log(id);
 
     const data = JSON.stringify({
-      "liftID": id
+      liftID: id,
     });
 
     const token = localStorage.getItem("token");
-    
-    const config = {
-      method: 'post',
-      url: 'https://ulift-backend.up.railway.app/api/lift/request',
-      headers: { 
-        'Authorization':`Bearer ${token}`, 
-        'Content-Type': 'application/json'
-      },
-      data : data
-    };
-    
-    axios(config)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
 
+    const config = {
+      method: "post",
+      url: "https://ulift-backend.up.railway.app/api/lift/request",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const goChat = (id: string) => () => {
