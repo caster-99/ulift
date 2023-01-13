@@ -82,6 +82,10 @@ const HistorialColas = (): JSX.Element => {
               <TabPanel value="2">
                 <ListaHistorialUsuarios historial={historial} />
               </TabPanel>
+              <TabPanel value="2">
+                <ListaHistorialUsuarios historial={histPasajero} />
+>>>>>>> Stashed changes
+              </TabPanel>
             </TabContext>
           </Container>
         </Box>
