@@ -3,6 +3,7 @@ import { NavBar } from "../components/NavBar";
 import CheckParaConductores from "../components/CheckParaConductores";
 import CheckParaPasajeros from "../components/CheckParaPasajeros";
 import { useParams } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 const ColaProceso = (): JSX.Element => {
   var tipoUsuario: string;

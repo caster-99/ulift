@@ -62,8 +62,23 @@ const ListaEsperaParaConductores = (): JSX.Element => {
         data: data,
       };
 
+      var startLift = {
+        method: "post",
+        url: "https://ulift-backend.up.railway.app/api/lift/start",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
+
       axios(config).then(function (response) {
+        console.log("Ejecutando accept");
         console.log(JSON.stringify(response.data.message));
+      });
+
+      axios(startLift).then(function (response) {
+        console.log("Ejecutando start");
+        console.log(JSON.stringify(response.data));
+
         setTimeout(() => {
           localStorage.setItem("elegidos", JSON.stringify(elegidos));
           flag = true;

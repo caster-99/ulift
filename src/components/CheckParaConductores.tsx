@@ -21,23 +21,12 @@ import { User } from "../types";
 import { grey } from "@mui/material/colors";
 import RatingDialogo from "./RatingDialogo";
 import RatingPasajeros from "./RatingPasajeros";
+import axios from "axios";
+import { useSnackbar } from "notistack";
 
 const CheckParaConductores = (): JSX.Element => {
-  const p1: User = {
-    name: "Luisa",
-    email: "luisa",
-    gender: "Femenino",
-    role: "Estudiante",
-    id: "1234",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
-  };
+  const { enqueueSnackbar } = useSnackbar();
+
   var pasajeros: User[] = [];
 
   const [open, setOpen] = React.useState(false);
@@ -50,8 +39,26 @@ const CheckParaConductores = (): JSX.Element => {
   };
 
   const finViaje = () => {
-    console.log("Viaje finalizado");
-    abrirDialogo();
+var config = {
+      method: "post",
+      url: "https://ulift-backend.up.railway.app/api/lift/complete",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    };axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        enqueueSnackbar("Cola finalizada recuerda calificar a tus pasajeros.", {
+          variant: "success",
+        });
+        setTimeout(() => {
+          abrirDialogo();
+        }, 5000);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
   };
 
   const fetchUser = async () => {
@@ -124,12 +131,29 @@ export const UserListItem = (user: User): JSX.Element => {
       newChecked.splice(currentIndex, 1);
     }
 
-    setChecked(newChecked);
 
     const d = new Date();
     let hour = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
-    console.log("Viaje de " + value + " finalizado a las: " + hour);
+
     //Aquí se debe mandar a la bd o agregar a un arreglo la info de cuando se dejó
+
+    var config = {
+      method: 'post',
+      url: 'https://ulift-backend.up.railway.app/api/lift/driverCheck/' + value,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        console.log("Viaje de " + value + " finalizado a las: " + hour);
+        setChecked(newChecked);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (

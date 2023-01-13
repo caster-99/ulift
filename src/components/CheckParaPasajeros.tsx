@@ -73,9 +73,9 @@ const CheckParaPasajeros = (): JSX.Element => {
       <Typography fontSize={{ xs: 14, md: 17 }} textAlign="left">
         Indica si fuiste dejado en el lugar correcto:
       </Typography>
-      <Typography fontSize={{ xs: 17, md: 20 }} fontWeight="500" textAlign="center" margin={4}>
+      {/* <Typography fontSize={{ xs: 17, md: 20 }} fontWeight="500" textAlign="center" margin={4}>
         En las cercanías de XXXX
-      </Typography>
+      </Typography> */}
       <Container
         maxWidth="md"
         sx={{

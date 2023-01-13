@@ -124,6 +124,7 @@ const Registro = (): JSX.Element => {
       })
       .catch(function (error) {
         console.log(error);
+
         enqueueSnackbar("¡Algo salió mal!", { variant: "error" });
         data.delete("email");
         data.delete("password");

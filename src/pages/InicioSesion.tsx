@@ -54,8 +54,14 @@ const InicioSesion = (): JSX.Element => {
         }
       })
       .catch((error) => {
-        console.log(error);
-        enqueueSnackbar("Error al iniciar sesión", { variant: "error" });
+        if (error.response) {
+          console.log(error.response.status);
+          if (error.response.status === 433) {
+            enqueueSnackbar("Usuario no verificado", { variant: "error" });
+          } else {
+            enqueueSnackbar("Error al iniciar sesión", { variant: "error" });
+          }
+        }
       });
   };
 

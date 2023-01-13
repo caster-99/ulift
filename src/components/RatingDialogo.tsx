@@ -12,6 +12,7 @@ import { useState } from "react";
 import { User } from "../types";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 interface DialogProps {
   isOpen: boolean;
@@ -29,15 +30,35 @@ const RatingPassanger = ({ isOpen, closeDialog, p, tipo }: DialogProps): JSX.Ele
   const cerrarDialogo = () => {
     console.log(value);
 
-    setTimeout(() => {
-      closeDialog();
-      if (tipo === "conductor") {
-        localStorage.removeItem("requests");
-      }
-      localStorage.removeItem("conductores");
+    var data = JSON.stringify({
+      receiverID: p.id,
+      rate: value,
+    });
 
-      navigate("/");
-    }, 5000);
+    var config = {
+      method: "post",
+      url: "https://ulift-backend.up.railway.app/api/lift/rating",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        setTimeout(() => {
+          closeDialog();
+
+          localStorage.removeItem("requests");
+
+          navigate("/");
+        }, 5000);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
