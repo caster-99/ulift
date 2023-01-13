@@ -25,7 +25,9 @@ const RatingPassanger = ({ isOpen, closeDialog, pasajeros, tipo }: DialogProps):
 
   const cerrarDialogo = () => {
     console.log(value);
-    closeDialog();
+    setTimeout(() => {
+      closeDialog();
+    }, 5000);
   };
 
   return (

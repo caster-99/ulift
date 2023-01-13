@@ -82,6 +82,21 @@ export const NavBar = (props: Props) => {
     headers: { Authorization: `Bearer ${token}` },
   };
 
+  var getMode = {
+    method: "get",
+    url: "https://ulift-backend.up.railway.app/api/user/mode",
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  axios(getMode)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data.mode));
+      localStorage.setItem("mode", JSON.stringify(response.data.mode));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
   axios(config).then(function (response) {
     tipoUsuario = response.data.status;
   });

@@ -8,23 +8,30 @@ import axios from "axios";
 const CheckParaPasajeros = (): JSX.Element => {
   var conductor: User[] = [];
   const { enqueueSnackbar } = useSnackbar();
-  const user: User = {
-    name: "Eva",
-    email: "luisa",
-    gender: "Femenino",
-    role: "Estudiante",
-    id: "8910",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
+
+  //Solicitar a la API el destino en el que fue dejado el pasajero
+
+  var user: User;
+
+  var config = {
+    method: "get",
+    url: "https://ulift-backend.up.railway.app/api/lift/driver",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
 
-  conductor.push(user);
+  axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      user = response.data.driver;
+      console.log(user);
+      conductor.push(user);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
   const [open, setOpen] = React.useState(false);
 
@@ -37,8 +44,7 @@ const CheckParaPasajeros = (): JSX.Element => {
 
   const handleClick = () => {
     const d = new Date();
-    let hour = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
-    console.log("Viaje finalizado a las: " + hour);
+    let hour = d.getHours() + ":" + d.getMinutes();
 
     var config = {
       method: "post",
@@ -51,7 +57,7 @@ const CheckParaPasajeros = (): JSX.Element => {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        enqueueSnackbar("¡Solicitud de cola creada con exito! Espera que un conductor te acepte.", {
+        enqueueSnackbar("Cola finalizada a las " + hour + ", recuerda calificar a tu conductor.", {
           variant: "success",
         });
         setTimeout(() => {
@@ -67,9 +73,9 @@ const CheckParaPasajeros = (): JSX.Element => {
       <Typography fontSize={{ xs: 14, md: 17 }} textAlign="left">
         Indica si fuiste dejado en el lugar correcto:
       </Typography>
-      {/* <Typography fontSize={{ xs: 17, md: 20 }} fontWeight="500" textAlign="center" margin={4}>
-        Al menos XXX metros de XXXX
-      </Typography> */}
+      <Typography fontSize={{ xs: 17, md: 20 }} fontWeight="500" textAlign="center" margin={4}>
+        En las cercanías de XXXX
+      </Typography>
       <Container
         maxWidth="md"
         sx={{
@@ -82,7 +88,7 @@ const CheckParaPasajeros = (): JSX.Element => {
       >
         <Button variant="contained" sx={{ width: "100%", marginTop: "10px" }} onClick={handleClick}>
           Viaje finalizado
-        </Button>{" "}
+        </Button>
         {open && (
           <RatingDialogo
             isOpen={open}

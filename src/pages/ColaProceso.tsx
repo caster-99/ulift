@@ -26,9 +26,15 @@ const ColaProceso = (): JSX.Element => {
               Cola en proceso
             </Typography>
             {/* Si no hay nada en proceso aún */}
-            <Typography fontSize={{ xs: 14, md: 17 }}>No hay ninguna cola en proceso</Typography>
-            {tipoUsuario === "conductor" && <CheckParaConductores />}
-            {tipoUsuario === "pasajero" && <CheckParaPasajeros />}
+            {localStorage.getItem("mode") === "F" && (
+              <Typography fontSize={{ xs: 14, md: 17 }}>No hay ninguna cola en proceso</Typography>
+            )}
+            {tipoUsuario === "conductor" && localStorage.getItem("mode") !== "F" && (
+              <CheckParaConductores />
+            )}
+            {tipoUsuario === "pasajero" && localStorage.getItem("mode") !== "F" && (
+              <CheckParaPasajeros />
+            )}
           </Container>
         </Box>
       </Fade>
