@@ -1,24 +1,6 @@
-import React from "react";
-import {
-  ListItem,
-  Avatar,
-  ListItemAvatar,
-  ListItemText,
-  IconButton,
-  Stack,
-  Box,
-  Typography,
-  Card,
-  CardActionArea,
-  Grid,
-} from "@mui/material";
-import {
-  ChatRounded as ChatIcon,
-  CheckCircleOutlineRounded as AcceptIcon,
-} from "@mui/icons-material";
+import { Avatar, Box, Typography, Card, CardActionArea, Grid } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import CardContent from "@mui/material/CardContent";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 interface UserProps {
   name: string;

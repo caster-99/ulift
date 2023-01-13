@@ -1,34 +1,13 @@
-import React, { useState } from "react";
-import {
-  ListItem,
-  Avatar,
-  ListItemAvatar,
-  ListItemText,
-  IconButton,
-  Stack,
-  Box,
-  Typography,
-  Card,
-  CardActionArea,
-  Divider,
-  Grid,
-} from "@mui/material";
-import {
-  ChatRounded as ChatIcon,
-  CheckCircleOutlineRounded as AcceptIcon,
-} from "@mui/icons-material";
+import { useState } from "react";
+import { Avatar, Box, Typography, Card, Divider, Grid } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import CardContent from "@mui/material/CardContent";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import InfoUserDialogo from "./InfoUserDialogo";
-import { Lift, User } from "../types";
-
 
 interface UserProps {
   color: string;
-  date:Date;
-  distanceLastNode:number;
+  date: Date;
+  distanceLastNode: number;
   driverID: number;
   email: string;
   gender: string;
@@ -40,12 +19,12 @@ interface UserProps {
   photo: string;
   plate: string;
   rName: string;
-  rate:number;
-  role:string;
-  seats:number;
-  time:Date;
-  waitingTime:number;
-  }
+  rate: number;
+  role: string;
+  seats: number;
+  time: Date;
+  waitingTime: number;
+}
 
 const ConductorDisponible = (props: UserProps): JSX.Element => {
   const [isInfoUserOpen, setDialogInfoUser] = useState(false);
@@ -101,7 +80,7 @@ const ConductorDisponible = (props: UserProps): JSX.Element => {
                   fontWeight: 600,
                 }}
               >
-                {props.name +' ' +props.lastname}
+                {props.name + " " + props.lastname}
               </Typography>
             </Box>
             <Box
@@ -149,7 +128,7 @@ const ConductorDisponible = (props: UserProps): JSX.Element => {
       <InfoUserDialogo
         isOpen={isInfoUserOpen}
         closeDialog={closeInfoUserDialog}
-        name={props.name+' '+props.lastname}
+        name={props.name + " " + props.lastname}
         seats={props.seats}
         location={props.rName}
         time={props.waitingTime.toString()}

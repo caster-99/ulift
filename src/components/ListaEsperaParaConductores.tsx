@@ -7,42 +7,68 @@ import {
   CardContent,
   IconButton,
   List,
-  ListItem,
-  ListItemAvatar,
-  ListItemButton,
   Typography,
 } from "@mui/material";
-import {
-  CheckCircleOutlineRounded as AcceptIcon,
-  ChatRounded,
-  DriveEtaRounded as LocIcon,
-} from "@mui/icons-material";
+import { ChatRounded, DriveEtaRounded as LocIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
 import { User } from "../types";
+import axios from "axios";
 
 interface Props {
   usuario: User;
   pasajeros: User[];
 }
+interface ColasDisponibles {
+  driverID: string;
+  email: string;
+  name: string;
+  lastname: string;
+  liftID: string;
+  photo: string;
+  role: string;
+}
 
-var elegidos: User[] = [];
+interface SolicitudUsuarios {
+  usuario: ColasDisponibles;
+  solicitudes: ColasDisponibles[];
+}
 
-const ListaEsperaParaConductores = ({ pasajeros }: Props): JSX.Element => {
+var elegidos: ColasDisponibles[] = [];
+
+const ListaEsperaParaConductores = (): JSX.Element => {
+  var requests: ColasDisponibles[] = [];
+  const token = localStorage.getItem("token");
+  var requestAConductores = {
+    method: "get",
+    url: "https://ulift-backend.up.railway.app/api/lift/requests",
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  axios(requestAConductores)
+    .then(function (response) {
+      requests = response.data.requests;
+      console.log("requests");
+      console.log(requests);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
   const navigate = useNavigate();
-  console.log("Lista de solicitudes de cola");
-  console.log(pasajeros);
+  // console.log("Lista de solicitudes de cola");
+  // console.log(pasajeros);
 
   return (
     <Box display={"flex"} flexDirection="column" alignItems="center" justifyContent="center">
       <List dense sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-        {pasajeros.map((user) => (
-          <PasajeroListaEspera usuario={user} pasajeros={pasajeros} key={user.id} />
+        {requests.map((user, index) => (
+          <PasajeroListaEspera usuario={user} solicitudes={requests} key={index} />
         ))}
       </List>
 
       {/* Cuando haya seleccionado al menos uno o el límite indicado y si es conductor , debe habilitarse esta opción */}
-      {pasajeros.length > 0 && (
+      {requests.length > 0 && (
         <Button
           variant="contained"
           onClick={() => {
@@ -58,7 +84,7 @@ const ListaEsperaParaConductores = ({ pasajeros }: Props): JSX.Element => {
 
 export default ListaEsperaParaConductores;
 
-export const PasajeroListaEspera = ({ usuario, pasajeros }: Props): JSX.Element => {
+export const PasajeroListaEspera = ({ usuario, solicitudes }: SolicitudUsuarios): JSX.Element => {
   const foto = "https://ulift-backend.up.railway.app/" + usuario.photo;
   const [isActive, setIsActive] = useState(false);
   const navigate = useNavigate();
@@ -66,16 +92,18 @@ export const PasajeroListaEspera = ({ usuario, pasajeros }: Props): JSX.Element 
   const handleClick = (id: string) => () => {
     if (isActive === false) {
       setIsActive((current) => !current);
-      elegidos.push(pasajeros.find((usuario) => usuario.id === id) as User);
-      console.log(elegidos.flatMap((usuario) => usuario.name + " " + usuario.id));
+      elegidos.push(solicitudes.find((usuario) => usuario.driverID === id) as ColasDisponibles);
+      console.log(elegidos.flatMap((usuario) => usuario.name + " " + usuario.driverID));
     } else {
-      if (pasajeros.find((usuario) => usuario.id === id)) {
+      if (solicitudes.find((usuario) => usuario.driverID === id)) {
         setIsActive((current) => !current);
         elegidos.splice(
-          elegidos.indexOf(pasajeros.find((usuario) => usuario.id === id) as User),
+          elegidos.indexOf(
+            solicitudes.find((usuario) => usuario.driverID === id) as ColasDisponibles
+          ),
           1
         );
-        console.log(elegidos.flatMap((usuario) => usuario.name + " " + usuario.id));
+        console.log(elegidos.flatMap((usuario) => usuario.name + " " + usuario.driverID));
       }
     }
 
@@ -113,7 +141,7 @@ export const PasajeroListaEspera = ({ usuario, pasajeros }: Props): JSX.Element 
       >
         <Box alignItems="center" mr={2} mt={1}>
           {/* Aquí se tiene que cambiar para colocar la imagen */}
-          <Avatar sx={{ width: "50px", height: "50px" }}>N</Avatar>
+          <Avatar sx={{ width: 50, height: 50 }} src={foto} />
         </Box>
 
         <Box
@@ -137,10 +165,10 @@ export const PasajeroListaEspera = ({ usuario, pasajeros }: Props): JSX.Element 
             flexDirection: "row",
           }}
         >
-          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.id)}>
+          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.driverID)}>
             <ChatRounded color="primary" />
           </IconButton>
-          <IconButton sx={{ marginRight: 1 }} onClick={handleClick(usuario.id)}>
+          <IconButton sx={{ marginRight: 1 }} onClick={handleClick(usuario.driverID)}>
             <LocIcon />
           </IconButton>
         </Box>

@@ -20,7 +20,7 @@ import RegistroDestino from "./pages/RegistroDestino";
 import WrapperPerfilExterno from "./pages/WrapperPerfilExterno";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:3001");
+//const socket = io("http://localhost:3001");
 
 const App = (): JSX.Element => {
   return (

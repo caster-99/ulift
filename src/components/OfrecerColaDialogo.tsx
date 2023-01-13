@@ -1,17 +1,12 @@
 import * as React from "react";
 
-import { grey } from "@mui/material/colors";
-
 import {
   Autocomplete,
   Dialog,
-  styled,
   Box,
   DialogTitle,
   DialogContent,
   FormControl,
-  InputLabel,
-  MenuItem,
   TextField,
   Typography,
 } from "@mui/material";
@@ -19,18 +14,13 @@ import {
   AlarmRounded as TimeIcon,
   EmojiPeopleRounded as PasajerosIcon,
   DirectionsCar as CarIcon,
-  LocationOn as LocIcon,
   RampLeftRounded as RutaIcon,
 } from "@mui/icons-material";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Button from "@mui/material/Button";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { useSnackbar } from "notistack";
 import api_instance from "../api/api_instance";
-import { User, Vehicle, Route } from "../types/index";
 import { useEffect } from "react";
 import axios from "axios";
 
@@ -91,7 +81,6 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
       console.log("Mujeres: " + mujeresOnly);
 
       const token = localStorage.getItem("token");
-      const url = "https://ulift-backend.up.railway.app/api/lift";
       // const url = "http://localhost:3000/api/lift";
       var data = JSON.stringify({
         plate: vehiculo.split(" - ")[0],
@@ -104,7 +93,7 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
 
       const config = {
         method: "post",
-        url: url,
+        url: "https://ulift-backend.up.railway.app/api/lift",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

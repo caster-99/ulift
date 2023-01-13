@@ -1,36 +1,48 @@
-import React, { useState } from "react";
-import {
-  Avatar,
-  Box,
-  IconButton,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Typography,
-} from "@mui/material";
-import UsuarioTarjeta from "./UsuarioTarjeta";
-import { User } from "../types";
-import {
-  ChatRounded,
-  CheckCircleOutlineRounded,
-  HailRounded as PedirColaIcon,
-} from "@mui/icons-material";
+import { Avatar, Box, IconButton, Typography } from "@mui/material";
+import { ChatRounded, HailRounded as PedirColaIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import ListItemButton from "@mui/material/ListItemButton";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { grey } from "@mui/material/colors";
 import axios from "axios";
 
-interface Props {
-  usuario: User;
-  pasajeros: User[];
+interface ColasDisponibles {
+  driverID: string;
+  email: string;
+  name: string;
+  lastname: string;
+  liftID: string;
+  photo: string;
+  role: string;
 }
-const ListaEsperaParaPasajeros = ({ pasajeros }: Props): JSX.Element => {
+
+const ListaEsperaParaPasajeros = (): JSX.Element => {
+  var pasajeros: ColasDisponibles[] = [];
+
+  const p1: ColasDisponibles = {
+    driverID: "string",
+    email: "string",
+    name: "string",
+    lastname: "string",
+    liftID: "string",
+    photo: "string",
+    role: "string",
+  };
+  pasajeros.push(p1);
+
   return (
     <Box display={"flex"} flexDirection="column">
-      {pasajeros.map((user) => (
-        <Conductor key={user.id} usuario={user} pasajeros={pasajeros} />
+      {pasajeros.map((user, index) => (
+        <Conductor
+          key={index}
+          driverID={user.driverID}
+          email={user.email}
+          name={user.name}
+          lastname={user.lastname}
+          liftID={user.liftID}
+          photo={user.photo}
+          role={user.role}
+        />
       ))}
     </Box>
   );
@@ -38,38 +50,38 @@ const ListaEsperaParaPasajeros = ({ pasajeros }: Props): JSX.Element => {
 
 export default ListaEsperaParaPasajeros;
 
-export const Conductor = ({ usuario }: Props): JSX.Element => {
+export const Conductor = (usuario: ColasDisponibles): JSX.Element => {
   const foto = "https://ulift-backend.up.railway.app/" + usuario.photo;
 
   const navigate = useNavigate();
+
   const handleClick = (id: string) => () => {
     navigate("/colaEnProceso/pasajero");
     console.log(id);
 
     const data = JSON.stringify({
-      "liftID": id
+      liftID: id,
     });
 
     const token = localStorage.getItem("token");
-    
-    const config = {
-      method: 'post',
-      url: 'https://ulift-backend.up.railway.app/api/lift/request',
-      headers: { 
-        'Authorization':`Bearer ${token}`, 
-        'Content-Type': 'application/json'
-      },
-      data : data
-    };
-    
-    axios(config)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
 
+    const config = {
+      method: "post",
+      url: "https://ulift-backend.up.railway.app/api/lift/request",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const goChat = (id: string) => () => {
@@ -127,34 +139,14 @@ export const Conductor = ({ usuario }: Props): JSX.Element => {
             flexDirection: "row",
           }}
         >
-          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.id)}>
+          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.driverID)}>
             <ChatRounded color="primary" />
           </IconButton>
-          <IconButton sx={{ marginRight: 1 }} onClick={handleClick(usuario.id)}>
+          <IconButton sx={{ marginRight: 1 }} onClick={handleClick(usuario.liftID)}>
             <PedirColaIcon />
           </IconButton>
         </Box>
       </CardContent>
     </Card>
-    // <ListItem
-    // secondaryAction={
-    //     <IconButton sx={{ marginRight: 1 }} onClick={handleClick(user.id)}>
-    //       <PedirColaIcon />
-    //     </IconButton>
-    //   }
-    // <ListItemButton
-    //   onClick={goChat(user.id)}
-    // >
-    //   <ListItemAvatar>
-    //     <Avatar sx={{ width: 50, height: 50 }} src={foto} />
-    //   </ListItemAvatar>
-    //   <ListItemText
-    //     primary={user.name}
-    //     primaryTypographyProps={{
-    //       fontWeight: 600,
-    //     }}
-    //   />
-    // </ListItemButton>
-    // </ListItem>
   );
 };

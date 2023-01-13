@@ -68,7 +68,6 @@ const fetchInfo = async () => {
       Authorization: `Bearer ${token}`,
     },
   };
-
   axios(queryVehiculos)
     .then(function (response) {
       vehiculos = response.data.vehicles;

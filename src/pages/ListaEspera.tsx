@@ -7,6 +7,20 @@ import axios from "axios";
 import { useEffect } from "react";
 import { User } from "../types";
 
+interface ColasDisponibles {
+  driverID: number;
+  email: string;
+  gender: string;
+  lastname: string;
+  liftID: number;
+
+  name: string;
+
+  photo: string;
+
+  role: string;
+}
+
 const ListaEspera = (): JSX.Element => {
   //Necesito establecer los tipos de usuario, es decir, saber si es un conducto o un pasajero
   //porque a cada uno se le va a mostrar algo distinto
@@ -24,82 +38,10 @@ const ListaEspera = (): JSX.Element => {
   axios(requestAConductores)
     .then(function (response) {
       requests = response.data.requests;
-      console.log("requests");
-      console.log(requests);
     })
     .catch(function (error) {
       console.log(error);
     });
-
-  const p1: User = {
-    name: "Luisa",
-    email: "luisa",
-    gender: "Femenino",
-    role: "Estudiante",
-    id: "1234",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
-  };
-
-  const p2: User = {
-    name: "Maria",
-    email: "luisa",
-    gender: "Femenino",
-    role: "Estudiante",
-    id: "11121",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
-  };
-
-  const p3: User = {
-    name: "Ana",
-    email: "luisa",
-    gender: "Femenino",
-    role: "Estudiante",
-    id: "4567",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
-  };
-
-  const p4: User = {
-    name: "Roberson",
-    email: "ragarcia.19@est.ucab.edu.ve",
-    gender: "Masculino",
-    role: "Estudiante",
-    id: "1",
-    photo: "https://i.imgur.com/0cQ3X7A.png",
-    trips: 0,
-    rating: 0,
-    emergencyContact: "123456789",
-    emergencyName: "Luisa",
-    vehicles: [],
-    destinations: [],
-    routes: [],
-  };
-  var usuarios: User[] = [];
-
-  usuarios.push(p1);
-  usuarios.push(p2);
-  usuarios.push(p3);
-  usuarios.push(p4);
 
   return (
     <Box>
@@ -128,12 +70,8 @@ const ListaEspera = (): JSX.Element => {
                 No hay nadie en la lista de espera
               </Typography>
             )}
-            {requests.length > 0 && tipoUsuario === "conductor" && (
-              <ListaEsperaParaConductores pasajeros={requests} usuario={p1} />
-            )}
-            {tipoUsuario === "pasajero" && (
-              <ListaEsperaParaPasajeros pasajeros={usuarios} usuario={p1} />
-            )}
+            {tipoUsuario === "conductor" && <ListaEsperaParaConductores />}
+            {tipoUsuario === "pasajero" && <ListaEsperaParaPasajeros />}
           </Container>
         </Box>
       </Fade>
