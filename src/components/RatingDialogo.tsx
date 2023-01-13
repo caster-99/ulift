@@ -24,6 +24,7 @@ const RatingPassanger = ({ isOpen, closeDialog, pasajeros, tipo }: DialogProps):
   const navigate = useNavigate();
   const [value, setValue] = useState<number | null>(0);
   const [hover, setHover] = useState(-1);
+  console.log("conductor " + pasajeros);
 
   const cerrarDialogo = () => {
     console.log(value);

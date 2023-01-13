@@ -28,6 +28,7 @@ const CheckParaPasajeros = (): JSX.Element => {
       user = response.data.driver;
       console.log(user);
       conductor.push(user);
+      console.log(conductor);
     })
     .catch(function (error) {
       console.log(error);
