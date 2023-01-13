@@ -1,11 +1,13 @@
 import React from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
 import RatingDialogo from "./RatingDialogo";
+import { useSnackbar } from "notistack";
 import { User } from "../types";
+import axios from "axios";
 
 const CheckParaPasajeros = (): JSX.Element => {
   var conductor: User[] = [];
-
+  const { enqueueSnackbar } = useSnackbar();
   const user: User = {
     name: "Eva",
     email: "luisa",
@@ -37,16 +39,37 @@ const CheckParaPasajeros = (): JSX.Element => {
     const d = new Date();
     let hour = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
     console.log("Viaje finalizado a las: " + hour);
-    abrirDialogo();
+
+    var config = {
+      method: "post",
+      url: "https://ulift-backend.up.railway.app/api/lift/complete",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        enqueueSnackbar("¡Solicitud de cola creada con exito! Espera que un conductor te acepte.", {
+          variant: "success",
+        });
+        setTimeout(() => {
+          abrirDialogo();
+        }, 5000);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
   return (
     <Box display={"flex"} flexDirection="column">
       <Typography fontSize={{ xs: 14, md: 17 }} textAlign="left">
         Indica si fuiste dejado en el lugar correcto:
       </Typography>
-      <Typography fontSize={{ xs: 17, md: 20 }} fontWeight="500" textAlign="center" margin={4}>
+      {/* <Typography fontSize={{ xs: 17, md: 20 }} fontWeight="500" textAlign="center" margin={4}>
         Al menos XXX metros de XXXX
-      </Typography>
+      </Typography> */}
       <Container
         maxWidth="md"
         sx={{
