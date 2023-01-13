@@ -93,9 +93,11 @@ const ListaEsperaParaConductores = (): JSX.Element => {
       });
     }
 
-    var data = JSON.stringify({
-      liftID: elegidos[0].liftID,
+    var dataLift = JSON.stringify({
+      liftID: localStorage.getItem("liftID"),
     });
+
+    console.log("dataLift " + localStorage.getItem("liftID"));
 
     var createRatings = {
       method: "post",
@@ -104,7 +106,7 @@ const ListaEsperaParaConductores = (): JSX.Element => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
-      data: data,
+      data: dataLift,
     };
 
     axios(createRatings).then(function (response) {

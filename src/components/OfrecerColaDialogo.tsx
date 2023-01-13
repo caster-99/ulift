@@ -67,7 +67,7 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
     email: string;
     nameU: string;
     lastname: string;
-    liftID: string;
+    liftID: number;
     photo: string;
     role: string;
   }
@@ -124,6 +124,8 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
           enqueueSnackbar("Cola creada, espera que alguien te envie una solicitud", {
             variant: "success",
           });
+          console.log(response.data.liftID);
+          localStorage.setItem("liftID", response.data.liftID);
           axios(requestAConductores).then((res) => {
             requests = res.data.requests;
             localStorage.setItem("requests", JSON.stringify(requests));
