@@ -16,13 +16,25 @@ import { User } from "../types";
 import axios from "axios";
 
 interface ColasDisponibles {
-  id: string;
+  color: string;
+  date: Date;
+  distanceLastNode: number;
+  driverID: number;
   email: string;
-  nameU: string;
+  gender: string;
   lastname: string;
-  liftID: string;
+  liftID: number;
+  model: string;
+  nameU: string;
+  path: string;
   photo: string;
+  plate: string;
+  rName: string;
+  rate: number;
   role: string;
+  seats: number;
+  time: Date;
+  waitingTime: number;
 }
 
 interface SolicitudUsuarios {
@@ -48,7 +60,7 @@ const ListaEsperaParaConductores = (): JSX.Element => {
     let j = 0;
     for (let i = 0; i < elegidos.length; i++) {
       var data = JSON.stringify({
-        id: elegidos[i].id,
+        id: elegidos[i].driverID,
         dNumber: 1,
       });
       console.log(data);
@@ -78,8 +90,7 @@ const ListaEsperaParaConductores = (): JSX.Element => {
         method: "post",
         url: "https://ulift-backend.up.railway.app/api/lift/createR",
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImVtYWlsIjoibG1sb3Blei4xOUBlc3QudWNhYi5lZHUudmUiLCJuYW1lVSI6Ikx1aXNhIiwibGFzdG5hbWUiOiJMw7NwZXogIiwiaWF0IjoxNjcwOTc5NzE2fQ.vEPf2zScOXyadrCJn5lqyYBHIc1UWLSn1M9FeME1pEY",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
         data: data,
@@ -139,27 +150,29 @@ export const PasajeroListaEspera = ({ usuario, solicitudes }: SolicitudUsuarios)
   const navigate = useNavigate();
   solicitudes = requests;
   console.log(
-    "arreglo de requests " + requests.flatMap((usuario) => usuario.nameU + " " + usuario.id)
+    "arreglo de requests " + requests.flatMap((usuario) => usuario.nameU + " " + usuario.driverID)
   );
-  const handleClick = (id: string) => () => {
+  const handleClick = (id: number) => () => {
     if (isActive === false) {
       setIsActive((current) => !current);
-      elegidos.push(solicitudes.find((usuario) => usuario.id === id) as ColasDisponibles);
-      console.log(elegidos.flatMap((usuario) => usuario.nameU + " " + usuario.id));
+      elegidos.push(solicitudes.find((usuario) => usuario.driverID === id) as ColasDisponibles);
+      console.log(elegidos.flatMap((usuario) => usuario.nameU + " " + usuario.driverID));
     } else {
-      if (solicitudes.find((usuario) => usuario.id === id)) {
+      if (solicitudes.find((usuario) => usuario.driverID === id)) {
         setIsActive((current) => !current);
         elegidos.splice(
-          elegidos.indexOf(solicitudes.find((usuario) => usuario.id === id) as ColasDisponibles),
+          elegidos.indexOf(
+            solicitudes.find((usuario) => usuario.driverID === id) as ColasDisponibles
+          ),
           1
         );
-        console.log(elegidos.flatMap((usuario) => usuario.nameU + " " + usuario.id));
+        console.log(elegidos.flatMap((usuario) => usuario.nameU + " " + usuario.driverID));
       }
     }
 
     // setIsActive(true);
   };
-  const goChat = (id: string) => () => {
+  const goChat = (id: number) => () => {
     navigate("/chatPrivado/" + id);
   };
 
@@ -216,10 +229,10 @@ export const PasajeroListaEspera = ({ usuario, solicitudes }: SolicitudUsuarios)
             flexDirection: "row",
           }}
         >
-          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.id)}>
+          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.driverID)}>
             <ChatRounded color="primary" />
           </IconButton>
-          <IconButton sx={{ marginRight: 1 }} onClick={handleClick(usuario.id)}>
+          <IconButton sx={{ marginRight: 1 }} onClick={handleClick(usuario.driverID)}>
             <LocIcon />
           </IconButton>
         </Box>
