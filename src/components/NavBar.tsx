@@ -145,9 +145,9 @@ export const NavBar = (props: Props) => {
     }
   };
 
-  const handleClickFaq = () => {
-    navigate(`/faq`);
-  };
+  // const handleClickFaq = () => {
+  //   navigate(`/faq`);
+  // };
 
   const handleClickCloseSesion = () => {
     localStorage.removeItem("token");
@@ -242,14 +242,14 @@ export const NavBar = (props: Props) => {
           }}
         >
           <Divider />
-          <ListItem disablePadding>
+          {/* <ListItem disablePadding>
             <ListItemButton onClick={handleClickFaq}>
               <ListItemIcon>
                 <QuestionIcon />
               </ListItemIcon>
               <ListItemText>Preguntas frecuentes</ListItemText>
             </ListItemButton>
-          </ListItem>
+          </ListItem> */}
 
           <ListItem disablePadding>
             <ListItemButton onClick={handleClickCloseSesion}>

@@ -26,21 +26,8 @@ const App = (): JSX.Element => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Inicio />} />
-        <Route
-          element={
-            <UnAuth>
-              <InicioSesionLayout />
-            </UnAuth>
-          }
-        >
-          <Route
-            element={
-              <Auth>
-                <Outlet />
-              </Auth>
-            }
-          ></Route>
+        <Route element={<InicioSesionLayout />}>
+          <Route element={<Outlet />}></Route>
           <Route path="login" element={<InicioSesion />} />
           <Route path="signup" element={<Registro />} />
         </Route>
