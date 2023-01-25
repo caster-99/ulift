@@ -19,17 +19,14 @@ import {
   PersonRounded as PersonIcon,
   MenuRounded as MenuIcon,
   HistoryRounded as HistoryIcon,
-  ContactSupportRounded as QuestionIcon,
   LogoutRounded as CloseIcon,
-  ChatRounded as ChatIcon,
   SosRounded as SosIcon,
   TaxiAlertRounded as ColaProcesoIcon,
 } from "@mui/icons-material";
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import logo from "../assets/logo512.png";
-import api_instance from "../api/api_instance";
 import axios from "axios";
 
 const drawerWidth = 240;
@@ -51,24 +48,16 @@ interface ColasDisponibles {
 export const NavBar = (props: Props) => {
   var numeroEmergencia = "";
   var tipoUsuario: string;
-  const url = "https://ulift-backend.up.railway.app/api/user/profile";
+
   //  const url = "http://localhost:3000/api/user/profile";
-  const fetchUser = async () => {
-    const token = localStorage.getItem("token");
-
-    const response = await api_instance.get(url, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    numeroEmergencia = response.data.user.emergencyNumber;
-    // console.log(vehiculos);
-  };
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
 
   const token = localStorage.getItem("token");
+
+  var numEmer = {
+    method: "get",
+    url: "https://ulift-backend.up.railway.app/api/user/profile",
+    headers: { Authorization: `Bearer ${token}` },
+  };
 
   var config = {
     method: "get",
@@ -98,6 +87,10 @@ export const NavBar = (props: Props) => {
 
   axios(config).then(function (response) {
     tipoUsuario = response.data.status;
+  });
+
+  axios(numEmer).then(function (response) {
+    numeroEmergencia = response.data.user.emergencyContact;
   });
 
   axios(requestAConductores).then(function (response) {

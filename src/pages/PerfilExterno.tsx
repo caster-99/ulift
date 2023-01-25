@@ -53,6 +53,7 @@ const PerfilExterno = (user: User): JSX.Element => {
         <Profile
           id={user.id}
           name={user.name}
+          lastname={user.lastname}
           email={user.email}
           role={user.role}
           gender={user.gender}

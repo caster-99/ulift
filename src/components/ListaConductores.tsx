@@ -19,6 +19,7 @@ const ListaConductores = ({ conductores }: Props): JSX.Element => {
           key={user.id}
           id={user.id}
           name={user.name}
+          lastname={user.lastname}
           email={user.email}
           role={user.role}
           gender={user.gender}

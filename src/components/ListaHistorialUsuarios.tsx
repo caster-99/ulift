@@ -8,7 +8,6 @@ interface Props {
 }
 
 const ListaHistorialUsuarios = ({ historial }: Props): JSX.Element => {
-  console.log(historial);
   return (
     <Box display={"flex"} flexDirection="column">
       {historial.map((cola, index) => (

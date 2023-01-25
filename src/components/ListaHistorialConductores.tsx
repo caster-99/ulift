@@ -1,14 +1,56 @@
-import React from "react";
-import { Box } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  Divider,
+  Grid,
+  ListItem,
+  ListItemAvatar,
+  Typography,
+} from "@mui/material";
 import UserListItem from "./UserListItem";
-import { Colas } from "../types";
 
+import axios from "axios";
+import InfoHistorialDialogo from "./InfoHistorialDialogo";
+
+interface Colas {
+  color: string;
+  date: string;
+  email: string;
+  lastname: string;
+  liftID: number;
+  model: string;
+  name: string;
+  path: string;
+  photo: string;
+  plate: string;
+  rate: number;
+  routename: string;
+  seats: number;
+  time: string;
+  waitingTime: number;
+}
 interface Props {
   historial: Colas[];
 }
+var histConductor: Colas[] = [];
 
 const ListaHistorialConductores = ({ historial }: Props): JSX.Element => {
-  console.log(historial);
+  const token = localStorage.getItem("token");
+  const [isInfoUserOpen, setDialogInfoUser] = useState(false);
+
+  const openInfoUserDialog = () => {
+    setDialogInfoUser(true);
+  };
+
+  const closeInfoUserDialog = () => {
+    setDialogInfoUser(false);
+  };
+
+  console.log("hist" + historial.flatMap((cola) => cola.name));
+
   return (
     <Box display={"flex"} flexDirection="column">
       {historial.map((cola, index) => (

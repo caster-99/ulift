@@ -23,6 +23,7 @@ interface DialogProps {
   isOpen: boolean;
   closeDialog: () => void;
   name: string;
+  lastname: string;
   trips: number;
   role: string;
   photo: string;
@@ -46,7 +47,8 @@ const InfoFavoritoDialogo = (props: DialogProps) => {
         }}
       >
         {/* Aquí se tiene que cambiar para colocar la imagen */}
-        <Avatar sx={{ width: "80px", height: "80px" }}>N</Avatar>
+
+        <Avatar sx={{ width: 50, height: 50 }} src={props.photo} />
 
         <Typography
           sx={{

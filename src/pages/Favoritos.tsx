@@ -1,4 +1,4 @@
-import { Box, Container, Typography, Fab } from "@mui/material";
+import { Box, Container, Typography, Fab, Button } from "@mui/material";
 import Fade from "@mui/material/Fade";
 import React, { useEffect, useState } from "react";
 import { NavBar } from "../components/NavBar";
@@ -103,7 +103,7 @@ const Favoritos = (): JSX.Element => {
             />
           </Container>
         </Box>
-      </Fade>
+      </Fade>{" "}
     </Box>
   );
 };

@@ -8,6 +8,7 @@ import {
   Card,
   CardContent,
   Grid,
+  Typography,
 } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import InfoHistorialDialogo from "./InfoHistorialDialogo";
@@ -16,7 +17,7 @@ import { Colas } from "../types";
 const UserListItem = (props: Colas): JSX.Element => {
   const [isInfoUserOpen, setDialogInfoUser] = useState(false);
   const foto = "https://ulift-backend.up.railway.app/" + props.photo;
-  console.log(props);
+
   const openInfoUserDialog = () => {
     setDialogInfoUser(true);
   };
@@ -53,12 +54,9 @@ const UserListItem = (props: Colas): JSX.Element => {
             <ListItemAvatar>
               <Avatar sx={{ width: 50, height: 50 }} src={foto} />
             </ListItemAvatar>
-            <ListItemText
-              primary={props.name}
-              primaryTypographyProps={{
-                fontWeight: 600,
-              }}
-            />
+            <Typography>
+              {props.name} {props.lastname}
+            </Typography>
           </ListItem>
         </CardContent>
       </Card>

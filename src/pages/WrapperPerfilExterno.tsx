@@ -49,6 +49,7 @@ const WrapperPerfilExterno = (): JSX.Element => {
 
   const user: User = {
     name: "Eva",
+    lastname: "Perez",
     email: "luisa",
     gender: "Femenino",
     role: "Estudiante",
@@ -67,6 +68,7 @@ const WrapperPerfilExterno = (): JSX.Element => {
     <PerfilExterno
       id={user.id}
       name={user.name}
+      lastname={user.lastname}
       email={user.email}
       role={user.role}
       gender={user.gender}

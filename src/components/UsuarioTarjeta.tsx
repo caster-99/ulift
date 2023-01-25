@@ -8,6 +8,7 @@ import {
   CardContent,
   Grid,
   IconButton,
+  Typography,
 } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import InfoUserDialogo from "./InfoUserDialogo";
@@ -64,12 +65,9 @@ const UsuarioTarjeta = (user: User): JSX.Element => {
             <ListItemAvatar>
               <Avatar sx={{ width: 50, height: 50 }} src={foto} />
             </ListItemAvatar>
-            <ListItemText
-              primary={user.name}
-              primaryTypographyProps={{
-                fontWeight: 600,
-              }}
-            />
+            <Typography>
+              {user.name} {user.lastname}
+            </Typography>
           </ListItem>
         </CardContent>
       </Card>
@@ -77,6 +75,7 @@ const UsuarioTarjeta = (user: User): JSX.Element => {
         isOpen={isInfoUserOpen}
         closeDialog={closeInfoUserDialog}
         name={user.name}
+        lastname={user.lastname}
         trips={user.trips}
         role={user.role}
         photo={user.photo}

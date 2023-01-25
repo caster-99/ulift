@@ -14,6 +14,7 @@ const ListaPasajeros = ({ pasajeros }: Props): JSX.Element => {
           key={index}
           id={user.id}
           name={user.name}
+          lastname={user.lastname}
           email={user.email}
           role={user.role}
           gender={user.gender}

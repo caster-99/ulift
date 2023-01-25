@@ -35,6 +35,7 @@ import { useSnackbar } from "notistack";
 
 const usuario: User = {
   name: "",
+  lastname: "",
   id: "",
   email: "",
   role: "",
@@ -61,7 +62,8 @@ const PerfilUsuario = (): JSX.Element => {
     const response = await api_instance.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    usuario.name = response.data.user.nameU + " " + response.data.user.lastname;
+    usuario.name = response.data.user.nameU;
+    usuario.lastname = response.data.user.lastname;
     usuario.id = response.data.user.id;
     usuario.email = response.data.user.email;
     usuario.emergencyContact = response.data.user.emergencyContact;
@@ -95,6 +97,7 @@ const PerfilUsuario = (): JSX.Element => {
           <Profile
             id={usuario.id}
             name={usuario.name}
+            lastname={usuario.lastname}
             email={usuario.email}
             role={usuario.role}
             gender={usuario.gender}

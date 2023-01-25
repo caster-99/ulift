@@ -6,7 +6,24 @@ import ListaHistorialUsuarios from "../components/ListaHistorialUsuarios";
 import ListaHistorialConductores from "../components/ListaHistorialConductores";
 import React from "react";
 import axios from "axios";
-import { Colas } from "../types";
+
+interface Colas {
+  color: string;
+  date: string;
+  email: string;
+  lastname: string;
+  liftID: number;
+  model: string;
+  name: string;
+  path: string;
+  photo: string;
+  plate: string;
+  rate: number;
+  routename: string;
+  seats: number;
+  time: string;
+  waitingTime: number;
+}
 
 var histConductor: Colas[] = [];
 var histPasajero: Colas[] = [];

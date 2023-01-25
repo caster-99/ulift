@@ -10,8 +10,6 @@ interface DialogProps {
 const InfoHistorialDialogo = (props: DialogProps) => {
   const foto = "https://ulift-backend.up.railway.app/" + props.cola.photo;
 
-  console.log(props.cola);
-
   return (
     <Dialog open={props.isOpen} onClose={props.closeDialog}>
       <DialogTitle textAlign={"center"} color={"primary"}>

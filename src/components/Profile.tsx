@@ -15,7 +15,7 @@ const Profile = (user: User): JSX.Element => {
         fontWeight={600}
         mb={{ xs: 2, sm: 3 }}
       >
-        {user.name}
+        {user.name} {user.lastname}
       </Typography>
       <Stack direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={6}>
         <Box>

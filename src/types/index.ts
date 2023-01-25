@@ -2,6 +2,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  lastname: string;
   role: string;
   gender: string;
   photo: string;
@@ -53,19 +54,19 @@ export interface Lift {
 }
 
 export interface Colas {
-  liftID: string;
-  email: string;
-  name: string;
-  lastname: string;
-  photo: string;
-  routename: string;
-  waitingTime: number;
-  rate: number;
-  time: string;
-  date: string;
-  plate: string;
-  model: string;
   color: string;
-  seats: number;
+  date: string;
+  email: string;
+  lastname: string;
+  liftID: number;
+  model: string;
+  name: string;
   path: string;
+  photo: string;
+  plate: string;
+  rate: number;
+  routename: string;
+  seats: number;
+  time: string;
+  waitingTime: number;
 }
