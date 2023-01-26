@@ -44,6 +44,7 @@ interface ColasDisponibles {
   seats: number;
   time: Date;
   waitingTime: number;
+  newRate: number | null;
 }
 
 const CheckParaConductores = (): JSX.Element => {
@@ -87,10 +88,9 @@ const CheckParaConductores = (): JSX.Element => {
     // var requestsString = JSON.parse(localStorage.getItem("requests")!);
     // requests = requestsString;
     // console.log("arreglo de requests" + requests);
-    console.log("elegidos: " + localStorage.getItem("elegidos")!);
+
     var elegidosString = JSON.parse(localStorage.getItem("elegidos")!);
     pasajeros = elegidosString;
-    console.log(pasajeros);
   };
 
   fetchUser();
@@ -132,6 +132,7 @@ const CheckParaConductores = (): JSX.Element => {
               seats={user.seats}
               time={user.time}
               waitingTime={user.waitingTime}
+              newRate={user.newRate}
             />
           ))}
         </List>
@@ -147,6 +148,7 @@ const CheckParaConductores = (): JSX.Element => {
 export default CheckParaConductores;
 
 export const UserListItem = (user: ColasDisponibles): JSX.Element => {
+  const { enqueueSnackbar } = useSnackbar();
   const foto = "https://ulift-backend.up.railway.app/" + user.photo;
   const [checked, setChecked] = React.useState([0]);
 
@@ -176,7 +178,10 @@ export const UserListItem = (user: ColasDisponibles): JSX.Element => {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        console.log("Viaje de " + value + " finalizado a las: " + hour);
+        enqueueSnackbar("Viaje de " + value + " finalizado a las: " + hour, {
+          variant: "info",
+        });
+
         setChecked(newChecked);
       })
       .catch(function (error) {

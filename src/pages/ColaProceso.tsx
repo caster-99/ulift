@@ -9,7 +9,7 @@ const ColaProceso = (): JSX.Element => {
   var tipoUsuario: string;
   const params = useParams();
   tipoUsuario = params.tipo!;
-  console.log("hola " + tipoUsuario);
+
   return (
     <Box>
       <NavBar />

@@ -29,7 +29,6 @@ const PasajeroFavoritoDialogo = ({ isOpen, closeDialog }: DialogProps) => {
   const navigate = useNavigate();
 
   const handleAddFavorito = async () => {
-    console.log("Agregando pasajero favorito " + favorito);
     setAdding(true);
     const token = localStorage.getItem("token");
     const url = "https://ulift-backend.up.railway.app/api/favorites";
@@ -37,8 +36,6 @@ const PasajeroFavoritoDialogo = ({ isOpen, closeDialog }: DialogProps) => {
     var data = JSON.stringify({
       email: favorito,
     });
-
-    console.log(data);
 
     const config = {
       method: "post",

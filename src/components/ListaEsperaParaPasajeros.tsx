@@ -34,7 +34,6 @@ const ListaEsperaParaPasajeros = (): JSX.Element => {
   const fetchUser = async () => {
     var requestsString = JSON.parse(localStorage.getItem("conductores")!);
     pasajeros = requestsString;
-    console.log(pasajeros);
   };
 
   fetchUser();

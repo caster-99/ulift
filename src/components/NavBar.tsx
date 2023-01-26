@@ -126,9 +126,9 @@ export const NavBar = (props: Props) => {
       navigate(`/colaEnProceso/pasajero`);
     }
   };
-  const handleClickChats = () => {
-    navigate(`/chats`);
-  };
+  // const handleClickChats = () => {
+  //   navigate(`/chats`);
+  // };
 
   const handleClickListaEspera = () => {
     if (tipoUsuario === "D") {
@@ -184,14 +184,14 @@ export const NavBar = (props: Props) => {
             <ListItemText>Inicio</ListItemText>
           </ListItemButton>
         </ListItem>
-        <ListItem disablePadding>
+        {/* <ListItem disablePadding>
           <ListItemButton onClick={handleClickHistory}>
             <ListItemIcon>
               <HistoryIcon />
             </ListItemIcon>
             <ListItemText>Historial</ListItemText>
           </ListItemButton>
-        </ListItem>
+        </ListItem> */}
         <ListItem disablePadding>
           <ListItemButton onClick={handleClickFav}>
             <ListItemIcon>

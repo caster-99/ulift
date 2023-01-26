@@ -13,6 +13,7 @@ import { User } from "../types";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useSnackbar } from "notistack";
 
 interface ColasDisponibles {
   color: string;
@@ -34,6 +35,7 @@ interface ColasDisponibles {
   seats: number;
   time: Date;
   waitingTime: number;
+  newRate: number | null;
 }
 
 interface DialogProps {
@@ -43,24 +45,25 @@ interface DialogProps {
 }
 
 const RatingPasajeros = ({ isOpen, closeDialog, p }: DialogProps): JSX.Element => {
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const [value, setValue] = useState<number | null>(0);
+  const [value, setValue] = useState<number[] | null[]>([]);
   const [hover, setHover] = useState(-1);
-  console.log("elegidos: " + localStorage.getItem("elegidos")!);
+
   var elegidosString = JSON.parse(localStorage.getItem("elegidos")!);
   p = elegidosString;
-  console.log("pasajeros en el rating " + p);
 
   const cerrarDialogo = () => {
-    console.log(value);
-
     //luego de que se mande el rating
 
     for (let i = 0; i < p.length; i++) {
       var data = JSON.stringify({
         receiverID: p[i].id,
-        rate: value,
+        rate: p[i].newRate,
       });
+
+      console.log(data);
+
       var config = {
         method: "post",
         url: "https://ulift-backend.up.railway.app/api/lift/rating",
@@ -74,19 +77,24 @@ const RatingPasajeros = ({ isOpen, closeDialog, p }: DialogProps): JSX.Element =
       axios(config)
         .then(function (response) {
           console.log(JSON.stringify(response.data));
+          enqueueSnackbar("¡Proceso finalizado! En unos segundos estará de vuelta al inicio.", {
+            variant: "success",
+          });
+          setTimeout(() => {
+            closeDialog();
+
+            localStorage.removeItem("requests");
+            localStorage.removeItem("elegidos");
+            localStorage.removeItem("liftID");
+
+            navigate("/");
+          }, 8000);
         })
         .catch(function (error) {
           console.log(error);
+          enqueueSnackbar("¡Error al procesar el rating!", { variant: "error" });
         });
     }
-
-    setTimeout(() => {
-      closeDialog();
-
-      localStorage.removeItem("requests");
-
-      navigate("/");
-    }, 8000);
   };
 
   return (
@@ -97,30 +105,24 @@ const RatingPasajeros = ({ isOpen, closeDialog, p }: DialogProps): JSX.Element =
           sx={{
             width: "200px",
             display: "flex",
-            alignItems: "center",
+            alignItems: "left",
+            flexDirection: "column",
             justifyContent: "space-evenly",
           }}
         >
           {p.map((user, index) => {
             return (
-              <Box
-                key={index}
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-evenly",
-                }}
-              >
+              <Box key={index}>
                 <Typography mr="2px">
-                  {user.nameU} {user.lastname}{" "}
+                  {user.nameU} {user.lastname}
                 </Typography>
                 <Rating
-                  name="hover-feedback"
-                  value={value}
+                  key={index}
+                  value={value[index]}
                   precision={1}
                   onChange={(event, newValue) => {
-                    setValue(newValue);
+                    user.newRate = newValue;
+                    value[index] = newValue;
                   }}
                   onChangeActive={(event, newHover) => {
                     setHover(newHover);

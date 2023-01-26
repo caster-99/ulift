@@ -40,7 +40,7 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
     const response = await api_instance.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(response.data.user.routes);
+
     for (let i = 0; i < vehiculos.length; i++) {
       vehiculos.pop();
     }
@@ -85,11 +85,6 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
     if (direccion !== "" && vehiculo !== "" && puestos >= 1 && tiempo > 1) {
       //Aquí veo el estado de los hooks para mandar esta info a la BD
       //obtengo de la dirección(ruta) y vehículo el id correspondiente de su PK compuesta
-      console.log("Direccion: " + direccion.split(" - ")[0]);
-      console.log("Vehiculo: " + vehiculo.split(" - ")[0]);
-      console.log("Puestos: " + puestos);
-      console.log("Tiempo: " + tiempo);
-      console.log("Mujeres: " + mujeresOnly);
 
       const token = localStorage.getItem("token");
       // const url = "http://localhost:3000/api/lift";
@@ -124,12 +119,12 @@ const OfrecerColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
           enqueueSnackbar("Cola creada, espera que alguien te envie una solicitud", {
             variant: "success",
           });
-          console.log(response.data.liftID);
+
           localStorage.setItem("liftID", response.data.liftID);
           axios(requestAConductores).then((res) => {
             requests = res.data.requests;
             localStorage.setItem("requests", JSON.stringify(requests));
-            console.log("requests: " + localStorage.getItem("requests"));
+
             navigate("/listaEspera/conductor");
           });
         })

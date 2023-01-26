@@ -13,6 +13,7 @@ import { User } from "../types";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useSnackbar } from "notistack";
 
 interface DialogProps {
   isOpen: boolean;
@@ -22,14 +23,12 @@ interface DialogProps {
 }
 
 const RatingPassanger = ({ isOpen, closeDialog, p, tipo }: DialogProps): JSX.Element => {
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const [value, setValue] = useState<number | null>(0);
   const [hover, setHover] = useState(-1);
-  console.log("conductor " + p);
 
   const cerrarDialogo = () => {
-    console.log(value);
-
     var data = JSON.stringify({
       receiverID: p.id,
       rate: value,
@@ -48,16 +47,22 @@ const RatingPassanger = ({ isOpen, closeDialog, p, tipo }: DialogProps): JSX.Ele
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        enqueueSnackbar("¡Proceso finalizado! En unos segundos estará de vuelta al inicio.", {
+          variant: "success",
+        });
         setTimeout(() => {
           closeDialog();
 
           localStorage.removeItem("requests");
+          localStorage.removeItem("elegidos");
+          localStorage.removeItem("liftID");
 
           navigate("/");
-        }, 5000);
+        }, 8000);
       })
       .catch(function (error) {
         console.log(error);
+        enqueueSnackbar("¡Error al procesar el rating!", { variant: "error" });
       });
   };
 

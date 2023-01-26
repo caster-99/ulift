@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
 import { User } from "../types";
 import axios from "axios";
+import { useSnackbar } from "notistack";
 
 interface ColasDisponibles {
   color: string;
@@ -35,6 +36,7 @@ interface ColasDisponibles {
   seats: number;
   time: Date;
   waitingTime: number;
+  newRate: number | null;
 }
 
 interface SolicitudUsuarios {
@@ -47,8 +49,8 @@ var flag: boolean = false;
 var requests: ColasDisponibles[] = [];
 
 const ListaEsperaParaConductores = (): JSX.Element => {
+  const { enqueueSnackbar } = useSnackbar();
   const fetchUser = async () => {
-    console.log(localStorage.getItem("requests")!);
     var requestsString = JSON.parse(localStorage.getItem("requests")!);
     requests = requestsString;
   };
@@ -97,8 +99,6 @@ const ListaEsperaParaConductores = (): JSX.Element => {
       liftID: localStorage.getItem("liftID"),
     });
 
-    console.log("dataLift " + localStorage.getItem("liftID"));
-
     var createRatings = {
       method: "post",
       url: "https://ulift-backend.up.railway.app/api/lift/createR",
@@ -112,6 +112,7 @@ const ListaEsperaParaConductores = (): JSX.Element => {
     axios(createRatings).then(function (response) {
       console.log("Ejecutando create ratings");
       console.log(JSON.stringify(response.data));
+      enqueueSnackbar("El viaje ya va a comenzar ", { variant: "info" });
       setTimeout(() => {
         localStorage.setItem("elegidos", JSON.stringify(elegidos));
         flag = true;
@@ -167,7 +168,6 @@ export const PasajeroListaEspera = ({ usuario, solicitudes }: SolicitudUsuarios)
           elegidos.indexOf(solicitudes.find((usuario) => usuario.id === id) as ColasDisponibles),
           1
         );
-        console.log(elegidos.flatMap((usuario) => usuario.nameU + " " + usuario.id));
       }
     }
 

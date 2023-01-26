@@ -25,8 +25,6 @@ const CheckParaPasajeros = (): JSX.Element => {
     .then(function (response) {
       console.log(JSON.stringify(response.data));
       conductor = response.data.driver;
-
-      console.log(conductor);
     })
     .catch(function (error) {
       console.log(error);

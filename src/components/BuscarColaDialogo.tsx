@@ -99,10 +99,10 @@ const BuscarColaDialogo = ({ isOpen, closeDialog }: DialogProps) => {
           variant: "success",
         });
         //guardo en localStorage los conductores disponibles
-        console.log(response.data.lifts);
+
         conductores = response.data.lifts;
         localStorage.setItem("conductores", JSON.stringify(conductores));
-        console.log("localStorage: " + localStorage.getItem("conductores"));
+
         setTimeout(() => {
           navigate("/listaEspera/pasajero");
         }, 5000);

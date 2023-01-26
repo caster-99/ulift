@@ -83,8 +83,6 @@ const PerfilUsuario = (): JSX.Element => {
     } else {
       usuario.role = "Trabajador";
     }
-
-    console.log(usuario.routes);
   };
 
   fetchUser();

@@ -71,7 +71,6 @@ const ListaHistorialConductores = ({ historial }: Props): JSX.Element => {
           seats={cola.seats}
           path={cola.path}
           key={index}
-          //role="Estudiante"
         />
       ))}
     </Box>

@@ -33,9 +33,6 @@ const Favoritos = (): JSX.Element => {
 
           return usuarios;
         });
-
-        console.log(favoritos);
-        console.log(favoritos.length);
       })
       .catch(function (error) {
         console.log(error);
