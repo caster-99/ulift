@@ -55,45 +55,51 @@ const RatingPasajeros = ({ isOpen, closeDialog, p }: DialogProps): JSX.Element =
 
   const cerrarDialogo = () => {
     //luego de que se mande el rating
-
+    let j = 0;
     for (let i = 0; i < p.length; i++) {
-      var data = JSON.stringify({
-        receiverID: p[i].id,
-        rate: p[i].newRate,
-      });
-
-      console.log(data);
-
-      var config = {
-        method: "post",
-        url: "https://ulift-backend.up.railway.app/api/lift/rating",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-        data: data,
-      };
-
-      axios(config)
-        .then(function (response) {
-          console.log(JSON.stringify(response.data));
-          enqueueSnackbar("¡Proceso finalizado! En unos segundos estará de vuelta al inicio.", {
-            variant: "success",
-          });
-          setTimeout(() => {
-            closeDialog();
-
-            localStorage.removeItem("requests");
-            localStorage.removeItem("elegidos");
-            localStorage.removeItem("liftID");
-
-            navigate("/");
-          }, 8000);
-        })
-        .catch(function (error) {
-          console.log(error);
-          enqueueSnackbar("¡Error al procesar el rating!", { variant: "error" });
+      // eslint-disable-next-line no-loop-func
+      setTimeout(() => {
+        var data = JSON.stringify({
+          receiverID: p[i].id,
+          rate: p[i].newRate,
         });
+
+        console.log(data);
+
+        var config = {
+          method: "post",
+          url: "https://ulift-backend.up.railway.app/api/lift/rating",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+          data: data,
+        };
+
+        axios(config)
+          .then(function (response) {
+            console.log(JSON.stringify(response.data));
+            j++;
+          })
+          .catch(function (error) {
+            console.log(error);
+            enqueueSnackbar("¡Error al procesar el rating!", { variant: "error" });
+          });
+      }, 5000);
+    }
+
+    if (j === p.length) {
+      setTimeout(() => {
+        closeDialog();
+        enqueueSnackbar("¡Proceso finalizado! En unos segundos estará de vuelta al inicio.", {
+          variant: "success",
+        });
+        localStorage.removeItem("requests");
+        localStorage.removeItem("elegidos");
+        localStorage.removeItem("liftID");
+
+        navigate("/");
+      }, 8000);
     }
   };
 
