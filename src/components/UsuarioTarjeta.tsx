@@ -1,19 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   ListItem,
   Avatar,
   ListItemAvatar,
-  ListItemText,
   Card,
   CardContent,
   Grid,
-  IconButton,
   Typography,
 } from "@mui/material";
-import Divider from "@mui/material/Divider";
-import InfoUserDialogo from "./InfoUserDialogo";
-import { useNavigate } from "react-router-dom";
-import { ArrowCircleRight, ChatRounded, PropaneSharp } from "@mui/icons-material";
 import { User } from "../types";
 import { grey } from "@mui/material/colors";
 import InfoFavoritoDialogo from "./InfoFavoritoDialogo";
