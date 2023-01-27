@@ -27,6 +27,7 @@ interface DialogProps {
   seats: number;
   location: string;
   role: string;
+  photo: string;
 }
 
 const InfoUserDialogo = (props: DialogProps) => {
@@ -53,7 +54,10 @@ const InfoUserDialogo = (props: DialogProps) => {
         }}
       >
         {/* Aquí se tiene que cambiar para colocar la imagen */}
-        <Avatar sx={{ width: "80px", height: "80px" }}>N</Avatar>
+        <Avatar
+          sx={{ width: 50, height: 50 }}
+          src={"https://ulift-backend.up.railway.app/" + props.photo}
+        />
 
         <Typography
           sx={{
@@ -63,7 +67,10 @@ const InfoUserDialogo = (props: DialogProps) => {
         >
           {props.name}
         </Typography>
-        <Typography>{props.role}</Typography>
+        {props.role === "E" && <Typography>Estudiante</Typography>}
+        {props.role === "P" && <Typography>Docente</Typography>}
+        {props.role === "T" && <Typography>Trabajador</Typography>}
+
         <Typography>Tiempo de espera: {props.time} minutos</Typography>
 
         <Typography>Puestos disponibles: {props.seats} puestos</Typography>

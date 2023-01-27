@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import { Link } from "react-router-dom";
 interface UserProps {
   name: string;
-  // photo: object;
+  photo: string;
   lastMsg: string;
   userId: string;
 }
@@ -41,7 +41,10 @@ const ChatMini = (props: UserProps): JSX.Element => {
           >
             <Box alignItems="center" mr={2}>
               {/* Aquí se tiene que cambiar para colocar la imagen */}
-              <Avatar sx={{ width: "50px", height: "50px" }}>N</Avatar>
+              <Avatar
+                sx={{ width: 50, height: 50 }}
+                src={"https://ulift-backend.up.railway.app/" + props.photo}
+              />
             </Box>
 
             <Box sx={{ display: "flex", flexDirection: "column", width: "360px" }}>

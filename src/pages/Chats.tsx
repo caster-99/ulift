@@ -21,22 +21,30 @@ const Chats = (): JSX.Element => {
           {/* Si no hay ningún chat aún */}
           <Typography fontSize={{ xs: 14, md: 17 }}>No has iniciado ningún chat</Typography>
           <Box display={"flex"} flexDirection="column">
-            <ChatMini name="Luisa" lastMsg="Holaaaa aaaaaa" userId="1234" />
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" userId="5254" />
-            <ChatMini name="Luisa" lastMsg="Holaaaa aaaaaa" userId="53" />
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" userId="44587" />
-            <ChatMini name="Luisa" lastMsg="Holaaaa aaaaaa" userId="752" />
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" userId="725" />
-            <ChatMini name="Luisa" lastMsg="Holaaaa aaaaaa" userId="727" />
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" userId="7837" />
-            <ChatMini name="Luisa" lastMsg="Holaaaa aaaaaa" userId="732" />
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" userId="73" />
-            <ChatMini name="Luisa" lastMsg="Holaaaa aaaaaa" userId="793" />
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" userId="045" />
-            <ChatMini name="Luisa" lastMsg="Holaaaa aaaaaa" userId="735" />
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" userId="9234" />
-            <ChatMini name="Luisa" lastMsg="Holaaaa aaaaaa" userId="70" />
-            <ChatMini name="Luisa" lastMsg="Holaaaaaaaaaa" userId="15" />
+            <ChatMini
+              name="Luisa"
+              lastMsg="Holaaaa aaaaaa"
+              userId="1234"
+              photo="https://cdn.icon-icons.com/icons2/933/PNG/512/user-shape_icon-icons.com_72487.png"
+            />
+            <ChatMini
+              name="Luisa"
+              lastMsg="Holaaaa aaaaaa"
+              userId="1234"
+              photo="https://cdn.icon-icons.com/icons2/933/PNG/512/user-shape_icon-icons.com_72487.png"
+            />
+            <ChatMini
+              name="Luisa"
+              lastMsg="Holaaaa aaaaaa"
+              userId="1234"
+              photo="https://cdn.icon-icons.com/icons2/933/PNG/512/user-shape_icon-icons.com_72487.png"
+            />
+            <ChatMini
+              name="Luisa"
+              lastMsg="Holaaaa aaaaaa"
+              userId="1234"
+              photo="https://cdn.icon-icons.com/icons2/933/PNG/512/user-shape_icon-icons.com_72487.png"
+            />
           </Box>
         </Container>
       </Box>

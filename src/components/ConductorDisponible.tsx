@@ -135,6 +135,7 @@ const ConductorDisponible = (props: UserProps): JSX.Element => {
         location={props.rName}
         time={props.waitingTime.toString()}
         role={props.role}
+        photo={props.photo}
       />
     </Grid>
   );
