@@ -67,7 +67,6 @@ const InfoUserDialogo = (props: DialogProps) => {
         <Typography>Tiempo de espera: {props.time} minutos</Typography>
 
         <Typography>Puestos disponibles: {props.seats} puestos</Typography>
-        <Typography>Destino final: {props.location}</Typography>
       </DialogContent>
     </Dialog>
   );
