@@ -161,9 +161,9 @@ export const Conductor = (usuario: ColasDisponibles): JSX.Element => {
             flexDirection: "row",
           }}
         >
-          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.driverID.toString())}>
+          {/* <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.driverID.toString())}>
             <ChatRounded color="primary" />
-          </IconButton>
+          </IconButton> */}
           <IconButton sx={{ marginRight: 1 }} onClick={handleClick(usuario.liftID.toString())}>
             <PedirColaIcon />
           </IconButton>

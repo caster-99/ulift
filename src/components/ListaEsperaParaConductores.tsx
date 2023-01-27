@@ -230,9 +230,9 @@ export const PasajeroListaEspera = ({ usuario, solicitudes }: SolicitudUsuarios)
             flexDirection: "row",
           }}
         >
-          <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.id)}>
+          {/* <IconButton sx={{ marginRight: 1 }} onClick={goChat(usuario.id)}>
             <ChatRounded color="primary" />
-          </IconButton>
+          </IconButton> */}
           <IconButton sx={{ marginRight: 1 }} onClick={handleClick(usuario.id)}>
             <LocIcon />
           </IconButton>

@@ -3,7 +3,7 @@ import Fade from "@mui/material/Fade";
 import React from "react";
 import { NavBar } from "../components/NavBar";
 
-const Chats = (): JSX.Element => {
+const FAQs = (): JSX.Element => {
   return (
     <Box>
       <NavBar />
@@ -26,4 +26,4 @@ const Chats = (): JSX.Element => {
   );
 };
 
-export default Chats;
+export default FAQs;
