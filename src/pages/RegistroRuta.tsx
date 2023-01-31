@@ -18,7 +18,7 @@ const initialValues: Values = {
 };
 
 const loader = new Loader({
-  apiKey: "AIzaSyDiBDk9jPW-I_ka-HEAH5gZO2wfXblZ88k",
+  apiKey: "",
   version: "weekly",
   libraries: ["places", "drawing"],
 });

@@ -15,7 +15,7 @@ let map: google.maps.Map;
 const Map = (): JSX.Element => {
   // objeto para cargar el api de google
   const loader = new Loader({
-    apiKey: "AIzaSyDiBDk9jPW-I_ka-HEAH5gZO2wfXblZ88k",
+    apiKey: "",
     version: "weekly",
     libraries: ["places"],
   });

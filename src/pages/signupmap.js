@@ -4,7 +4,7 @@ window.mark = {}; // global variable to store markers xdd
 
 // objeto para cargar el api de google
 const loader = new Loader({
-  apiKey: "AIzaSyDiBDk9jPW-I_ka-HEAH5gZO2wfXblZ88k",
+  apiKey: "",
   version: "weekly",
   libraries: ["places"],
 });

@@ -73,7 +73,7 @@ const Registro = (): JSX.Element => {
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyDiBDk9jPW-I_ka-HEAH5gZO2wfXblZ88k",
+    googleMapsApiKey: "",
     libraries: ["places", "drawing"],
   });
 
